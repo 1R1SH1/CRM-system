@@ -35,7 +35,7 @@ namespace IT_Consulting_CRM_API.Controllers
         {
             Context = dataContext;
             httpClient = new HttpClient();
-            BotUrl = @"https://api.telegram.org/bot5125573757:/";
+            BotUrl = @"https://api.telegram.org/:/";
             Update_id = 0;
         }
         [HttpPost]
