@@ -1,0 +1,32 @@
+﻿@using IT_Consulting_CRM_Web.Models
+@model List<Requests>
+@{ ViewData["Title"] = "Access denied"; }
+
+<h2 class="hform">@ViewData["Title"]</h2>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="~/css/StyleSheet.css" type="text/css" />
+    <link rel="stylesheet" href="~/css/style1.css" type="text/css" />
+    <link rel="stylesheet" href="~/css/style.css" type="text/css" />
+    <style type="text/css">
+
+        .btn {
+            text-decoration: none;
+            position: center;
+            height: 40px;
+            line-height: 40px;
+            padding: 0 50px 0 50px;
+            margin: 0 10px;
+            background: linear-gradient(-135deg, #00E5FE, #4463FE);
+            border-width: 0;
+            border-radius: 50px;
+            font-size: 15px;
+            color: white;
+            outline: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<br />
+
+<a class="btn" asp-action="Index">Назад</a>

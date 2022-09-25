@@ -1,0 +1,44 @@
+﻿@model IT_Consulting_CRM_Web.Models.Projects
+
+@using (Html.BeginForm())
+{
+<head>
+    <title></title>
+    <link rel="stylesheet" href="~/css/StyleSheet.css" type="text/css" />
+    <link rel="stylesheet" href="~/css/style1.css" type="text/css" />
+    <link rel="stylesheet" href="~/css/style.css" type="text/css" />
+    <style type="text/css">
+
+        .btn {
+            text-decoration: none;
+            position: center;
+            height: 40px;
+            line-height: 40px;
+            padding: 0 50px 0 50px;
+            margin: 0 10px;
+            background: linear-gradient(-135deg, #00E5FE, #4463FE);
+            border-width: 0;
+            border-radius: 50px;
+            font-size: 15px;
+            color: white;
+            outline: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+    <div class="validation" asp-validation-summary="ModelOnly"></div>
+
+    <label class="lable" asp-for="Image">Добавить изображение:</label>
+    <input asp-for="Image" />
+    <span asp-validation-for="Image"></span>
+    <br />
+
+    <label class="lable" asp-for="ProjectInformation">Добавить описание:</label>
+    <input asp-for="ProjectInformation" />
+    <span asp-validation-for="ProjectInformation"></span>
+    <br />
+
+    <input class="btn" type="submit" value="Save" />
+    <a class="btn" asp-action="Index">Отмена</a>
+}

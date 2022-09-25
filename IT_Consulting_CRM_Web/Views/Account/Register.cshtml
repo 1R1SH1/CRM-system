@@ -1,0 +1,50 @@
+﻿@model IT_Consulting_CRM_Web.ViewModels.RegistrationViewModel
+@{
+    ViewData["Title"] = "Registration";
+}
+
+<h2 class="hform">@ViewData["Title"]</h2>
+
+<head>
+    <title></title>
+    <link rel="stylesheet" href="~/css/style.css" type="text/css" />
+    <style type="text/css">
+
+        .btn {
+            text-decoration: none;
+            position: relative;
+            height: 40px;
+            line-height: 40px;
+            padding: 0 50px 0 50px;
+            margin: 0 20px;
+            background: linear-gradient(-135deg, #00E5FE, #4463FE);
+            border-width: 0;
+            border-radius: 50px;
+            font-size: 20px;
+            color: white;
+            outline: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<form asp-action="Register" class="form-main" asp-antiforgery="true">
+    <div class="validation" asp-validation-summary="ModelOnly"></div>
+
+    <label class="lable" asp-for="Username">Username:</label>
+    <input asp-for="Username" />
+    <span asp-validation-for="Username"></span>
+    <br />
+
+    <label class="lable" asp-for="Password">Password:</label>
+    <input asp-for="Password" />
+    <span asp-validation-for="Password"></span>
+    <br />
+
+    <label class="lable" asp-for="ConfirmPassword">Confirm password:</label>
+    <input asp-for="ConfirmPassword" />
+    <span asp-validation-for="ConfirmPassword"></span>
+    <br />
+
+    <input class="btn" type="submit" value="Register" />
+</form>

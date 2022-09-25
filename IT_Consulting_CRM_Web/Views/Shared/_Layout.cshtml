@@ -1,0 +1,35 @@
+﻿@using IT_Consulting_CRM_Web.Controllers;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data - @ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/normolize.css" />
+    <link rel="stylesheet" href="~/css/style.css" />
+    <link rel="stylesheet" href="~/css/styles.css" />
+    <link rel="stylesheet" href="~/js/scripts.js" />
+</head>
+<body>
+    <header>        
+    </header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-0">
+        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"></a>
+        <a class="navbar-brand" asp-area="" asp-controller="Services" asp-action="Index"></a>
+        <a class="navbar-brand" asp-area="" asp-controller="Projects" asp-action="Project"></a>
+        <a class="navbar-brand" asp-area="" asp-controller="Blogs" asp-action="Index"></a>
+        <a class="navbar-brand" asp-area="" asp-controller="Contacts" asp-action="Index"></a>
+        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+            @await Component.InvokeAsync("LoginView")
+        </div>
+    </nav>
+    @RenderBody()
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

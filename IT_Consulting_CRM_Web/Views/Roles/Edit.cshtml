@@ -1,0 +1,43 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model IT_Consulting_CRM_Web.ViewModels.ChangeRoleViewModel
+@{
+    ViewData["Title"] = "Access level";
+}
+
+<h2 class="hform">@ViewData["Title"] for user @Model.UserLogin</h2>
+
+<head>
+    <title></title>
+    <link rel="stylesheet" href="~/css/style.css" type="text/css" />
+    <style type="text/css">
+
+        .btn {
+            text-decoration: none;
+            position: relative;
+            height: 40px;
+            line-height: 40px;
+            padding: 0 50px 0 50px;
+            margin: 0 20px;
+            background: linear-gradient(-135deg, #00E5FE, #4463FE);
+            border-width: 0;
+            border-radius: 50px;
+            font-size: 20px;
+            color: white;
+            outline: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<form asp-action="Edit" class="form-main" method="post">
+    <input type="hidden" name="userId" value="@Model.UserId" />
+    <div class="form-simple">
+        @foreach (IdentityRole role in Model.AllRoles)
+        {
+            <input type="checkbox" name="roles" value="@role.Name"
+            @(Model.UserRoles.Contains(role.Name) ? "checked=\"checked\"" : "") />@role.Name <br />
+        }
+    </div>
+    <input class="btn" type="submit" value="Save" />
+    <a class="btn" asp-action="Index">Cancel</a>
+</form>
