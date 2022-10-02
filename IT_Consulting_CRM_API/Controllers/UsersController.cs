@@ -3,7 +3,6 @@ using IT_Consulting_CRM_API.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Threading.Tasks;
 
 namespace IT_Consulting_CRM_API.Controllers
@@ -19,7 +18,8 @@ namespace IT_Consulting_CRM_API.Controllers
             _userManager = userManager;
         }
 
-        [HttpPost]
+        [AllowAnonymous]
+        [HttpPost("create")]
         [Authorize(Roles = "admin")]
         public async Task<ActionResult> Create(CreateUserViewModel model)
         {
@@ -39,7 +39,8 @@ namespace IT_Consulting_CRM_API.Controllers
             return View(model);
         }
 
-        [HttpDelete]
+        [AllowAnonymous]
+        [HttpDelete("delete")]
         [Authorize(Roles = "admin")]
         public async Task<ActionResult> Delete(string id)
         {

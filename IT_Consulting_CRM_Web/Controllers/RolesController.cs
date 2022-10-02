@@ -1,9 +1,12 @@
-﻿using IT_Consulting_CRM_Web.ViewModels;
+﻿using IT_Consulting_CRM_Web.Models;
+using IT_Consulting_CRM_Web.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace IT_Consulting_CRM_API.Controllers
@@ -12,10 +15,11 @@ namespace IT_Consulting_CRM_API.Controllers
     [ApiController]
     public class RolesController : Controller
     {
+        private HttpClient httpClient = new HttpClient();
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<User> _userManager;
 
-        public RolesController(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager)
+        public RolesController(RoleManager<IdentityRole> roleManager, UserManager<User> userManager)
         {
             _roleManager = roleManager;
             _userManager = userManager;
@@ -32,7 +36,9 @@ namespace IT_Consulting_CRM_API.Controllers
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(string id)
         {
-            IdentityUser user = await _userManager.FindByIdAsync(id);
+            var streamTask = httpClient.GetStreamAsync("https://localhost:5001/api/Roles/edithGet");
+            var repositories = JsonSerializer.Deserialize<List<User>>(await streamTask);
+            User user = await _userManager.FindByIdAsync(repositories.ToString());
 
             if (user != null)
             {
@@ -57,7 +63,9 @@ namespace IT_Consulting_CRM_API.Controllers
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(string userId, List<string> roles)
         {
-            IdentityUser user = await _userManager.FindByIdAsync(userId);
+            var streamTask = httpClient.GetStreamAsync("https://localhost:5001/api/Roles/edithPost");
+            var repositories = JsonSerializer.Deserialize<List<User>>(await streamTask);
+            User user = await _userManager.FindByIdAsync(repositories.ToString());
 
             if (user != null)
             {

@@ -22,11 +22,12 @@ namespace IT_Consulting_CRM_API.Controllers
             _userManager = userManager;
         }
 
-        [HttpGet]
+        [AllowAnonymous]
+        [HttpGet("edithGet")]
         [Authorize(Roles = "admin")]
         public async Task<ActionResult> Edit(string id)
         {
-            User user = (User)await _userManager.FindByIdAsync(id);
+            User user = await _userManager.FindByIdAsync(id);
 
             if (user != null)
             {
@@ -44,14 +45,15 @@ namespace IT_Consulting_CRM_API.Controllers
                 return View(model);
             }
 
-            return NotFound();
+            return Ok();
         }
 
-        [HttpPost]
+        [AllowAnonymous]
+        [HttpPost("edithPost")]
         [Authorize(Roles = "admin")]
         public async Task<ActionResult> Edit(string userId, List<string> roles)
         {
-            User user = (User)await _userManager.FindByIdAsync(userId);
+            User user = await _userManager.FindByIdAsync(userId);
 
             if (user != null)
             {
@@ -64,7 +66,7 @@ namespace IT_Consulting_CRM_API.Controllers
                 await _userManager.RemoveFromRolesAsync(user, removedRoles);
             }
 
-            return NotFound();
+            return Ok();
         }
 
 

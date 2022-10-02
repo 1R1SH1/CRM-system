@@ -21,7 +21,7 @@ namespace IT_Consulting_CRM_Web.Controllers
         public IActionResult Sendrequest(Requests request)
         {
             string url = @"https://localhost:5001/api/Request";
-            CRUD.Token = httpClient.PostAsync(url, new StringContent(JsonConvert.SerializeObject(request), 
+            CRUD.Token = httpClient.PostAsync(url, new StringContent(JsonConvert.SerializeObject(request),
                 Encoding.UTF8, "application/json")).Result.ToString();
             Console.WriteLine(CRUD.Token);
             if (CRUD.Token.Contains("200"))

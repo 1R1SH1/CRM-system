@@ -1,47 +1,52 @@
 using IT_Consulting_CRM_Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Text;
 
 namespace IT_Consulting_CRM_Web.Controllers
 {
     public class ProjectsController : Controller
     {
-        private static List<Projects> _project = new List<Projects>();
+        private HttpClient httpClient = new HttpClient();
+
+        const string host = "https://localhost:5001/api/Project";
+
+        private static List<Projects> _services = new();
 
         public static Projects Template { get; set; }
 
-        [HttpGet]
         public IActionResult Project()
         {
-            return View(ShowProjects());
+            return View(ShowProject());
         }
 
-        [HttpPost]
-        public IActionResult ShowProjects()
+        public IActionResult ShowProject()
         {
-            _project = JsonConvert.DeserializeObject<List<Projects>>(CRUD.Read("Projects"));
+            Template = new();
+            string url = "";
+            _services = JsonConvert.DeserializeObject<List<Projects>>(CRUD.Read("Projects").ToString());
+            return View(_services);
+        }
+
+        public IActionResult AddProject(Projects projects)
+        {
+            string url = @"https://localhost:5001/api/Project";
+            CRUD.Token = httpClient.PostAsync(url, new StringContent(JsonConvert.SerializeObject(projects),
+                Encoding.UTF8, "application/json")).Result.ToString();
             return View();
         }
 
-        [HttpPost]
-        public IActionResult AddProject()
-        {
-            if (Template.Id == 0)
-            {
-                CRUD.Create("Projects", JsonConvert.SerializeObject(Template));
-            }
-            return RedirectToAction("Project");
-        }
-
-        [HttpGet]
         public IActionResult ProjectEdit()
         {
             return View();
         }
 
-        [HttpPost]
         [Authorize(Roles = "admin")]
         public IActionResult DeleteProject(string id)
         {

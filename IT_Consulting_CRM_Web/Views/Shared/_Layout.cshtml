@@ -1,5 +1,4 @@
-﻿@using IT_Consulting_CRM_Web.Controllers;
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -16,10 +15,6 @@
     </header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-0">
         <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"></a>
-        <a class="navbar-brand" asp-area="" asp-controller="Services" asp-action="Index"></a>
-        <a class="navbar-brand" asp-area="" asp-controller="Projects" asp-action="Project"></a>
-        <a class="navbar-brand" asp-area="" asp-controller="Blogs" asp-action="Index"></a>
-        <a class="navbar-brand" asp-area="" asp-controller="Contacts" asp-action="Index"></a>
         <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
             @await Component.InvokeAsync("LoginView")
         </div>

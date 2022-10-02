@@ -10,7 +10,7 @@ namespace IT_Consulting_CRM_Web
     public static class CRUD
     {
         public static HttpClient httpClient = new HttpClient();
-        public static string Host = "https://localhost:5001/api/";
+        public static string Host = "https://localhost:5001/api/Project";
 
         public static string Token { get; set; }
 
@@ -18,6 +18,7 @@ namespace IT_Consulting_CRM_Web
         /// Добавить данные на сервер (строки) (Create)
         public static void Create(string url, string json)
         {
+            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("accept", "*/*");
             Answer(httpClient.PostAsync($"{Host}{url}", new StringContent(json, Encoding.UTF8, "application/json")).Result.ToString());
         }
 
@@ -28,6 +29,7 @@ namespace IT_Consulting_CRM_Web
         }
         public static void Update(string url, string json)
         {
+            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("accept", "*/*");
             Answer(httpClient.PutAsync($"{Host}{url}", new StringContent(json, Encoding.UTF8, "application/json")).Result.ToString());
         }
         public static void Delete(string url)

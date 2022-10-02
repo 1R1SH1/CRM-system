@@ -1,42 +1,52 @@
 ﻿using IT_Consulting_CRM_Web.Models;
 using IT_Consulting_CRM_Web.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
+//using System.Text.Json;
+using Newtonsoft.Json;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Hosting;
+using System.Net.Http.Headers;
 
 namespace IT_Consulting_CRM_Web.Controllers
 {
     public class AccountController : Controller
     {
-        const string host = "https://localhost:5001/api/Accaunt/";
         private HttpClient httpClient = new HttpClient();
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
 
         public static string Name { get; set; }
         public static string Role { get; set; }
 
         public IActionResult Login(string returnUrl = null)
         {
-            return View(new LoginViewModel()
-            {
-                ReturnUrl = returnUrl
-            });
+            return View(new LoginViewModel());
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public async Task<ActionResult> Login(LoginViewModel model)
         {
-            //string url = @"https://localhost:5001/api/Accaunt/authentication";
-            //CRUD.Token = httpClient.PostAsync(url, new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json")).Result;
+            string url = @"https://localhost:5001/api/Account/authentication";
 
-            string url = host + "authentication/";
+            if (model.Username == null) { model.Username = ""; }
+            if (model.Password == null) { model.Password = ""; }
             CRUD.Token = httpClient.PostAsync(url, new StringContent(JsonConvert.SerializeObject(model),
-                Encoding.UTF8, "application/json")).Result.ToString();
-
-            //ModelState.AddModelError(String.Empty, "Неправильный пароль");
-            return RedirectToAction(nameof(Index), "Home");
+                Encoding.UTF8, "application/json")).Result.Content.ReadAsStringAsync().Result;
+            if (CRUD.Token != "Unauthorize")
+            {
+                string urll = url + "values";
+                string json = httpClient.GetAsync(urll).Result.ToString();
+                List<User>? r = JsonConvert.DeserializeObject<List<User>>(json);
+                Name = r[0].ToString();
+                Role = r[1].ToString();
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         public IActionResult Register()
@@ -45,26 +55,24 @@ namespace IT_Consulting_CRM_Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(RegistrationViewModel model)
+        public async Task<ActionResult> Register(RegistrationViewModel model)
         {
-            //string url = @"https://localhost:5001/api/Accaunt/registration";
+            string url = @"https://localhost:5001/api/Account/registration";
             //CRUD.Token = httpClient.PostAsync(url, new StringContent(JsonConvert.SerializeObject(model),
             //    Encoding.UTF8, "application/json")).Result.ToString();
 
-            string url = host + "registration/";
-            CRUD.Token = httpClient.PostAsync(url, new StringContent(JsonConvert.SerializeObject(model),
-                Encoding.UTF8, "application/json")).Result.ToString();
+            //string url = host + "registration/";
+            CRUD.Token = httpClient.PostAsync(url, new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json")).ToString();
 
             return RedirectToAction(nameof(Index), "Home");
         }
 
         [HttpPost]
-        public async Task<IActionResult> Logout()
+        public async Task<ActionResult> Logout()
         {
-            //string url = @"https://localhost:5001/api/Accaunt/logout";
+            string url = @"https://localhost:5001/api/Accaunt/logout";
             Name = "";
             Role = "";
-            string url = host + "logout/";
             await httpClient.PostAsync(url, new StringContent("", Encoding.UTF8, "application/json"));
             return RedirectToAction(nameof(Index), "Home");
         }

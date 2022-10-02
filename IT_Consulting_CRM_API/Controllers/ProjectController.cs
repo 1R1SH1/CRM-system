@@ -22,14 +22,17 @@ namespace IT_Consulting_CRM_API.Controllers
             Context = dataContext;
         }
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Projects data)
+        public async Task<ActionResult> Post([FromBody] Projects data)
         {
-            await Context.Project.AddAsync(data);
-            await Context.SaveChangesAsync();
+            if (ModelState.IsValid)
+            {
+                await Context.Project.AddAsync(data);
+                await Context.SaveChangesAsync();
+            }
             return Ok();
         }
         [HttpPut]
-        public async Task<IActionResult> Put([FromBody] Projects data)
+        public async Task<ActionResult> Put([FromBody] Projects data)
         {
             Context.Project.Update(data);
             await Context.SaveChangesAsync();
@@ -43,7 +46,7 @@ namespace IT_Consulting_CRM_API.Controllers
         }
         [HttpDelete]
         [Route("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
             Projects project = Context.Project.ToList().Find(u => u.Id == id);
             Context.Project.Remove(project);

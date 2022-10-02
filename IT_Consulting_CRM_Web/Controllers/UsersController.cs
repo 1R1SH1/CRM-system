@@ -1,9 +1,13 @@
-﻿using IT_Consulting_CRM_Web.ViewModels;
+﻿using IT_Consulting_CRM_Web.Models;
+using IT_Consulting_CRM_Web.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace IT_Consulting_CRM_API.Controllers
@@ -12,18 +16,21 @@ namespace IT_Consulting_CRM_API.Controllers
     [ApiController]
     public class UsersController : Controller
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private HttpClient httpClient = new HttpClient();
+        private readonly UserManager<User> _userManager;        
 
-        public UsersController(UserManager<IdentityUser> userManager)
+        public UsersController(UserManager<User> userManager)
         {
             _userManager = userManager;
         }
 
         [HttpGet("role")]
         [Authorize(Roles = "admin")]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(_userManager.Users.ToList());
+            var streamTask = httpClient.GetStreamAsync("https://localhost:5001/api/Roles/edithGet");
+            var repositories = JsonSerializer.Deserialize<List<User>>(await streamTask);
+            return View(repositories.ToList());
         }
 
         [HttpGet("action")]
@@ -41,7 +48,7 @@ namespace IT_Consulting_CRM_API.Controllers
 
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = model.Username };
+                var user = new User { UserName = model.Username };
 
                 // create user
                 var createResult = await _userManager.CreateAsync(user, model.Password);

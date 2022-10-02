@@ -22,7 +22,7 @@ namespace IT_Consulting_CRM_Web.Controllers
 
         public IActionResult Index()
         {
-            Contact = JsonConvert.DeserializeObject<List<Contacts>>(CRUD.Read("Contacts"));
+            Contact = JsonConvert.DeserializeObject<List<Contacts>>(CRUD.Read("Contacts").ToString());
             return View();
         }
 

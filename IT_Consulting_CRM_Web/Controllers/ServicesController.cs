@@ -21,7 +21,7 @@ namespace IT_Consulting_CRM_Web.Controllers
 
         public IActionResult ShowServices()
         {
-            _services = JsonConvert.DeserializeObject<List<Services>>(CRUD.Read("Services"));
+            _services = JsonConvert.DeserializeObject<List<Services>>(CRUD.Read("Services").ToString());
             return View();
         }
 

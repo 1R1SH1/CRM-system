@@ -11,9 +11,9 @@ namespace IT_Consulting_CRM_Web.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public static List<Blogs>? Blog = new List<Blogs>();
-        public static Blogs? Selected { get; set; }
-        public static Blogs? Template { get; set; }
+        public static List<Blogs> Blog = new List<Blogs>();
+        public static Blogs Selected { get; set; }
+        public static Blogs Template { get; set; }
 
         public BlogController(ILogger<HomeController> logger)
         {
@@ -22,7 +22,7 @@ namespace IT_Consulting_CRM_Web.Controllers
 
         public IActionResult ShowBlog()
         {
-            Blog = JsonConvert.DeserializeObject<List<Blogs>>(CRUD.Read("Blog"));
+            Blog = JsonConvert.DeserializeObject<List<Blogs>>(CRUD.Read("Blog").ToString());
             return View();
         }
 

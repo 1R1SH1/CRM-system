@@ -3,7 +3,10 @@ using IT_Consulting_CRM_API.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace IT_Consulting_CRM_API.Controllers
@@ -23,28 +26,17 @@ namespace IT_Consulting_CRM_API.Controllers
 
         [AllowAnonymous]
         [HttpPost("authentication")]
-        public async Task<ActionResult> Login(LoginViewModel model)
+        public async Task<ActionResult<string>> Login(LoginViewModel model)
         {
-            if (ModelState.IsValid)
+            if ((await _signInManager.PasswordSignInAsync(model.Username, model.Password, false, false)).Succeeded)
             {
-                var loginResult = await _signInManager.PasswordSignInAsync(
-                    model.Username,
-                    model.Password,
-                    false,
-                    lockoutOnFailure: false);
-
-                if (loginResult.Succeeded)
-                {
-                    if (Url.IsLocalUrl(model.ReturnUrl) && !string.IsNullOrEmpty(model.ReturnUrl))
-                    {
-                        return Redirect(model.ReturnUrl);
-                    }
-
-                }
+                User user = await _userManager.FindByNameAsync(model.Username);
+                return Ok();
             }
-
-            ModelState.AddModelError(String.Empty, "Wrong user or password");
-            return View(model);
+            else
+            {
+                return "Unauthorize";
+            }
         }
 
         [AllowAnonymous]
@@ -78,7 +70,7 @@ namespace IT_Consulting_CRM_API.Controllers
                 }
             }
 
-            return View(model);
+            return Ok(model);
         }
 
         [AllowAnonymous]

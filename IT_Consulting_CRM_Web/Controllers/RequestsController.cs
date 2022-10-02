@@ -80,7 +80,7 @@ namespace IT_Consulting_CRM_Web.Controllers
         // Формирование коллекции на основании диапазона дат
         private void Show()
         {
-            _rawRequests = JsonConvert.DeserializeObject<List<Requests>>(CRUD.Read("Request"));
+            _rawRequests = JsonConvert.DeserializeObject<List<Requests>>(CRUD.Read("Request").ToString());
             _requests = new List<Requests>();
             SetDiapazon();
             for (int i = 0; i < _rawRequests.Count; i++)
@@ -108,7 +108,7 @@ namespace IT_Consulting_CRM_Web.Controllers
         [HttpPost]
         public IActionResult SetStatus(string Status)
         {
-            _rawRequests = JsonConvert.DeserializeObject<List<Requests>>(CRUD.Read("Request"));
+            _rawRequests = JsonConvert.DeserializeObject<List<Requests>>(CRUD.Read("Request").ToString());
             string[] output = ParseStatus(Status);
             Requests request = _rawRequests.Find(u => u.Id == int.Parse(output[0]));
             request.Status = int.Parse(output[1]);

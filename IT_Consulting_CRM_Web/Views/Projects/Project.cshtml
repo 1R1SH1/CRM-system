@@ -1,6 +1,7 @@
-﻿@using IT_Consulting_CRM_Web.Controllers
-@model List<IT_Consulting_CRM_Web.Models.Projects>
-@{ ViewData["Title"] = "Projects List"; }
+﻿@model IEnumerable<IT_Consulting_CRM_Web.Models.Projects>
+@{
+    ViewData["Title"] = "Projects List";
+}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -41,9 +42,9 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link" aria-current="page" asp-action="Index">ГЛАВНАЯ</a></li>
+                    <li class="nav-item"><a class="nav-link" aria-current="page" asp-controller="Home" asp-action="Index">ГЛАВНАЯ</a></li>
                     <li class="nav-item"><a class="nav-link" aria-current="page" asp-action="Service">УСЛУГИ</a></li>
-                    <li class="nav-item"><a class="nav-link" aria-current="page" asp-action="Project">ПРОЕКТЫ</a></li>
+                    <li class="nav-item"><a class="nav-link" aria-current="page" asp-controller="Projects" asp-action="Project">ПРОЕКТЫ</a></li>
                     <li class="nav-item"><a class="nav-link" aria-current="page" asp-action="Blog">БЛОГ</a></li>
                     <li class="nav-item"><a class="nav-link" aria-current="page" asp-action="Contact">КОНТАКТЫ</a></li>
                 </ul>
@@ -51,7 +52,7 @@
         </div>
     </nav>
 
-    <div class="row">
+    <div class="row" >
         @foreach (var item in Model)
         {
             <div class="card " style="width:20em;margin:10px;">
@@ -60,12 +61,11 @@
                     <div class="card-text">
                         <p>@item.ProjectInformation</p>
                     </div>
-                    <a href="#" class="btn btn-primary">Добавить</a>
                 </div>
             </div>
-        };        
+        };
     </div>
-        <a class="btn projects-item-btn" asp-action="AddProject">Добавить</a>
+    <a class="btn projects-item-btn" asp-controller="Projects" asp-action="AddProject">Добавить</a>
 
     <footer class="py-5 bg-dark">
         <div class="container">
