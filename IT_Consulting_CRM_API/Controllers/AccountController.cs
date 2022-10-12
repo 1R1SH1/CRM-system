@@ -3,7 +3,6 @@ using IT_Consulting_CRM_API.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -59,37 +58,6 @@ namespace IT_Consulting_CRM_API.Controllers
             {
                 return "Unauthorize";
             }
-            //if (ModelState.IsValid)
-            //{
-            //    var loginResult = await _signInManager.PasswordSignInAsync(
-            //        model.Username,
-            //        model.Password,
-            //        false,
-            //        lockoutOnFailure: false);
-
-            //    if (loginResult.Succeeded)
-            //    {
-            //        if (Url.IsLocalUrl(model.ReturnUrl) && !string.IsNullOrEmpty(model.ReturnUrl))
-            //        {
-            //            return Redirect(model.ReturnUrl);
-            //        }
-
-            //        return Ok();
-            //    }
-            //}
-            //return Ok(model);
-
-            //ModelState.AddModelError(String.Empty, "Wrong user or password");
-            //return View(model);
-            //if ((await _signInManager.PasswordSignInAsync(model.Username, model.Password, false, false)).Succeeded)
-            //{
-            //    User user = await _userManager.FindByNameAsync(model.Username);
-            //    return Ok(model);
-            //}
-            //else
-            //{
-            //    return "Unauthorize";
-            //}
         }
 
         [AllowAnonymous]

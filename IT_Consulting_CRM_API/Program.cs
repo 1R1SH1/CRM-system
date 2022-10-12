@@ -1,10 +1,7 @@
 using IT_Consulting_CRM_API;
 using IT_Consulting_CRM_API.Data;
 using IT_Consulting_CRM_API.Models;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

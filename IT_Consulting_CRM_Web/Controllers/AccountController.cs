@@ -23,16 +23,15 @@ namespace IT_Consulting_CRM_Web.Controllers
         }
 
         [HttpPost]
-        //[ValidateAntiForgeryToken]
         public IActionResult Login(LoginViewModel model)
         {
             string url = @"https://localhost:44390/api/Account/authentication";
 
             if (model.Username == null) { model.Username = ""; }
             if (model.Password == null) { model.Password = ""; }
-            CRUD.Token = httpClient.PostAsync(url, new StringContent(JsonConvert.SerializeObject(model),
+            string c = httpClient.PostAsync(url, new StringContent(JsonConvert.SerializeObject(model),
                 Encoding.UTF8, "application/json")).Result.Content.ReadAsStringAsync().Result;
-            if (CRUD.Token != "Unauthorize")
+            if (c != "Unauthorize")
             {
                 string urll = @"https://localhost:44390/api/Values";
                 string json = httpClient.GetStringAsync(urll).Result;
@@ -42,8 +41,6 @@ namespace IT_Consulting_CRM_Web.Controllers
                 Role = r.ToString();
                 Console.WriteLine(r);
             }
-
-
             return RedirectToAction(nameof(Index), "Home");
         }
 
