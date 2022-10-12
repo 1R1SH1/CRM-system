@@ -1,38 +1,32 @@
-﻿using IT_Consulting_CRM_Web.Models;
-using IT_Consulting_CRM_Web.ViewModels;
-using Microsoft.AspNetCore.Identity;
+﻿using IT_Consulting_CRM_Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using Site;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
-//using System.Text.Json;
-using Newtonsoft.Json;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Hosting;
-using System.Net.Http.Headers;
 
 namespace IT_Consulting_CRM_Web.Controllers
 {
     public class AccountController : Controller
     {
         private HttpClient httpClient = new HttpClient();
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
-
-        public static string Name { get; set; }
+        public static string Username { get; set; }
         public static string Role { get; set; }
-
         public IActionResult Login(string returnUrl = null)
         {
-            return View(new LoginViewModel());
+            return View(new LoginViewModel()
+            {
+                ReturnUrl = returnUrl
+            });
         }
 
         [HttpPost]
-        public async Task<ActionResult> Login(LoginViewModel model)
+        //[ValidateAntiForgeryToken]
+        public IActionResult Login(LoginViewModel model)
         {
-            string url = @"https://localhost:5001/api/Account/authentication";
+            string url = @"https://localhost:44390/api/Account/authentication";
 
             if (model.Username == null) { model.Username = ""; }
             if (model.Password == null) { model.Password = ""; }
@@ -40,13 +34,17 @@ namespace IT_Consulting_CRM_Web.Controllers
                 Encoding.UTF8, "application/json")).Result.Content.ReadAsStringAsync().Result;
             if (CRUD.Token != "Unauthorize")
             {
-                string urll = url + "values";
-                string json = httpClient.GetAsync(urll).Result.ToString();
-                List<User>? r = JsonConvert.DeserializeObject<List<User>>(json);
-                Name = r[0].ToString();
-                Role = r[1].ToString();
+                string urll = @"https://localhost:44390/api/Values";
+                string json = httpClient.GetStringAsync(urll).Result;
+                Console.WriteLine(json);
+                var r = JsonConvert.DeserializeObject(json);
+                Username = r.ToString();
+                Role = r.ToString();
+                Console.WriteLine(r);
             }
-            return RedirectToAction("Index", "Home");
+
+
+            return RedirectToAction(nameof(Index), "Home");
         }
 
         public IActionResult Register()
@@ -58,11 +56,8 @@ namespace IT_Consulting_CRM_Web.Controllers
         public async Task<ActionResult> Register(RegistrationViewModel model)
         {
             string url = @"https://localhost:5001/api/Account/registration";
-            //CRUD.Token = httpClient.PostAsync(url, new StringContent(JsonConvert.SerializeObject(model),
-            //    Encoding.UTF8, "application/json")).Result.ToString();
-
-            //string url = host + "registration/";
-            CRUD.Token = httpClient.PostAsync(url, new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json")).ToString();
+            var post = httpClient.PostAsync(url, new StringContent(JsonConvert.SerializeObject(model),
+                Encoding.UTF8, "application/json")).Result.Content.ReadAsStringAsync().Result;
 
             return RedirectToAction(nameof(Index), "Home");
         }
@@ -71,8 +66,6 @@ namespace IT_Consulting_CRM_Web.Controllers
         public async Task<ActionResult> Logout()
         {
             string url = @"https://localhost:5001/api/Accaunt/logout";
-            Name = "";
-            Role = "";
             await httpClient.PostAsync(url, new StringContent("", Encoding.UTF8, "application/json"));
             return RedirectToAction(nameof(Index), "Home");
         }

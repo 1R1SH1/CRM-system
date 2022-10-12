@@ -31,12 +31,65 @@ namespace IT_Consulting_CRM_API.Controllers
             if ((await _signInManager.PasswordSignInAsync(model.Username, model.Password, false, false)).Succeeded)
             {
                 User user = await _userManager.FindByNameAsync(model.Username);
-                return Ok();
+                string role;
+                if (await _userManager.IsInRoleAsync(user, "admin")) { role = "admin"; }
+                else if (await _userManager.IsInRoleAsync(user, "user")) { role = "user"; }
+                else { role = "uncknown"; }
+
+                var claims = new Claim[]
+                {
+                    new Claim(ClaimTypes.NameIdentifier, model.Username),
+                    new Claim(ClaimTypes.Role, role)
+                };
+
+                var tokenHandler = new JwtSecurityTokenHandler();
+
+                JwtSecurityToken token = tokenHandler.CreateJwtSecurityToken(
+                    issuer: "DataApi",
+                    audience: "DataClient",
+                    subject: new ClaimsIdentity(claims),
+                    notBefore: DateTime.Now,
+                    expires: DateTime.Now.AddMinutes(5),
+                    issuedAt: DateTime.Now);
+
+                var jwtToken = tokenHandler.WriteToken(token);
+                return jwtToken;
             }
             else
             {
                 return "Unauthorize";
             }
+            //if (ModelState.IsValid)
+            //{
+            //    var loginResult = await _signInManager.PasswordSignInAsync(
+            //        model.Username,
+            //        model.Password,
+            //        false,
+            //        lockoutOnFailure: false);
+
+            //    if (loginResult.Succeeded)
+            //    {
+            //        if (Url.IsLocalUrl(model.ReturnUrl) && !string.IsNullOrEmpty(model.ReturnUrl))
+            //        {
+            //            return Redirect(model.ReturnUrl);
+            //        }
+
+            //        return Ok();
+            //    }
+            //}
+            //return Ok(model);
+
+            //ModelState.AddModelError(String.Empty, "Wrong user or password");
+            //return View(model);
+            //if ((await _signInManager.PasswordSignInAsync(model.Username, model.Password, false, false)).Succeeded)
+            //{
+            //    User user = await _userManager.FindByNameAsync(model.Username);
+            //    return Ok(model);
+            //}
+            //else
+            //{
+            //    return "Unauthorize";
+            //}
         }
 
         [AllowAnonymous]

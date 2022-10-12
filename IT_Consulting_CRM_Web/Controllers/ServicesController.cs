@@ -1,7 +1,6 @@
 using IT_Consulting_CRM_Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using System.Collections.Generic;
 
 namespace IT_Consulting_CRM_Web.Controllers
@@ -21,7 +20,7 @@ namespace IT_Consulting_CRM_Web.Controllers
 
         public IActionResult ShowServices()
         {
-            _services = JsonConvert.DeserializeObject<List<Services>>(CRUD.Read("Services").ToString());
+            //_services = JsonConvert.DeserializeObject<List<Services>>(CRUD.Read("Services").ToString());
             return View();
         }
 
@@ -30,7 +29,7 @@ namespace IT_Consulting_CRM_Web.Controllers
             Template.ServicesInformation = serviceInformation;
             if (Template.Id == 0)
             {
-                CRUD.Create("Services", JsonConvert.SerializeObject(Template));
+                //CRUD.Create("Services", JsonConvert.SerializeObject(Template));
             }
             return RedirectToAction("ServiceEdit", "Services");
         }
@@ -42,7 +41,7 @@ namespace IT_Consulting_CRM_Web.Controllers
 
         public IActionResult DeleteService(string id)
         {
-            CRUD.Delete($"Services/{id}");
+            //CRUD.Delete($"Services/{id}");
             return RedirectToAction("ShowServices", "Services");
         }
 
@@ -51,11 +50,11 @@ namespace IT_Consulting_CRM_Web.Controllers
         {
             if (Template.Id == 0)
             {
-                CRUD.Create("Services", JsonConvert.SerializeObject(Template));
+                //CRUD.Create("Services", JsonConvert.SerializeObject(Template));
             }
             else
             {
-                CRUD.Update("Services", JsonConvert.SerializeObject(Template));
+                //CRUD.Update("Services", JsonConvert.SerializeObject(Template));
             }
             return RedirectToAction("ShowServices", "Services");
         }

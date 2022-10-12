@@ -1,7 +1,6 @@
 using IT_Consulting_CRM_Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
@@ -22,7 +21,7 @@ namespace IT_Consulting_CRM_Web.Controllers
 
         public IActionResult ShowBlog()
         {
-            Blog = JsonConvert.DeserializeObject<List<Blogs>>(CRUD.Read("Blog").ToString());
+            //Blog = JsonConvert.DeserializeObject<List<Blogs>>(CRUD.Read("Blog").ToString());
             return View();
         }
 
@@ -33,7 +32,7 @@ namespace IT_Consulting_CRM_Web.Controllers
             Template.dateTime = dateTime;
             if (Template.Id == 0)
             {
-                CRUD.Create("Blog", JsonConvert.SerializeObject(Template));
+                //CRUD.Create("Blog", JsonConvert.SerializeObject(Template));
             }
             return RedirectToAction("Index", "Blog");
         }
@@ -53,7 +52,7 @@ namespace IT_Consulting_CRM_Web.Controllers
 
         public IActionResult DeleteBlog(string id)
         {
-            CRUD.Delete($"Blog/{id}");
+            //CRUD.Delete($"Blog/{id}");
             return RedirectToAction("ShowBlog", "Blog");
         }
 
@@ -65,11 +64,11 @@ namespace IT_Consulting_CRM_Web.Controllers
             Template.dateTime = dateTime;
             if (Template.Id == 0)
             {
-                CRUD.Create("Blog", JsonConvert.SerializeObject(Template));
+                //CRUD.Create("Blog", JsonConvert.SerializeObject(Template));
             }
             else
             {
-                CRUD.Update("Blog", JsonConvert.SerializeObject(Template));
+                //CRUD.Update("Blog", JsonConvert.SerializeObject(Template));
             }
             return RedirectToAction("ShowBlog", "Blog");
         }

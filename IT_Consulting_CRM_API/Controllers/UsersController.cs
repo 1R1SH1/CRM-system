@@ -3,6 +3,8 @@ using IT_Consulting_CRM_API.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace IT_Consulting_CRM_API.Controllers
@@ -16,6 +18,19 @@ namespace IT_Consulting_CRM_API.Controllers
         public UsersController(UserManager<User> userManager)
         {
             _userManager = userManager;
+        }
+
+        [AllowAnonymous]
+        [HttpGet("get")]
+        [Authorize(Roles = "admin")]
+        public ActionResult<IEnumerable<User>> Get()
+        {
+            List<User> UsersList = new List<User>();
+            foreach (var users in _userManager.Users.ToList())
+            {
+                UsersList.Add(new User());
+            }
+            return UsersList;
         }
 
         [AllowAnonymous]

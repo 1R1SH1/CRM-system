@@ -3,78 +3,57 @@ using IT_Consulting_CRM_Web.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
+using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text.Json;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace IT_Consulting_CRM_API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
     public class UsersController : Controller
     {
         private HttpClient httpClient = new HttpClient();
-        private readonly UserManager<User> _userManager;        
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
 
         public UsersController(UserManager<User> userManager)
         {
             _userManager = userManager;
         }
 
-        [HttpGet("role")]
+        [HttpGet]
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> Index()
         {
-            var streamTask = httpClient.GetStreamAsync("https://localhost:5001/api/Roles/edithGet");
-            var repositories = JsonSerializer.Deserialize<List<User>>(await streamTask);
-            return View(repositories.ToList());
+            string url = @"https://localhost:5001/api/Users/get";
+
+            var json = httpClient.GetAsync(url).Result;
+            List<User> r = JsonConvert.DeserializeObject<List<User>>(json.ToString());
+
+            return View(json);
         }
 
-        [HttpGet("action")]
+        [HttpGet]
         [Authorize(Roles = "admin")]
         public IActionResult Create()
         {
             return View();
         }
 
-        [HttpPost("creatUser")]
+        [HttpPost]
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> Create(CreateUserViewModel model)
         {
-            string defaultRole = "user";
+            string url = @"https://localhost:5001/api/Users/create";
 
-            if (ModelState.IsValid)
-            {
-                var user = new User { UserName = model.Username };
-
-                // create user
-                var createResult = await _userManager.CreateAsync(user, model.Password);
-
-                // set role to user
-                var addToRole = await _userManager.AddToRoleAsync(user, defaultRole);
-
-
-                if (createResult.Succeeded && addToRole.Succeeded)
-                {
-                    return RedirectToAction(nameof(Index));
-                }
-
-                else
-                {
-                    foreach (var error in createResult.Errors)
-                    {
-                        ModelState.AddModelError(String.Empty, error.Description);
-                    }
-                }
-            }
+            var post = httpClient.PostAsync(url, new StringContent(JsonConvert.SerializeObject(model),
+                Encoding.UTF8, "application/json")).Result.Content.ReadAsStringAsync().Result;
 
             return View(model);
         }
 
-        [HttpPost("delete")]
+        [HttpPost]
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> Delete(string id)
         {

@@ -1,7 +1,6 @@
 using IT_Consulting_CRM_Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using System.Collections.Generic;
 
 namespace IT_Consulting_CRM_Web.Controllers
@@ -22,13 +21,13 @@ namespace IT_Consulting_CRM_Web.Controllers
 
         public IActionResult Index()
         {
-            Contact = JsonConvert.DeserializeObject<List<Contacts>>(CRUD.Read("Contacts").ToString());
+            //Contact = JsonConvert.DeserializeObject<List<Contacts>>(CRUD.Read("Contacts").ToString());
             return View();
         }
 
         public IActionResult UpdateContact()
         {
-            CRUD.Update("Contacts", JsonConvert.SerializeObject(new Contacts()));
+            //CRUD.Update("Contacts", JsonConvert.SerializeObject(new Contacts()));
             return RedirectToAction("Index", "Contacts");
         }
 
@@ -49,14 +48,14 @@ namespace IT_Consulting_CRM_Web.Controllers
             Template.ContactsInformation = contactInformation;
             if (Template.Id == 0)
             {
-                CRUD.Create("Contacts", JsonConvert.SerializeObject(Template));
+                //CRUD.Create("Contacts", JsonConvert.SerializeObject(Template));
             }
             return RedirectToAction("Index", "Contacts");
         }
 
         public IActionResult Delete(int id)
         {
-            CRUD.Delete($"Contacts/{id}");
+            //CRUD.Delete($"Contacts/{id}");
             return RedirectToAction("Index", "Contacts");
         }
         public IActionResult Edit(int id)
@@ -88,7 +87,7 @@ namespace IT_Consulting_CRM_Web.Controllers
             Template.EMail = eMail;
             Template.Address = address;
             Template.ContactsInformation = contactInformation;
-            CRUD.Update($"Contacts?id={Selected.Id}&description={contact}", JsonConvert.SerializeObject(Template));
+            //CRUD.Update($"Contacts?id={Selected.Id}&description={contact}", JsonConvert.SerializeObject(Template));
 
             return RedirectToAction("Index", "Contacts");
         }

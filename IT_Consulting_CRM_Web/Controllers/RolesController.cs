@@ -3,16 +3,13 @@ using IT_Consulting_CRM_Web.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace IT_Consulting_CRM_API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
     public class RolesController : Controller
     {
         private HttpClient httpClient = new HttpClient();
@@ -29,58 +26,31 @@ namespace IT_Consulting_CRM_API.Controllers
         [Authorize(Roles = "admin")]
         public IActionResult Index()
         {
-            return RedirectToAction("Index", "Users");
+            return RedirectToAction(nameof(Index), "Users");
         }
 
-        [HttpGet("roles")]
+        [HttpGet]
         [Authorize(Roles = "admin")]
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(ChangeRoleViewModel model)
         {
-            var streamTask = httpClient.GetStreamAsync("https://localhost:5001/api/Roles/edithGet");
-            var repositories = JsonSerializer.Deserialize<List<User>>(await streamTask);
-            User user = await _userManager.FindByIdAsync(repositories.ToString());
+            string url = @"https://localhost:5001/api/Roles/edithGet";
 
-            if (user != null)
-            {
-                var userRoles = await _userManager.GetRolesAsync(user);
-                var allRoles = _roleManager.Roles.ToList();
+            string json = httpClient.GetAsync(url).Result.ToString();
+            List<string> r = JsonConvert.DeserializeObject<List<string>>(json.ToString());
 
-                ChangeRoleViewModel model = new ChangeRoleViewModel
-                {
-                    UserId = user.Id,
-                    UserLogin = user.UserName,
-                    UserRoles = userRoles,
-                    AllRoles = allRoles
-                };
-
-                return View(model);
-            }
-
-            return NotFound();
+            return RedirectToAction(nameof(Index), "Home");
         }
 
-        [HttpPost("changeRole")]
+        [HttpPost]
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(string userId, List<string> roles)
         {
-            var streamTask = httpClient.GetStreamAsync("https://localhost:5001/api/Roles/edithPost");
-            var repositories = JsonSerializer.Deserialize<List<User>>(await streamTask);
-            User user = await _userManager.FindByIdAsync(repositories.ToString());
+            string url = @"https://localhost:5001/api/Roles/edithPost";
 
-            if (user != null)
-            {
-                var userRoles = await _userManager.GetRolesAsync(user);
-                var addedRoles = roles.Except(userRoles);
-                var removedRoles = userRoles.Except(roles);
+            string json = httpClient.GetAsync(url).Result.ToString();
+            List<string> r = JsonConvert.DeserializeObject<List<string>>(json.ToString());
 
-                await _userManager.AddToRolesAsync(user, addedRoles);
-
-                await _userManager.RemoveFromRolesAsync(user, removedRoles);
-
-                return RedirectToAction("Index", "Users");
-            }
-
-            return NotFound();
+            return RedirectToAction(nameof(Index), "Home");
         }
 
 
