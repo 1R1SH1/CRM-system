@@ -1,11 +1,15 @@
 ﻿using IT_Consulting_CRM_Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using Site;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace IT_Consulting_CRM_Web.Controllers
 {
@@ -23,6 +27,7 @@ namespace IT_Consulting_CRM_Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Login(LoginViewModel model)
         {
             string url = @"https://localhost:44390/api/Account/authentication";
@@ -31,14 +36,16 @@ namespace IT_Consulting_CRM_Web.Controllers
             if (model.Password == null) { model.Password = ""; }
             string c = httpClient.PostAsync(url, new StringContent(JsonConvert.SerializeObject(model),
                 Encoding.UTF8, "application/json")).Result.Content.ReadAsStringAsync().Result;
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", c);
             if (c != "Unauthorize")
             {
-                string urll = @"https://localhost:44390/api/Values";
-                string json = httpClient.GetStringAsync(urll).Result;
+                string host = @"https://localhost:44390/api/Values";
+                string json = httpClient.GetStringAsync(host).Result;
                 Console.WriteLine(json);
-                var r = JsonConvert.DeserializeObject(json);
-                Username = r.ToString();
-                Role = r.ToString();
+                List<string> r = JsonConvert.DeserializeObject<List<string>>(json);
+                //var r = JsonConvert.DeserializeObject(json);
+                Username = r[0];
+                Role = r[1];
                 Console.WriteLine(r);
             }
             return RedirectToAction(nameof(Index), "Home");
@@ -50,7 +57,8 @@ namespace IT_Consulting_CRM_Web.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Register(RegistrationViewModel model)
+        [ValidateAntiForgeryToken]
+        public ActionResult Register(RegistrationViewModel model)
         {
             string url = @"https://localhost:5001/api/Account/registration";
             var post = httpClient.PostAsync(url, new StringContent(JsonConvert.SerializeObject(model),

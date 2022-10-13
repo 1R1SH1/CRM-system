@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
 
@@ -17,13 +18,26 @@ builder.Configuration.SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
             .AddJsonFile("appsettings.json")
             .Build();
 
+builder.Services.AddTransient<IUserValidator<User>, CustomUserValidator>();
+
+builder.Services.AddTransient<IPasswordValidator<User>,
+            CustomPasswordValidator>(serv => new CustomPasswordValidator(5));
+
 builder.Services.AddLogging();
 
 builder.Services.AddDbContext<DataContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddIdentity<User, IdentityRole>()
-            .AddEntityFrameworkStores<DataContext>();
+builder.Services.AddIdentity<User, Microsoft.AspNetCore.Identity.IdentityRole>()
+                .AddEntityFrameworkStores<DataContext>();
+
+const string signingSecurityKey = "KIU389uigsaUIvh237JjvdIUGk32o3r0bfdKbkakjgucavdxzGy28493kljbncajk";
+var signingKey = new SigningSymmetricKey(signingSecurityKey);
+builder.Services.AddSingleton<IJwtSigningEncodingKey>(signingKey);
+
+const string encodingSecurityKey = "vLKBN23jbhldvscaKIYUVFjkvsc3467UJ2KUIUG3hlksvalkhnYIVJafbnklxUjac";
+var encryptionEncodingKey = new EncryptingSymmetricKey(encodingSecurityKey);
+builder.Services.AddSingleton<IJwtEncryptingEncodingKey>(encryptionEncodingKey);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -31,29 +45,58 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo { Title = "CRM система", Version = "v1.0.0" });
+
+    var securitySchema = new OpenApiSecurityScheme
+    {
+        Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        Reference = new OpenApiReference
+        {
+            Type = ReferenceType.SecurityScheme,
+            Id = "Bearer"
+        }
+    };
+
+    options.AddSecurityDefinition("Bearer", securitySchema);
+
+    var securityRequirement = new OpenApiSecurityRequirement
+                {
+                    { securitySchema, new[] { "Bearer" } }
+                };
+
+    options.AddSecurityRequirement(securityRequirement);
 });
 
-builder.Services.Configure<IdentityOptions>(options =>
-{
-    options.Password.RequiredLength = 5;
-    options.Password.RequireNonAlphanumeric = false;
-    options.Password.RequireLowercase = false;
-    options.Password.RequireUppercase = false;
-    options.Password.RequireDigit = false;
-    options.Lockout.MaxFailedAccessAttempts = 10;
-    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
-    options.Lockout.AllowedForNewUsers = true;
-});
+var signingDecodingKey = (IJwtSigningDecodingKey)signingKey;
+var encryptingDecodingKey = (IJwtEncryptingDecodingKey)encryptionEncodingKey;
+builder.Services
+    .AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = "JwtBearer";
+        options.DefaultChallengeScheme = "JwtBearer";
+    })
+    .AddJwtBearer("JwtBearer", jwtBearerOptions =>
+    {
+        jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = signingDecodingKey.GetKey(),
+            TokenDecryptionKey = encryptingDecodingKey.GetKey(),
 
-builder.Services.ConfigureApplicationCookie(options =>
-{
-    options.Cookie.HttpOnly = true;
-    options.Cookie.Name = "authToken";
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(120);
-    options.LoginPath = "/Account/Login";
-    options.LogoutPath = "/Account/Logout";
-    options.AccessDeniedPath = "/Home/AccessDenied";
-});
+            ValidateIssuer = true,
+            ValidIssuer = "DataApi",
+
+            ValidateAudience = true,
+            ValidAudience = "DataClient",
+
+            ValidateLifetime = false,
+
+            ClockSkew = TimeSpan.FromSeconds(5)
+        };
+    });
 
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())

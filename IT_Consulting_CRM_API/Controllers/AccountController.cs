@@ -3,6 +3,7 @@ using IT_Consulting_CRM_API.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -25,7 +26,9 @@ namespace IT_Consulting_CRM_API.Controllers
 
         [AllowAnonymous]
         [HttpPost("authentication")]
-        public async Task<ActionResult<string>> Login(LoginViewModel model)
+        public async Task<ActionResult<string>> Login([FromBody] LoginViewModel model,
+            [FromServices] IJwtSigningEncodingKey signingEncodingKey,
+            [FromServices] IJwtEncryptingEncodingKey encryptingEncodingKey)
         {
             if ((await _signInManager.PasswordSignInAsync(model.Username, model.Password, false, false)).Succeeded)
             {
@@ -49,7 +52,14 @@ namespace IT_Consulting_CRM_API.Controllers
                     subject: new ClaimsIdentity(claims),
                     notBefore: DateTime.Now,
                     expires: DateTime.Now.AddMinutes(5),
-                    issuedAt: DateTime.Now);
+                    issuedAt: DateTime.Now,
+                    signingCredentials: new SigningCredentials(
+                        signingEncodingKey.GetKey(),
+                        signingEncodingKey.SigningAlgorithm),
+                    encryptingCredentials: new EncryptingCredentials(
+                        encryptingEncodingKey.GetKey(),
+                        encryptingEncodingKey.SigningAlgorithm,
+                        encryptingEncodingKey.EncryptingAlgorithm));
 
                 var jwtToken = tokenHandler.WriteToken(token);
                 return jwtToken;

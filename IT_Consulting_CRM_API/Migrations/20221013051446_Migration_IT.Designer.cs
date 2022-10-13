@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IT_Consulting_CRM_API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220930043134_M1_IT")]
-    partial class M1_IT
+    [Migration("20221013051446_Migration_IT")]
+    partial class Migration_IT
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
