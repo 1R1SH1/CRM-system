@@ -13,26 +13,26 @@ namespace IT_Consulting_CRM_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AccountController : Controller
+    public class AuthenticationController : ControllerBase
     {
-        public UserManager<User> _userManager;
-        public SignInManager<User> _signInManager;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AuthenticationController(UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
         }
 
         [AllowAnonymous]
-        [HttpPost("authentication")]
-        public async Task<ActionResult<string>> Login([FromBody] LoginViewModel model,
+        [HttpPost]
+        public async Task<ActionResult<string>> PostAsync([FromBody] LoginViewModel authRequest,
             [FromServices] IJwtSigningEncodingKey signingEncodingKey,
             [FromServices] IJwtEncryptingEncodingKey encryptingEncodingKey)
         {
-            if ((await _signInManager.PasswordSignInAsync(model.Username, model.Password, false, false)).Succeeded)
+            if ((await _signInManager.PasswordSignInAsync(authRequest.Name, authRequest.Password, false, false)).Succeeded)
             {
-                User user = await _userManager.FindByNameAsync(model.Username);
+                User user = await _userManager.FindByNameAsync(authRequest.Name);
                 string role;
                 if (await _userManager.IsInRoleAsync(user, "admin")) { role = "admin"; }
                 else if (await _userManager.IsInRoleAsync(user, "user")) { role = "user"; }
@@ -40,15 +40,15 @@ namespace IT_Consulting_CRM_API.Controllers
 
                 var claims = new Claim[]
                 {
-                    new Claim(ClaimTypes.NameIdentifier, model.Username),
+                    new Claim(ClaimTypes.NameIdentifier, authRequest.Name),
                     new Claim(ClaimTypes.Role, role)
                 };
 
                 var tokenHandler = new JwtSecurityTokenHandler();
 
                 JwtSecurityToken token = tokenHandler.CreateJwtSecurityToken(
-                    issuer: "DataApi",
-                    audience: "DataClient",
+                    issuer: "DiplomApi",
+                    audience: "DiplomClient",
                     subject: new ClaimsIdentity(claims),
                     notBefore: DateTime.Now,
                     expires: DateTime.Now.AddMinutes(5),
@@ -102,15 +102,6 @@ namespace IT_Consulting_CRM_API.Controllers
             }
 
             return Ok(model);
-        }
-
-        [AllowAnonymous]
-        [HttpPost("logout")]
-        public async Task<ActionResult> Logout()
-        {
-            // remove cookies
-            await _signInManager.SignOutAsync();
-            return RedirectToAction(nameof(Index), "Home");
         }
     }
 }

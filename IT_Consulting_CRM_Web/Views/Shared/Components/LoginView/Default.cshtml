@@ -1,9 +1,8 @@
-﻿@if (User.Identity.IsAuthenticated)
+﻿@using IT_Consulting_CRM_Web.Controllers;
+@if (AccountController.Role == "admin" || AccountController.Role == "user")
 {
 <head>
     <title></title>
-    <link rel="stylesheet" href="~/css/StyleSheet.css" type="text/css" />
-    <link rel="stylesheet" href="~/css/style1.css" type="text/css" />
     <link rel="stylesheet" href="~/css/style.css" type="text/css" />
     <style type="text/css">
 
@@ -25,16 +24,19 @@
     </style>
 </head>
     <ul class="navbar-nav flex-grow-1">
-                <li class="nav-item">
-            <a class="nav-link text-dark" asp-controller="Users" asp-action="Index">Пользователи</a>
-        </li>
+        @if (AccountController.Role == "admin")
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-controller="Users" asp-action="Index">Пользователи</a>        
+            </li>
+        }
         <li class="nav-item">
             <form class="link-logout form-second" method="post" asp-controller="Account" asp-action="Logout" id="logoutform">
                 <a class="nav-link text-dark" href="#" onclick="document.getElementById('logoutform').submit()">Выйти</a>
             </form>
         </li>
     </ul>
-    <div class="login">@User.Identity.Name</div>
+    <div class="login">@AccountController.Name</div>
 }
 else
 {

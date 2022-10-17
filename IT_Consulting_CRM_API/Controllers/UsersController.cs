@@ -1,4 +1,4 @@
-﻿using IT_Consulting_CRM_API.Models;
+using IT_Consulting_CRM_API.Models;
 using IT_Consulting_CRM_API.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -11,61 +11,46 @@ namespace IT_Consulting_CRM_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : Controller
+    [Authorize(Roles = "admin")]
+    public class UsersController : ControllerBase
     {
-        public UserManager<User> _userManager;
-
+        private UserManager<User> _userManager;
         public UsersController(UserManager<User> userManager)
         {
             _userManager = userManager;
         }
-
-        [AllowAnonymous]
-        [HttpGet("get")]
-        [Authorize(Roles = "admin")]
-        public ActionResult<IEnumerable<User>> Get()
+        [HttpGet]
+        public ActionResult<IEnumerable<AnswerUserViewModel>> Get()
         {
-            List<User> UsersList = new List<User>();
+            List<AnswerUserViewModel> UsersList = new List<AnswerUserViewModel>();
             foreach (var users in _userManager.Users.ToList())
             {
-                UsersList.Add(new User());
+                UsersList.Add(new AnswerUserViewModel(users.Id, users.Email));
             }
             return UsersList;
         }
-
-        [AllowAnonymous]
-        [HttpPost("create")]
-        [Authorize(Roles = "admin")]
-        public async Task<ActionResult> Create(CreateUserViewModel model)
+        [HttpPost]
+        public async Task Post([FromBody] LoginViewModel model)
         {
-            string defaultRole = "user";
+            User user = new User { Email = model.Name, UserName = model.Name, EmailConfirmed = true };
 
-            if (ModelState.IsValid)
+            var result = await _userManager.CreateAsync(user, model.Password);
+            if (result.Succeeded)
             {
-                var user = new User { UserName = model.Username };
-
-                // create user
-                var createResult = await _userManager.CreateAsync(user, model.Password);
-
-                // set role to user
-                var addToRole = await _userManager.AddToRoleAsync(user, defaultRole);
+                await _userManager.AddToRoleAsync(user, "user");
             }
-
-            return View(model);
         }
-
-        [AllowAnonymous]
-        [HttpDelete("delete")]
-        [Authorize(Roles = "admin")]
-        public async Task<ActionResult> Delete(string id)
+        [HttpDelete]
+        public async Task Delete(string id)
         {
-            var user = await _userManager.FindByIdAsync(id);
-
-            if (user != null)
+            if (id != "1")
             {
-                IdentityResult result = await _userManager.DeleteAsync(user);
+                User user = await _userManager.FindByIdAsync(id);
+                if (user != null)
+                {
+                    IdentityResult result = await _userManager.DeleteAsync(user);
+                }
             }
-            return RedirectToAction("Index", new { id = id });
         }
     }
 }

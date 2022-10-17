@@ -29,7 +29,7 @@ builder.Services.AddDbContext<DataContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddIdentity<User, Microsoft.AspNetCore.Identity.IdentityRole>()
-                .AddEntityFrameworkStores<DataContext>();
+            .AddEntityFrameworkStores<DataContext>();
 
 const string signingSecurityKey = "KIU389uigsaUIvh237JjvdIUGk32o3r0bfdKbkakjgucavdxzGy28493kljbncajk";
 var signingKey = new SigningSymmetricKey(signingSecurityKey);
@@ -68,6 +68,7 @@ builder.Services.AddSwaggerGen(options =>
                 };
 
     options.AddSecurityRequirement(securityRequirement);
+
 });
 
 var signingDecodingKey = (IJwtSigningDecodingKey)signingKey;
@@ -87,10 +88,10 @@ builder.Services
             TokenDecryptionKey = encryptingDecodingKey.GetKey(),
 
             ValidateIssuer = true,
-            ValidIssuer = "DataApi",
+            ValidIssuer = "DiplomApi",
 
             ValidateAudience = true,
-            ValidAudience = "DataClient",
+            ValidAudience = "DiplomClient",
 
             ValidateLifetime = false,
 
@@ -125,6 +126,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
 app.UseAuthentication();
 app.UseAuthorization();
 

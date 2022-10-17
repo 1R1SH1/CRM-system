@@ -1,5 +1,4 @@
-﻿using IT_Consulting_CRM_Web.Models;
-using IT_Consulting_CRM_Web.ViewModels;
+﻿using IT_Consulting_CRM_Web.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -14,12 +13,10 @@ namespace IT_Consulting_CRM_API.Controllers
     {
         private HttpClient httpClient = new HttpClient();
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly UserManager<User> _userManager;
 
-        public RolesController(RoleManager<IdentityRole> roleManager, UserManager<User> userManager)
+        public RolesController(RoleManager<IdentityRole> roleManager)
         {
             _roleManager = roleManager;
-            _userManager = userManager;
         }
 
         [HttpGet]
@@ -33,7 +30,7 @@ namespace IT_Consulting_CRM_API.Controllers
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(ChangeRoleViewModel model)
         {
-            string url = @"https://localhost:5001/api/Roles/edithGet";
+            string url = @"https://localhost:44390/api/Roles";
 
             string json = httpClient.GetAsync(url).Result.ToString();
             List<string> r = JsonConvert.DeserializeObject<List<string>>(json.ToString());
@@ -45,7 +42,7 @@ namespace IT_Consulting_CRM_API.Controllers
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(string userId, List<string> roles)
         {
-            string url = @"https://localhost:5001/api/Roles/edithPost";
+            string url = @"https://localhost:44390/api/Roles";
 
             string json = httpClient.GetAsync(url).Result.ToString();
             List<string> r = JsonConvert.DeserializeObject<List<string>>(json.ToString());

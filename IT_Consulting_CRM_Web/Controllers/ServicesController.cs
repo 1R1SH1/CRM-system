@@ -11,7 +11,7 @@ namespace IT_Consulting_CRM_Web.Controllers
 
         private static List<Services> _services = new List<Services>();
 
-        private static Services? Template { get; set; }
+        private static Services Template { get; set; }
 
         public ServicesController(ILogger<HomeController> logger)
         {

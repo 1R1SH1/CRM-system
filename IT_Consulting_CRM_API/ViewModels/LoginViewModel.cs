@@ -1,19 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace IT_Consulting_CRM_API.ViewModels
+﻿namespace IT_Consulting_CRM_API.ViewModels
 {
     public class LoginViewModel
     {
-        [Required(ErrorMessage = "Введите логин")]
-        public string Username { get; set; }
-
-        [Required(ErrorMessage = "Введите пароль")]
-        [DataType(DataType.Password)]
+        public string Name { get; set; }
         public string Password { get; set; }
-
-        [Display(Name = "Запомнить меня")]
-        public bool RememberMe { get; set; }
-
-        public string ReturnUrl { get; set; }
     }
 }

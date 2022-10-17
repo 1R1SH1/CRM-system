@@ -1,11 +1,11 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
 #nullable disable
 
 namespace IT_Consulting_CRM_API.Migrations
 {
-    public partial class Migration_IT : Migration
+    public partial class M1000 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
