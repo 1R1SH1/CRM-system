@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IT_Consulting_CRM_API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221017051758_M1000")]
+    [Migration("20221024055352_M1000")]
     partial class M1000
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,6 +33,9 @@ namespace IT_Consulting_CRM_API.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("BlogInformation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Header")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Image")
@@ -87,6 +90,9 @@ namespace IT_Consulting_CRM_API.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Header")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
@@ -209,6 +215,9 @@ namespace IT_Consulting_CRM_API.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Header")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ServicesInformation")
                         .HasColumnType("nvarchar(max)");

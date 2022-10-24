@@ -1,7 +1,9 @@
 using IT_Consulting_CRM_Web.Models;
+using IT_Consulting_CRM_Web.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
@@ -12,32 +14,29 @@ namespace IT_Consulting_CRM_Web.Controllers
     {
         private HttpClient httpClient = new HttpClient();
 
-        const string host = "https://localhost:5001/api/Project";
-
         private static List<Projects> _services = new();
 
         public static Projects Template { get; set; }
 
         public IActionResult Project()
         {
-            //string p = httpClient.GetStringAsync($"{host}").Result;
-            //_services = JsonConvert.DeserializeObject<List<Projects>>(p);
+            _services = JsonConvert.DeserializeObject<List<Projects>>(CRUD.Read("Project"));
+            return View(_services);
+        }
+
+        [HttpGet]
+        public IActionResult AddProject()
+        {
             return View();
         }
 
-        //public IActionResult ShowProject()
-        //{
-        //    string p = httpClient.GetStringAsync($"{host}").Result;
-        //    _services = JsonConvert.DeserializeObject<List<Projects>>(p);
-        //    return View(_services);
-        //}
-
+        [HttpPost]
         public IActionResult AddProject(Projects projects)
         {
-            string url = @"https://localhost:5001/api/Project";
-            string p = httpClient.PostAsync(url, new StringContent(JsonConvert.SerializeObject(projects),
-                Encoding.UTF8, "application/json")).Result.ToString();
-            return View();
+            string url = @"https://localhost:44390/api/Project";
+            string p = httpClient.PutAsync(url, new StringContent(JsonConvert.SerializeObject(projects),
+                Encoding.UTF8, "application/json")).Result.Content.ReadAsStringAsync().Result;
+            return RedirectToAction("Project", "Projects");
         }
 
         public IActionResult ProjectEdit()

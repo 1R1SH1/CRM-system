@@ -1,4 +1,4 @@
-﻿@using IT_Consulting_CRM_Web.Models
+﻿@using IT_Consulting_CRM_Web.Controllers
 @model IEnumerable<Projects>
 @{
     ViewData["Title"] = "Projects List";
@@ -53,20 +53,25 @@
         </div>
     </nav>
 
-    <div class="row" >
-        @foreach (var item in Model)
-        {
-            <div class="card " style="width:20em;margin:10px;">
-                <img src="@item.Image" class="card-img-top" />
-                <div class="card-body">
-                    <div class="card-text">
-                        <p>@item.ProjectInformation</p>
+        <div class="row m-5" >
+            @foreach (var item in Model)
+            {
+                <div class="card " style="width:20em;margin:10px;">
+                    <img src="@item.Image" class="card-img-top" />
+                    <div class="card-body">
+                        <div class="card-text">
+                            <p>@item.ProjectInformation</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        };
-    </div>
-    <a class="btn projects-item-btn" asp-controller="Projects" asp-action="AddProject">Добавить</a>
+            }
+        </div>
+    @if (AccountController.Role == "admin")
+    {
+        <a class="btn projects-item-btn" asp-controller="Projects" asp-action="AddProject">Добавить</a>
+        <a class="btn projects-item-btn" asp-controller="Projects" asp-action="DeleteProject">Удалить</a>
+        <a class="btn projects-item-btn" asp-controller="Projects" asp-action="UpdateProject">Обновить</a>
+    }
 
     <footer class="py-5 bg-dark">
         <div class="container">

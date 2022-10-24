@@ -4,6 +4,8 @@ namespace IT_Consulting_CRM_Web.ViewModels
 {
     public class CreateUserViewModel
     {
+        public string Id { get; set; }
+
         [Required(ErrorMessage = "Введите логин")]
         public string Username { get; set; }
 

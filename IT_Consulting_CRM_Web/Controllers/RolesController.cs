@@ -1,34 +1,23 @@
 ﻿using IT_Consulting_CRM_Web.ViewModels;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Threading.Tasks;
 
 namespace IT_Consulting_CRM_API.Controllers
 {
     public class RolesController : Controller
     {
         private HttpClient httpClient = new HttpClient();
-        private readonly RoleManager<IdentityRole> _roleManager;
-
-        public RolesController(RoleManager<IdentityRole> roleManager)
-        {
-            _roleManager = roleManager;
-        }
 
         [HttpGet]
-        [Authorize(Roles = "admin")]
         public IActionResult Index()
         {
             return RedirectToAction(nameof(Index), "Users");
         }
 
         [HttpGet]
-        [Authorize(Roles = "admin")]
-        public async Task<IActionResult> Edit(ChangeRoleViewModel model)
+        public IActionResult Edit(ChangeRoleViewModel model)
         {
             string url = @"https://localhost:44390/api/Roles";
 
@@ -39,8 +28,7 @@ namespace IT_Consulting_CRM_API.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "admin")]
-        public async Task<IActionResult> Edit(string userId, List<string> roles)
+        public IActionResult Edit(string userId, List<string> roles)
         {
             string url = @"https://localhost:44390/api/Roles";
 

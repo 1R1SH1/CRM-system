@@ -33,6 +33,9 @@ namespace IT_Consulting_CRM_API.Migrations
                     b.Property<string>("BlogInformation")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Header")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
@@ -85,6 +88,9 @@ namespace IT_Consulting_CRM_API.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Header")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
@@ -207,6 +213,9 @@ namespace IT_Consulting_CRM_API.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Header")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ServicesInformation")
                         .HasColumnType("nvarchar(max)");
