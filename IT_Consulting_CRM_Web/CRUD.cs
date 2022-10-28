@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Http;
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -48,7 +47,7 @@ namespace IT_Consulting_CRM_Web
         public static void Delete(string url)
         {
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
-            Answer(httpClient.DeleteAsync($"{Host}{url}").Result.ToString());
+            Answer(httpClient.DeleteAsync($"{Host}{url}").Result.Content.ReadAsStringAsync().Result);
         }
         private static void Answer(string answer)
         {

@@ -1,90 +1,183 @@
-﻿@model IEnumerable<IT_Consulting_CRM_Web.Models.Projects>
-@{ ViewData["Title"] = "Project Details"; }
+﻿@using IT_Consulting_CRM_Web.Controllers
+@model Projects
+@if (AccountController.Role == "admin")
+{
+    Layout = "_LayoutAdmin";
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <title>Full Width Pics - Start Bootstrap Template</title>
-    <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-    <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="css/styles.css" rel="stylesheet" />
-    <link href="C:\Users\Rishat Murzyev\Downloads\main_image.jpg" />
-    <style type="text/css">
-        .btn {
-            text-decoration: none;
-            position: center;
-            height: 40px;
-            line-height: 40px;
-            padding: 0 50px 0 50px;
-            margin: 0 10px;
-            background: linear-gradient(-135deg, #00E5FE, #4463FE);
-            border-width: 0;
-            border-radius: 50px;
-            font-size: 15px;
-            color: white;
-            outline: none;
-            cursor: pointer;
-        }
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <style type="text/css">
+            .btn {
+                text-decoration: none;
+                position: center;
+                height: 40px;
+                line-height: 40px;
+                padding: 0 50px 0 50px;
+                margin: 0 10px;
+                background: linear-gradient(-135deg, #00E5FE, #4463FE);
+                border-width: 0;
+                border-radius: 50px;
+                font-size: 15px;
+                color: white;
+                outline: none;
+                cursor: pointer;
+            }
 
-        .brd {
-            border: 4px double black; /* Параметры границы */
-            background: #e9e5e5; /* Цвет фона */
-            padding: 20px; /* Поля вокруг текста */
-        }
-    </style>
-</head>
-<body>
-    <!-- Responsive navbar-->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="#!"></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">ГЛАВНАЯ</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#!">УСЛУГИ</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#!">ПРОЕКТЫ</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#!">БЛОГ</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#!">КОНТАКТЫ</a></li>
-                </ul>
+            .brd {
+                border: 4px double black; /*Параметры границы*/
+                background: #e9e5e5; /*Цвет фона*/
+                padding: 20px; /*Поля вокруг текста*/
+            }
+
+            .card:hover {
+                box-shadow: -1px 9px 40px -12px #4463FE;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Responsive navbar-->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="#!"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link" aria-current="page" asp-controller="Home" asp-action="Index">ГЛАВНАЯ</a></li>
+                        <li class="nav-item"><a class="nav-link" aria-current="page" asp-action="Service">УСЛУГИ</a></li>
+                        <li class="nav-item"><a class="nav-link" aria-current="page" asp-controller="Projects" asp-action="Project">ПРОЕКТЫ</a></li>
+                        <li class="nav-item"><a class="nav-link" aria-current="page" asp-action="Blog">БЛОГ</a></li>
+                        <li class="nav-item"><a class="nav-link" aria-current="page" asp-action="Contact">КОНТАКТЫ</a></li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
-    <!-- Content section-->
-    <section class="py-5">
-        <div class="container my-5">
-            <ul class="projects-items d-flex">
-                <li class="projects-item d-flex">
-                    <svg class="projects-item-icon" width="80" height="78">
-                        @foreach (var note in Model)
-                        {
-            <img src="@note.Image" />}
-                    </svg>
-                    <p class="projects-item-descr">
-                        @foreach (var note in Model)
-                        {
-                         @note.ProjectInformation
-                        }
-                    </p>
-                </li>
-            </ul>
-        </div>
-    </section>
-    <!-- Footer-->
-    <footer class="py-5 bg-dark">
-        <div class="container">
-            <p class="m-1 text-center text-white">#SkillProfi &copy; 2022</p>
-            <p class="m-0 text-center text-white">Все права защищены</p>
-        </div>
-    </footer>
-    <!-- Bootstrap core JS-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Core theme JS-->
-    <script src="js/scripts.js"></script>
-</body>
-</html>
+        </nav>
+        <!-- Content section-->
+        <section class="py-5" style="height:50em;">
+            <div class="container my-auto">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <div class="row" style="align-content:center;">
+                            <div class="brd">
+                                <form>
+                                    <div class="brd container-fluid px-4" >
+                                        <div id="photo" style="text-align: justify-all">
+                                            <img style="vertical-align:middle" width="80" height="68" src="@Model.Image" alt="">
+                                            <span style="vertical-align:auto">@Model.Header</span>
+                                        </div>
+                                    </div>
+                                    <div class="container my-5">
+                                        <p class="projects-item-descr">
+                                            @Model.ProjectInformation
+                                        </p>
+                                    </div>
+                                </form>                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>                
+        <!-- Footer-->
+        <footer class="py-lg-3 bg-dark" style="vertical-align:bottom">
+            <div class="container">
+                <p class="m-1 text-center text-white">#SkillProfi &copy; 2022</p>
+                <p class="m-0 text-center text-white">Все права защищены</p>
+            </div>
+        </footer>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/scripts.js"></script>
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+    </body>
+    </html>
+}
+else
+{
+    ViewData["Title"] = "Project Details";
+
+    <html lang="en">
+    <head>
+        <style type="text/css">
+            .btn {
+                text-decoration: none;
+                position: center;
+                height: 40px;
+                line-height: 40px;
+                padding: 0 50px 0 50px;
+                margin: 0 10px;
+                background: linear-gradient(-135deg, #00E5FE, #4463FE);
+                border-width: 0;
+                border-radius: 50px;
+                font-size: 15px;
+                color: white;
+                outline: none;
+                cursor: pointer;
+            }
+
+            .brd {
+                border: 4px double black; /*Параметры границы*/
+                background: #e9e5e5; /*Цвет фона*/
+                padding: 20px; /*Поля вокруг текста*/
+            }
+
+            .card:hover {
+                box-shadow: -1px 9px 40px -12px #4463FE;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Responsive navbar-->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="#!"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link" aria-current="page" asp-controller="Home" asp-action="Index">ГЛАВНАЯ</a></li>
+                        <li class="nav-item"><a class="nav-link" aria-current="page" asp-action="Service">УСЛУГИ</a></li>
+                        <li class="nav-item"><a class="nav-link" aria-current="page" asp-controller="Projects" asp-action="Project">ПРОЕКТЫ</a></li>
+                        <li class="nav-item"><a class="nav-link" aria-current="page" asp-action="Blog">БЛОГ</a></li>
+                        <li class="nav-item"><a class="nav-link" aria-current="page" asp-action="Contact">КОНТАКТЫ</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Content section-->
+        <section class="py-5" style="height:50em;">
+            <div class="container my-auto">
+                <div class="row justify-content-center">
+                    <div class="col-lg-auto">
+                        <div class="row" style="align-content:center;">
+                            <div class="brd">
+                                <form>
+                                    <div class="brd container-fluid px-4">
+                                        <div id="photo" style="text-align: justify-all">
+                                            <img style="vertical-align:middle" width="80" height="68" src="@Model.Image" alt="">
+                                            <span style="vertical-align:bottom">@Model.Header</span>
+                                        </div>
+                                    </div>
+                                    <div class="container my-5">
+                                        <p class="projects-item-descr">
+                                            @Model.ProjectInformation
+                                        </p>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Footer-->
+        <footer class="py-lg-3 bg-dark" style="vertical-align:bottom">
+            <div class="container">
+                <p class="m-1 text-center text-white">#SkillProfi &copy; 2022</p>
+                <p class="m-0 text-center text-white">Все права защищены</p>
+            </div>
+        </footer>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/scripts.js"></script>
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+    </body>
+    </html>
+}

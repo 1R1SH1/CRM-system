@@ -1,4 +1,4 @@
-﻿@model IT_Consulting_CRM_Web.Models.Projects
+﻿@model IT_Consulting_CRM_Web.Models.Services
 
 @using (Html.BeginForm())
 {
@@ -29,19 +29,14 @@
 
     <div class="validation" asp-validation-summary="ModelOnly"></div>
 
-    <label class="lable" asp-for="Image">Добавить изображение:</label>
-    <input asp-for="Image" />
-    <span asp-validation-for="Image"></span>
-    <br />
-
     <label class="lable" asp-for="Header">Добавить описание:</label>
     <input asp-for="Header" />
     <span asp-validation-for="Header"></span>
     <br />
 
-    <label class="lable" asp-for="ProjectInformation">Добавить описание:</label>
-    <input asp-for="ProjectInformation" />
-    <span asp-validation-for="ProjectInformation"></span>
+    <label class="lable" asp-for="ServicesInformation">Добавить описание:</label>
+    <input asp-for="ServicesInformation" />
+    <span asp-validation-for="ServicesInformation"></span>
     <br />
 
     <input class="btn" type="submit" value="Сохранить" />

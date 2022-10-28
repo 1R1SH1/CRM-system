@@ -1,4 +1,5 @@
-﻿@model IT_Consulting_CRM_Web.Models.Requests
+﻿@using IT_Consulting_CRM_Web.Controllers
+@model IT_Consulting_CRM_Web.Models.Requests
 @{ ViewData["Title"] = "Requests"; }
 
 <!DOCTYPE html>
@@ -39,11 +40,18 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    @if (AccountController.Role == "admin")
+                    {
+                        <li class="nav-item"><a class="nav-link" asp-controller="Requests" asp-action="Worktable">РАБОЧИЙ СТОЛ</a></li>
+                    }
+                    else
+                    {
                     <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">ГЛАВНАЯ</a></li>
-                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Service">УСЛУГИ</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Services" asp-action="Service">УСЛУГИ</a></li>
                     <li class="nav-item"><a class="nav-link" asp-controller="Projects" asp-action="Project">ПРОЕКТЫ</a></li>
                     <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Blog">БЛОГ</a></li>
                     <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Contact">КОНТАКТЫ</a></li>
+                    }
                 </ul>
             </div>
         </div>
@@ -51,7 +59,7 @@
     <!-- Header - set the background image for the header in the line below-->
     <header>
         <div class="py-5 bg-image-full" style="background-image: url('img/main_image.jpg')">
-            <div style="height: 35rem"></div>
+            <div style="height:42em"></div>
         </div>
     </header>
     <section class="py-5">

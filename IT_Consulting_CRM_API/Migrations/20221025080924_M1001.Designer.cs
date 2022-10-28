@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IT_Consulting_CRM_API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221024055352_M1000")]
-    partial class M1000
+    [Migration("20221025080924_M1001")]
+    partial class M1001
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -134,78 +134,6 @@ namespace IT_Consulting_CRM_API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Request");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EMail = "Carlov@mail.ru",
-                            Information = "Напишите мне, меня заинтересовало ваше предложение!",
-                            Name = "Карл",
-                            Status = 0,
-                            SurName = "Карлов"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EMail = "Ivanov@mail.ru",
-                            Information = "Напишите мне, меня заинтересовало ваше предложение!",
-                            Name = "Иван",
-                            Status = 0,
-                            SurName = "Иванов"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EMail = "Petrov@mail.ru",
-                            Information = "Напишите мне, меня заинтересовало ваше предложение!",
-                            Name = "Пётр",
-                            Status = 0,
-                            SurName = "Петров"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EMail = "Vasov@mail.ru",
-                            Information = "Напишите мне, меня заинтересовало ваше предложение!",
-                            Name = "Вася",
-                            Status = 0,
-                            SurName = "Васёв"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EMail = "Genov@mail.ru",
-                            Information = "Напишите мне, меня заинтересовало ваше предложение!",
-                            Name = "Гена",
-                            Status = 0,
-                            SurName = "Генов"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EMail = "Sedorov@mail.ru",
-                            Information = "Напишите мне, меня заинтересовало ваше предложение!",
-                            Name = "Сидор",
-                            Status = 0,
-                            SurName = "Сидоров"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EMail = "Slavov@mail.ru",
-                            Information = "Напишите мне, меня заинтересовало ваше предложение!",
-                            Name = "Слава",
-                            Status = 0,
-                            SurName = "Славов"
-                        });
                 });
 
             modelBuilder.Entity("IT_Consulting_CRM_API.Models.Services", b =>

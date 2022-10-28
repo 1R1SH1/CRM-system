@@ -1,12 +1,12 @@
 using IT_Consulting_CRM_Web.Models;
-using IT_Consulting_CRM_Web.ViewModels;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
+using System.Reflection.PortableExecutable;
 using System.Text;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace IT_Consulting_CRM_Web.Controllers
 {
@@ -16,12 +16,17 @@ namespace IT_Consulting_CRM_Web.Controllers
 
         private static List<Projects> _services = new();
 
-        public static Projects Template { get; set; }
-
         public IActionResult Project()
         {
             _services = JsonConvert.DeserializeObject<List<Projects>>(CRUD.Read("Project"));
             return View(_services);
+        }
+
+        public IActionResult ProjectDetails(Projects projects)
+        {
+            _services = JsonConvert.DeserializeObject<List<Projects>>(CRUD.Read("Project"));
+            var p = _services.FirstOrDefault(x => x.Id == projects.Id);
+            return View(p);
         }
 
         [HttpGet]
@@ -39,29 +44,30 @@ namespace IT_Consulting_CRM_Web.Controllers
             return RedirectToAction("Project", "Projects");
         }
 
-        public IActionResult ProjectEdit()
+        [HttpGet]
+        public IActionResult UpdateProject()
         {
             return View();
         }
 
-        [Authorize(Roles = "admin")]
         public IActionResult DeleteProject(string id)
         {
-            //CRUD.Delete($"Projects/{id}");
-            return RedirectToAction("Project");
+            CRUD.Delete($"Project/{id}");
+            return RedirectToAction("Project", "Projects");
         }
 
-        [HttpPost]
-        [Authorize(Roles = "admin")]
-        public IActionResult UpdateProject()
+        public IActionResult UpdateProject(Projects projects, string Image, string Header, string ProjectInformation)
         {
-            if (Template.Id == 0)
+            projects.Image = Image;
+            projects.Header = Header;
+            projects.ProjectInformation = ProjectInformation;
+            if (projects.Id == 0)
             {
-                //CRUD.Create("Projects", JsonConvert.SerializeObject(Template));
+                CRUD.Create("Project", JsonConvert.SerializeObject(projects));
             }
             else
             {
-                //CRUD.Update("Projects", JsonConvert.SerializeObject(Template));
+                CRUD.Update("Project", JsonConvert.SerializeObject(projects));
             }
             return RedirectToAction("Project");
         }

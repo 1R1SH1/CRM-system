@@ -34,7 +34,7 @@
             <th></th>
             <th></th>
         </tr>
-        @foreach (var user in Model)
+        @foreach (var user in Model.OrderByDescending(x => x.Username))
         {
             <tr>
                 <th>@user.Username</th>

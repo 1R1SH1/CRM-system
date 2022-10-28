@@ -1,27 +1,20 @@
 using IT_Consulting_CRM_Web.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 
 namespace IT_Consulting_CRM_Web.Controllers
 {
     public class ServicesController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
         private static List<Services> _services = new List<Services>();
 
         private static Services Template { get; set; }
 
-        public ServicesController(ILogger<HomeController> logger)
+        public IActionResult Service()
         {
-            _logger = logger;
-        }
-
-        public IActionResult ShowServices()
-        {
-            //_services = JsonConvert.DeserializeObject<List<Services>>(CRUD.Read("Services").ToString());
-            return View();
+            _services = JsonConvert.DeserializeObject<List<Services>>(CRUD.Read("Services"));
+            return View(_services);
         }
 
         public IActionResult AddService(string serviceInformation)
@@ -29,7 +22,7 @@ namespace IT_Consulting_CRM_Web.Controllers
             Template.ServicesInformation = serviceInformation;
             if (Template.Id == 0)
             {
-                //CRUD.Create("Services", JsonConvert.SerializeObject(Template));
+                CRUD.Create("Services", JsonConvert.SerializeObject(Template));
             }
             return RedirectToAction("ServiceEdit", "Services");
         }
@@ -41,7 +34,7 @@ namespace IT_Consulting_CRM_Web.Controllers
 
         public IActionResult DeleteService(string id)
         {
-            //CRUD.Delete($"Services/{id}");
+            CRUD.Delete($"Services/{id}");
             return RedirectToAction("ShowServices", "Services");
         }
 
@@ -50,11 +43,11 @@ namespace IT_Consulting_CRM_Web.Controllers
         {
             if (Template.Id == 0)
             {
-                //CRUD.Create("Services", JsonConvert.SerializeObject(Template));
+                CRUD.Create("Services", JsonConvert.SerializeObject(Template));
             }
             else
             {
-                //CRUD.Update("Services", JsonConvert.SerializeObject(Template));
+                CRUD.Update("Services", JsonConvert.SerializeObject(Template));
             }
             return RedirectToAction("ShowServices", "Services");
         }

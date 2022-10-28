@@ -12,9 +12,6 @@ using System.Threading.Tasks;
 
 namespace IT_Consulting_CRM_API.Controllers
 {
-    /// <summary>
-    /// Контроллер заявок
-    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class RequestController : ControllerBase
@@ -30,14 +27,11 @@ namespace IT_Consulting_CRM_API.Controllers
         private static string PrevDatas { get; set; }
 
         private static int Update_id { get; set; }
-
         public RequestController(DataContext dataContext)
         {
             Context = dataContext;
-            httpClient = new HttpClient();
-            BotUrl = @"https://api.telegram.org/:/";
-            Update_id = 0;
         }
+
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Post([FromBody] Requests request)
@@ -47,22 +41,27 @@ namespace IT_Consulting_CRM_API.Controllers
             await Context.SaveChangesAsync();
             return Ok();
         }
+
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] Requests req)
         {
             Requests request = Context.Request.ToList().Find(u => u.Id == req.Id);
+            request.Name = req.Name;
+            request.Information = req.Information;
+            request.Status = req.Status;
             Context.Request.Update(request);
             await Context.SaveChangesAsync();
             return Ok();
         }
+
         [HttpGet]
-        public async Task<IEnumerable<Requests>> Get(Requests request)
+        public async Task<IEnumerable<Requests>> Get()
         {
-            ReadDataFromBot(request);
+            //ReadDataFromBot();
             return await Context.Request.ToListAsync();
         }
-        /// Получение заявок от бота.
-        private void ReadDataFromBot(Requests request)
+
+        private void ReadDataFromBot()
         {
             string url = $"{BotUrl}getUpdates";
             string r = httpClient.GetStringAsync(url).Result;
@@ -77,6 +76,7 @@ namespace IT_Consulting_CRM_API.Controllers
                     string userId = msg.message.from.id;
                     string useFirstrName = msg.message.from.first_name;
 
+                    Requests request = new();
                     DateTime date = new DateTime(1970, 1, 1).AddSeconds(Convert.ToDouble(msg.message.date));
                     request.Date = date;
 

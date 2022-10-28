@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace IT_Consulting_CRM_API.Migrations
 {
-    public partial class M1000 : Migration
+    public partial class M1001 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -234,20 +234,6 @@ namespace IT_Consulting_CRM_API.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.InsertData(
-                table: "Request",
-                columns: new[] { "Id", "Date", "EMail", "Information", "Name", "Status", "SurName" },
-                values: new object[,]
-                {
-                    { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Carlov@mail.ru", "Напишите мне, меня заинтересовало ваше предложение!", "Карл", 0, "Карлов" },
-                    { 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Ivanov@mail.ru", "Напишите мне, меня заинтересовало ваше предложение!", "Иван", 0, "Иванов" },
-                    { 3, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Petrov@mail.ru", "Напишите мне, меня заинтересовало ваше предложение!", "Пётр", 0, "Петров" },
-                    { 4, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Vasov@mail.ru", "Напишите мне, меня заинтересовало ваше предложение!", "Вася", 0, "Васёв" },
-                    { 5, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Genov@mail.ru", "Напишите мне, меня заинтересовало ваше предложение!", "Гена", 0, "Генов" },
-                    { 6, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Sedorov@mail.ru", "Напишите мне, меня заинтересовало ваше предложение!", "Сидор", 0, "Сидоров" },
-                    { 7, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Slavov@mail.ru", "Напишите мне, меня заинтересовало ваше предложение!", "Слава", 0, "Славов" }
                 });
 
             migrationBuilder.CreateIndex(
