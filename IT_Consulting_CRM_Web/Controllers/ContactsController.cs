@@ -1,37 +1,52 @@
 using IT_Consulting_CRM_Web.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace IT_Consulting_CRM_Web.Controllers
 {
     public class ContactsController : Controller
     {
-        private readonly ILogger<ContactsController> _logger;
 
-        public static List<Contacts> Contact = new List<Contacts>();
-        public static Contacts Selected { get; set; }
+        private static List<Contacts> _contact = new List<Contacts>();
 
-        public static Contacts Template { get; set; }
-
-        public ContactsController(ILogger<ContactsController> logger)
+        public IActionResult Contact(Contacts contacts)
         {
-            _logger = logger;
+            if (contacts.Id == 0)
+            {
+                AddContact(contacts);
+            }
+                _contact = JsonConvert.DeserializeObject<List<Contacts>>(CRUD.Read("Contacts"));
+                var c = _contact.FirstOrDefault();
+                return View(c);
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public IActionResult AddContact()
         {
-            //Contact = JsonConvert.DeserializeObject<List<Contacts>>(CRUD.Read("Contacts").ToString());
             return View();
         }
 
-        public IActionResult UpdateContact()
+        [HttpPost]
+        public IActionResult AddContact(Contacts contacts)
         {
-            //CRUD.Update("Contacts", JsonConvert.SerializeObject(new Contacts()));
-            return RedirectToAction("Index", "Contacts");
+            if (contacts.Id == 0)
+            {
+                CRUD.Create("Contacts", JsonConvert.SerializeObject(contacts));
+            }
+            return RedirectToAction("Contact", "Contacts");
         }
 
-        public IActionResult AddContact(string name,
+        [HttpGet]
+        public IActionResult UpdateContact()
+        {
+            return View();
+        }
+
+        public IActionResult UpdateContact(Contacts contacts,
+                                        string Image,
+                                        string name,
                                         string surName,
                                         string lastName,
                                         string phone,
@@ -39,57 +54,29 @@ namespace IT_Consulting_CRM_Web.Controllers
                                         string address,
                                         string contactInformation)
         {
-            Template.Name = name;
-            Template.SurName = surName;
-            Template.LastName = lastName;
-            Template.Phone = phone;
-            Template.EMail = eMail;
-            Template.Address = address;
-            Template.ContactsInformation = contactInformation;
-            if (Template.Id == 0)
+            contacts.Image = Image;
+            contacts.Name = name;
+            contacts.SurName = surName;
+            contacts.LastName = lastName;
+            contacts.Phone = phone;
+            contacts.EMail = eMail;
+            contacts.Address = address;
+            contacts.ContactsInformation = contactInformation;
+            if (contacts.Id == 0)
             {
-                //CRUD.Create("Contacts", JsonConvert.SerializeObject(Template));
+                CRUD.Create("Contacts", JsonConvert.SerializeObject(contacts));
             }
-            return RedirectToAction("Index", "Contacts");
+            else
+            {
+                CRUD.Update("Contacts", JsonConvert.SerializeObject(contacts));
+            }
+            return RedirectToAction("Contact", "Contacts");
         }
 
         public IActionResult Delete(int id)
         {
-            //CRUD.Delete($"Contacts/{id}");
-            return RedirectToAction("Index", "Contacts");
-        }
-        public IActionResult Edit(int id)
-        {
-            if (id != 0)
-            {
-                Selected = Contact.Find(u => u.Id == id);
-            }
-            else
-            {
-                Selected = new Contacts();
-            }
-            return View();
-        }
-        [HttpPost]
-        public IActionResult UpdateContact(Contacts contact,
-                                           string name,
-                                           string surName,
-                                           string lastName,
-                                           string phone,
-                                           string eMail,
-                                           string address,
-                                           string contactInformation)
-        {
-            Template.Name = name;
-            Template.SurName = surName;
-            Template.LastName = lastName;
-            Template.Phone = phone;
-            Template.EMail = eMail;
-            Template.Address = address;
-            Template.ContactsInformation = contactInformation;
-            //CRUD.Update($"Contacts?id={Selected.Id}&description={contact}", JsonConvert.SerializeObject(Template));
-
-            return RedirectToAction("Index", "Contacts");
+            CRUD.Delete($"Contacts/{id}");
+            return RedirectToAction("Contact", "Contacts");
         }
     }
 }

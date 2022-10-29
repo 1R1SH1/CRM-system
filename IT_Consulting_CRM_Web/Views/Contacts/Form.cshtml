@@ -1,0 +1,74 @@
+﻿@model IT_Consulting_CRM_Web.Models.Contacts
+
+@using (Html.BeginForm())
+{
+<head>
+    <title></title>
+    <link rel="stylesheet" href="~/css/StyleSheet.css" type="text/css" />
+    <link rel="stylesheet" href="~/css/style1.css" type="text/css" />
+    <link rel="stylesheet" href="~/css/style.css" type="text/css" />
+    <style type="text/css">
+
+        .btn {
+            text-decoration: none;
+            position: center;
+            height: 40px;
+            line-height: 40px;
+            padding: 0 50px 0 50px;
+            margin: 0 10px;
+            background: linear-gradient(-135deg, #00E5FE, #4463FE);
+            border-width: 0;
+            border-radius: 50px;
+            font-size: 15px;
+            color: white;
+            outline: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+    <div class="validation" asp-validation-summary="ModelOnly"></div>
+
+    <label class="lable" asp-for="Image">Добавить изображение:</label>
+    <input asp-for="Image" />
+    <span asp-validation-for="Image"></span>
+    <br />
+
+    <label class="lable" asp-for="Name">Добавить имя:</label>
+    <input asp-for="Name" />
+    <span asp-validation-for="Name"></span>
+    <br />
+
+    <label class="lable" asp-for="SurName">Добавить фамилию:</label>
+    <input asp-for="SurName" />
+    <span asp-validation-for="SurName"></span>
+    <br />
+
+    <label class="lable" asp-for="LastName">Добавить отчество:</label>
+    <input asp-for="LastName" />
+    <span asp-validation-for="LastName"></span>
+    <br />
+
+    <label class="lable" asp-for="Phone">Добавить номер телефона:</label>
+    <input asp-for="Phone" />
+    <span asp-validation-for="Phone"></span>
+    <br />
+
+    <label class="lable" asp-for="EMail">Добавить электронную почту:</label>
+    <input asp-for="EMail" />
+    <span asp-validation-for="EMail"></span>
+    <br />
+
+    <label class="lable" asp-for="Address">Добавить адрес:</label>
+    <input asp-for="Address" />
+    <span asp-validation-for="Address"></span>
+    <br />
+
+    <label class="lable" asp-for="ContactsInformation">Добавить описание:</label>
+    <input asp-for="ContactsInformation" />
+    <span asp-validation-for="ContactsInformation"></span>
+    <br />
+
+    <input class="btn" type="submit" value="Сохранить" />
+    <a class="btn" asp-action="Index">Отмена</a>
+}
