@@ -8,6 +8,6 @@ namespace IT_Consulting_CRM_Web.Models
         public string Header { get; set; }
         public string Image { get; set; }
         public string BlogInformation { get; set; }
-        public DateTime dateTime { get; set; }
+        public DateTime DateTime { get; set; }
     }
 }

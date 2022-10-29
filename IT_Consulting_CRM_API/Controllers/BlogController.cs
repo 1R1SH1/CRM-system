@@ -9,17 +9,11 @@ using System.Threading.Tasks;
 
 namespace IT_Consulting_CRM_API.Controllers
 {
-    /// <summary>
-    /// Контроллер управления блогом.
-    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class BlogController : ControllerBase
     {
         public static DataContext Context { get; set; }
-        /// <summary>
-        /// Инициализация контроллера.
-        /// </summary>
         public BlogController(DataContext dataContext)
         {
             Context = dataContext;

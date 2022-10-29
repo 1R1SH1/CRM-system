@@ -1,5 +1,5 @@
 ﻿@using IT_Consulting_CRM_Web.Controllers
-@model Projects
+@model Blogs
 @if (AccountController.Role == "admin")
 {
     Layout = "_LayoutAdmin";
@@ -53,7 +53,7 @@
             </div>
         </nav>
         <!-- Content section-->
-        <section class="py-5" style="min-height:50em;">
+        <section class="py-5" style="height:50em;">
             <div class="container my-auto">
                 <div class="row justify-content-center">
                     <div class="col-lg-6">
@@ -61,6 +61,9 @@
                             <div class="brd">
                                 <form>
                                     <div class="brd container-fluid px-4" >
+                                        <p class="projects-item-descr">
+                                            @Model.DateTime
+                                        </p>
                                         <div id="photo" style="text-align: justify-all">
                                             <img style="vertical-align:middle" width="80" height="68" src="@Model.Image" alt="">
                                             <span style="vertical-align:auto">@Model.Header</span>
@@ -68,7 +71,7 @@
                                     </div>
                                     <div class="container my-5">
                                         <p class="projects-item-descr">
-                                            @Model.ProjectInformation
+                                            @Model.BlogInformation
                                         </p>
                                     </div>
                                 </form>                                
@@ -143,7 +146,7 @@ else
             </div>
         </nav>
         <!-- Content section-->
-        <section class="py-5" style="min-height:50em;">
+        <section class="py-5" style="height:50em;">
             <div class="container my-auto">
                 <div class="row justify-content-center">
                     <div class="col-lg-auto">
@@ -151,14 +154,17 @@ else
                             <div class="brd">
                                 <form>
                                     <div class="brd container-fluid px-4">
+                                        <p class="projects-item-descr">
+                                            @Model.DateTime
+                                        </p>
                                         <div id="photo" style="text-align: justify-all">
                                             <img style="vertical-align:middle" width="80" height="68" src="@Model.Image" alt="">
-                                            <span style="vertical-align:bottom">@Model.Header</span>
+                                            <span style="vertical-align:auto">@Model.Header</span>
                                         </div>
                                     </div>
                                     <div class="container my-5">
                                         <p class="projects-item-descr">
-                                            @Model.ProjectInformation
+                                            @Model.BlogInformation
                                         </p>
                                     </div>
                                 </form>

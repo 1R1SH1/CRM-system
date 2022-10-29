@@ -1,76 +1,73 @@
 using IT_Consulting_CRM_Web.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace IT_Consulting_CRM_Web.Controllers
 {
     public class BlogController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
 
-        public static List<Blogs> Blog = new List<Blogs>();
-        public static Blogs Selected { get; set; }
-        public static Blogs Template { get; set; }
+        private static List<Blogs> _blog = new();
 
-        public BlogController(ILogger<HomeController> logger)
+        public IActionResult Blogs()
         {
-            _logger = logger;
+            _blog = JsonConvert.DeserializeObject<List<Blogs>>(CRUD.Read("Blog"));
+            return View(_blog);
         }
 
-        public IActionResult ShowBlog()
+        public IActionResult BlogDetails(Blogs blogs)
         {
-            //Blog = JsonConvert.DeserializeObject<List<Blogs>>(CRUD.Read("Blog").ToString());
+            _blog = JsonConvert.DeserializeObject<List<Blogs>>(CRUD.Read("Blog"));
+            var p = _blog.FirstOrDefault(x => x.Id == blogs.Id);
+            return View(p);
+        }
+
+        [HttpGet]
+        public IActionResult AddBlog()
+        {
             return View();
         }
 
-        public IActionResult AddBlog(string Image, string blogInformation, DateTime dateTime)
+        [HttpPost]
+        public IActionResult AddBlog(Blogs blogs)
         {
-            Template.Image = Image;
-            Template.BlogInformation = blogInformation;
-            Template.dateTime = dateTime;
-            if (Template.Id == 0)
+            if (blogs.Id == 0)
             {
-                //CRUD.Create("Blog", JsonConvert.SerializeObject(Template));
+                CRUD.Create("Blog", JsonConvert.SerializeObject(blogs));
             }
-            return RedirectToAction("Index", "Blog");
+            return RedirectToAction("Blogs", "Blog");
         }
 
-        public IActionResult BlogEdit(int id)
+        [HttpGet]
+        public IActionResult UpdateBlog()
         {
-            if (id != 0)
-            {
-                Selected = Blog.Find(u => u.Id == id);
-            }
-            else
-            {
-                Selected = new Blogs();
-            }
             return View();
         }
 
         public IActionResult DeleteBlog(string id)
         {
-            //CRUD.Delete($"Blog/{id}");
-            return RedirectToAction("ShowBlog", "Blog");
+            CRUD.Delete($"Blog/{id}");
+            return RedirectToAction("Blogs", "Blog");
         }
 
-        [HttpPost]
-        public IActionResult UpdateBlog(string Image, string blogInformation, DateTime dateTime)
+        public IActionResult UpdateBlog(Blogs blogs, string Header, string Image, string blogInformation, DateTime DateTime)
         {
-            Template.Image = Image;
-            Template.BlogInformation = blogInformation;
-            Template.dateTime = dateTime;
-            if (Template.Id == 0)
+            blogs.Header = Header;
+            blogs.Image = Image;
+            blogs.BlogInformation = blogInformation;
+            blogs.DateTime = DateTime;
+            if (blogs.Id == 0)
             {
-                //CRUD.Create("Blog", JsonConvert.SerializeObject(Template));
+                CRUD.Create("Blog", JsonConvert.SerializeObject(blogs));
             }
             else
             {
-                //CRUD.Update("Blog", JsonConvert.SerializeObject(Template));
+                CRUD.Update("Blog", JsonConvert.SerializeObject(blogs));
             }
-            return RedirectToAction("ShowBlog", "Blog");
+            return RedirectToAction("Blogs", "Blog");
         }
     }
 }

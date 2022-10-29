@@ -9,9 +9,6 @@ using System.Threading.Tasks;
 
 namespace IT_Consulting_CRM_API.Controllers
 {
-    /// <summary>
-    /// Контроллер контактов
-    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class ContactsController : ControllerBase

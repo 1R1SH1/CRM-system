@@ -9,9 +9,6 @@ using System.Threading.Tasks;
 
 namespace IT_Consulting_CRM_API.Controllers
 {
-    /// <summary>
-    /// Контроллер услуг
-    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class ServicesController : ControllerBase
@@ -28,9 +25,8 @@ namespace IT_Consulting_CRM_API.Controllers
             await Context.SaveChangesAsync();
         }
         [HttpPut]
-        public async Task<IActionResult> Put([FromBody] Services getservice)
+        public async Task<IActionResult> Put([FromBody] Services service)
         {
-            Services service = Context.Service.ToList().Find(u => u.Id == getservice.Id);
             Context.Service.Update(service);
             await Context.SaveChangesAsync();
             return Ok();

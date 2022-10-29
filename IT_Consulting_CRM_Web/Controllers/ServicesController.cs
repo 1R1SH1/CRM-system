@@ -9,25 +9,30 @@ namespace IT_Consulting_CRM_Web.Controllers
     {
         private static List<Services> _services = new List<Services>();
 
-        private static Services Template { get; set; }
-
         public IActionResult Service()
         {
             _services = JsonConvert.DeserializeObject<List<Services>>(CRUD.Read("Services"));
             return View(_services);
         }
 
-        public IActionResult AddService(string serviceInformation)
+        [HttpGet]
+        public IActionResult AddService()
         {
-            Template.ServicesInformation = serviceInformation;
-            if (Template.Id == 0)
-            {
-                CRUD.Create("Services", JsonConvert.SerializeObject(Template));
-            }
-            return RedirectToAction("ServiceEdit", "Services");
+            return View();
         }
 
-        public IActionResult ServiceEdit()
+        [HttpPost]
+        public IActionResult AddService(Services services)
+        {
+            if (services.Id == 0)
+            {
+                CRUD.Create("Services", JsonConvert.SerializeObject(services));
+            }
+            return RedirectToAction("Service", "Services");
+        }
+
+        [HttpGet]
+        public IActionResult UpdateService()
         {
             return View();
         }
@@ -35,21 +40,22 @@ namespace IT_Consulting_CRM_Web.Controllers
         public IActionResult DeleteService(string id)
         {
             CRUD.Delete($"Services/{id}");
-            return RedirectToAction("ShowServices", "Services");
+            return RedirectToAction("Service", "Services");
         }
 
-        [HttpPost]
-        public IActionResult UpdateService()
+        public IActionResult UpdateService(Services services, string Header, string ServicesInformation)
         {
-            if (Template.Id == 0)
+            services.Header = Header;
+            services.ServicesInformation = ServicesInformation;
+            if (services.Id == 0)
             {
-                CRUD.Create("Services", JsonConvert.SerializeObject(Template));
+                CRUD.Create("Services", JsonConvert.SerializeObject(services));
             }
             else
             {
-                CRUD.Update("Services", JsonConvert.SerializeObject(Template));
+                CRUD.Update("Services", JsonConvert.SerializeObject(services));
             }
-            return RedirectToAction("ShowServices", "Services");
+            return RedirectToAction("Service", "Services");
         }
     }
 }

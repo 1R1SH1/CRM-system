@@ -1,5 +1,5 @@
 ﻿@using IT_Consulting_CRM_Web.Controllers
-@model IEnumerable<Services>
+@model IEnumerable<Blogs>
 @if (AccountController.Role == "admin")
 {
     Layout = "_LayoutAdmin";
@@ -7,6 +7,30 @@
     <!DOCTYPE html>
     <html lang="en">
     <head>
+        <link rel="stylesheet" href="global-styles.css">
+        <style>
+            .fullclick {
+                margin: 1em 0;
+                padding: 0;
+                max-width: 25em;
+            }
+
+            .fullclick a.main {
+                color: #85baff;
+                display: block;
+                z-index: 1;
+            }
+
+            .fullclick li a.main::after {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 40px;
+                content: ' ';
+            }
+        </style>
+
         <style type="text/css">
             .btn {
                 text-decoration: none;
@@ -30,46 +54,13 @@
                 padding: 20px; /*Поля вокруг текста*/
             }
 
-            .brd-spoiler {
-                border: 2px double black; /*Параметры границы*/
-                width: 70em;
-            }
-
-            .spoiler-content {
-                display: none; /**скрываем блок контента спойлера**/
-                padding: 15px 20px; /**добавляем внутренний отступ**/
-            }
-            /**Стили блока с текстом внутри спойлера**/
-            .spoiler-content {
-                display: none; /**скрываем блок контента спойлера**/
-                padding: 15px 20px; /**добавляем внутренний отступ**/
-                border: 1px solid #ccc; /**рамка блока контента спойлера**/
-                margin-top: 5px; /**отступ сверху**/
-                background: #F0F0F0; /**фон блока контента спойлера**/
-            }
-            /**Стили блока оборачивающего каждый блок**/
-            .spoiler-block {
-                margin-top: 30px;
-                width: 70em;
-            }
-            /**Стили кнопки спойлера**/
-            .spoiler-title {
-                border: 1px solid #B9B9B9;
-                background: #ccc; /**обычный фон для браузеров, которые не поддерживают градиент**/
-                background: linear-gradient(#CACACA, #007fff); /**градиентный фон**/
-                padding: 10px; /**внутренний отступ**/
-                text-decoration: none; /**убираем подчёркивание у ссылки**/
-                color: #000; /**цвет текста ссылки**/
-                display: block; /**делаем ссылку на всю ширину**/
-            }
-
-            .spoiler-collapse-arrow {
-                transform: rotate(-90deg);
+            .card:hover {
+                box-shadow: -1px 9px 40px -12px #4463FE;
             }
 
             .title_1 {
-                margin-top:60px;
-                margin-left:170px;
+                margin-top: 20px;
+                margin-left: 80px;
                 text-decoration: none; /**убираем подчёркивание у ссылки**/
                 color: #000; /**цвет текста ссылки**/
             }
@@ -92,24 +83,33 @@
             </div>
         </nav>
 
-        <section class="py" style="height:50em;">
+        <section class="py-xxl-5" style="min-height:50em;">
             <div class="row justify-content-center">
-                <h1 class="title_1" >Что мы можем сделать</h1>
-                <a class="brd-spoiler"></a>
+                <h1 class="title_1">Блог</h1>
                 @foreach (var item in Model)
                 {
-                    <div class="spoiler-block">
-                        <a href="#" class="spoiler-title">@item.Header  &#62;</a>
-                        
-		                <div class="spoiler-content"> 
-                                 @item.ServicesInformation
-		                </div>
-                        <a id="Delete" href="/Services/DeleteService/@item.Id">&#128465;</a>
-                        <a id="Update" href="/Services/UpdateService/@item.Id">&#128393;</a>
-	                </div>
+                    <ul class="fullclick">
+                        <li>
+                            @item.DateTime
+                            <div class="card" style="width:20em;margin:10px;">
+                                <img src="@item.Image" class="card-img-top" style="height:10em;" />
+                                <div class="card-body" style="height:5em;">
+                                    <div class="card-text">
+                                        <p>@item.Header</p>
+                                    </div>
+                                </div>
+                                <div class="card-text">
+                                    <p>@item.BlogInformation</p>
+                                </div>
+                                <a id="Delete" align="right" href="/Blog/DeleteBlog/@item.Id">&#128465;</a>
+                                <a id="Update" align="right" href="/Blog/UpdateBlog/@item.Id">&#128393;</a>
+                                <a href="/Blog/BlogDetails/@item.Id" class="main"></a>
+                            </div>
+                        </li>
+                    </ul>
                 }
             </div>
-            <a class="btn projects-item-btn" style="margin-left:100px; margin-top:50px;" asp-controller="Services" asp-action="AddService">Добавить услуги</a>
+            <a class="btn projects-item-btn" asp-controller="Blog" asp-action="AddBlog">Добавить проект</a>
         </section>        
 
         <footer class="py-lg-3 bg-dark" style="vertical-align:bottom">
@@ -123,12 +123,20 @@
         <script src="~/js/scripts.js"></script>
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script type="text/javascript">
-            $(document).ready(function () {
-                $('.spoiler-title').click(function () {
-                    $(this).parent().children('div.spoiler-content').toggle('fast');
-                    return false;
-                });
-            });
+            $('.card').hover(
+                function () {
+                    $(this).animate({
+                        marginTop: "-=0.2%",
+                        marginBottom: "+=0.2%"
+                    }, 200)
+                },
+                function () {
+                    $(this).animate({
+                        marginTop: "+=0.2%",
+                        marginBottom: "-=0.2%"
+                    })
+                }
+            )
         </script>
     </body>
     </html>
@@ -138,7 +146,31 @@ else
     ViewData["Title"] = "Projects List";
 
     <html lang="en">
-    <head>
+    <head>     
+        <link rel="stylesheet" href="global-styles.css">
+        <style>
+            .fullclick {
+                margin: 1em 0;
+                padding: 0;
+                max-width: 25em;
+            }
+
+            .fullclick a.main {
+                color: #85baff;                
+                display: block;
+                z-index: 1;
+            }
+
+            .fullclick li a.main::after {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                content: ' ';
+            }
+        </style>
+
         <style type="text/css">
             .btn {
             text-decoration: none;
@@ -162,42 +194,13 @@ else
             padding: 20px; /*Поля вокруг текста*/
             }
 
-            .brd-spoiler {
-                border: 2px double black; /*Параметры границы*/
-                width: 70em;
-            }
-
-            .spoiler-content {
-                display: none; /**скрываем блок контента спойлера**/
-                padding: 15px 20px; /**добавляем внутренний отступ**/
-            }
-            /**Стили блока с текстом внутри спойлера**/
-            .spoiler-content {
-                display: none; /**скрываем блок контента спойлера**/
-                padding: 15px 20px; /**добавляем внутренний отступ**/
-                border: 1px solid #ccc; /**рамка блока контента спойлера**/
-                margin-top: 5px; /**отступ сверху**/
-                background: #F0F0F0; /**фон блока контента спойлера**/
-            }
-            /**Стили блока оборачивающего каждый блок**/
-            .spoiler-block {
-                margin-top: 30px;
-                width: 70em;
-            }
-            /**Стили кнопки спойлера**/
-            .spoiler-title {
-                border: 1px solid #B9B9B9;
-                background: #ccc; /**обычный фон для браузеров, которые не поддерживают градиент**/
-                background: linear-gradient(#CACACA, #007fff); /**градиентный фон**/
-                padding: 10px; /**внутренний отступ**/
-                text-decoration: none; /**убираем подчёркивание у ссылки**/
-                color: #000; /**цвет текста ссылки**/
-                display: block; /**делаем ссылку на всю ширину**/
+            .card:hover {
+            box-shadow: -1px 9px 40px -12px #4463FE;
             }
 
             .title_1 {
                 margin-top: 60px;
-                margin-left: 19em;
+                margin-left: 170px;
                 text-decoration: none; /**убираем подчёркивание у ссылки**/
                 color: #000; /**цвет текста ссылки**/
             }
@@ -220,19 +223,29 @@ else
                 </div>
             </div>
         </nav>
-        <section class="py" style="height:50em;">
+        <section class="py-xxl-5" style="min-height:50em;">
             <div class="row justify-content-center">
-                <h1 class="title_1">Что мы можем сделать</h1>
-                <a class="brd-spoiler"></a>
-            @foreach (var item in Model)
-            {
-                <div class="spoiler-block">
-                        <a href="#" class="spoiler-title">@item.Header  &#62;</a>
-                    <div class="spoiler-content">
-                        @item.ServicesInformation
-                    </div>
-                </div>
-            }
+                <h1 class="title_1">Блог</h1>
+                @foreach (var item in Model)
+                {
+                    <ul class="fullclick">
+                        <li>
+                            @item.DateTime
+                            <div class="card" style="width:20em;margin:10px;">
+                                <img src="@item.Image" class="card-img-top" style="height:10em;" />
+                                <div class="card-body" style="height:5em;">
+                                    <div class="card-text">
+                                        <p>@item.Header</p>
+                                    </div>
+                                </div>
+                                <div class="card-text">
+                                    <p>@item.BlogInformation</p>
+                                </div>
+                                <a href="/Blog/BlogDetails/@item.Id" class="main"></a>
+                            </div>
+                        </li>
+                    </ul>
+                }
             </div>
         </section>
         <footer class="py-lg-3 bg-dark" style="vertical-align:bottom">
@@ -246,12 +259,20 @@ else
         <script src="~/js/scripts.js"></script>
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script type="text/javascript">
-            $(document).ready(function () {
-                $('.spoiler-title').click(function () {
-                    $(this).parent().children('div.spoiler-content').toggle('fast');
-                    return false;
-                });
-            });
+            $('.card').hover(
+            function () {
+            $(this).animate({
+            marginTop: "-=0.2%",
+            marginBottom: "+=0.2%"
+            }, 200)
+            },
+            function () {
+            $(this).animate({
+            marginTop: "+=0.2%",
+            marginBottom: "-=0.2%"
+            })
+            }
+            )
         </script>
     </body>
     </html>
