@@ -18,8 +18,14 @@ namespace IT_Consulting_CRM_Web.Controllers
             return View();
         }
 
-        public IActionResult Sendrequest(Requests request)
+        public IActionResult ShowRequest()
         {
+            return View();
+        }
+
+        public IActionResult SendRequest(string name, string surName, string email, string information)
+        {
+            Requests request = new(0, name, surName, email, information);
             string url = @"https://localhost:44390/api/Request";
             CRUD.Token = httpClient.PostAsync(url, new StringContent(JsonConvert.SerializeObject(request),
                 Encoding.UTF8, "application/json")).Result.ToString();
@@ -33,6 +39,7 @@ namespace IT_Consulting_CRM_Web.Controllers
                 return RedirectToAction(nameof(RequestError));
             }
         }
+
         public IActionResult RequestDone()
         {
             return View();

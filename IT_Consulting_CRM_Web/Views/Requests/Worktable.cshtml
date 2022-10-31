@@ -2,6 +2,21 @@
 
 @{Layout = "_LayoutAdmin";}
 
+<head>
+    <link rel="stylesheet" href="~/css/StyleSheet.css" type="text/css" />
+    <link rel="stylesheet" href="~/css/style1.css" type="text/css" />
+    <link rel="stylesheet" href="~/css/style.css" type="text/css" />
+    <style type="text/css">
+        table {
+            table-layout: fixed;
+            width: 100%
+        }
+
+        td {
+            word-wrap: break-word;
+        }
+    </style>
+</head>
 <div style="align-content:center;color:black">
     <a href="/Requests/Today" style="display:inline-block;width: 160px;">Сегодня</a>
     <a href="/Requests/Tomorrow" style="display:inline-block;width: 160px;">Вчера</a>
@@ -17,35 +32,66 @@
     </div>
         <p id=Subheader style="text-align:left">Всего заявок: @RequestsController.RawRequests.Count</p>
         <p id=Subheader style="text-align:left">За указанный перод: @RequestsController.Requests.Count</p>
-    <table>
-        <tr>
-            <td width="100">Дата</td>
-            <td width="150">Имя</td>
-            <td width="150">e-mail</td>
-            <td width="300">Сообщение</td>
-            <td width="100">Статус</td>
+    @*<table class="simple-little-table" cellspacing='0'>
+        <tr style="font-size:20px;">
+            <th>ID</th>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Patronymic</th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        @foreach (var note in Model)
+        {
+            <tr>
+                <th>@note.Id</th>
+                <th>@note.Name</th>
+                <th>@note.SurName</th>
+                <th>@note.Patronymic</th>
+                <th><a href="~/Home/Details/@note.Id">Детальная информация</a></th>
+                <th>
+                    <form class="form-simple">
+                        <button class="btn" asp-action="Edit" asp-route-id=@note.Id>Изменить</button>
+                    </form>
+                </th>
+                <th>
+                    <form class="form-simple" method="post">
+                        <button class="btn" asp-action="Delete" asp-route-id="@note.Id">Удалить</button>
+                    </form>
+                </th>
+            </tr>
+        }
+    </table>*@
+    <table class="simple-little-table" cellspacing='0'>
+        <tr style="font-size:20px;">
+            <td width="160" style="max-width:160px;">Дата</td>
+            <td width="100" style="max-width:100px;">Имя</td>
+            <td width="190" style="max-width:190px;">e-mail</td>
+            <td width="600" style="max-width:600px;">Сообщение</td>
+            <td width="110" style="max-width:110px;">Статус</td>
         </tr>
         @foreach (Requests request in RequestsController.Requests)
         {
             <tr>
-                <td width="100">@request.Date</td>
-                <td width="150">@request.Name</td>
-                <td width="150">@request.EMail</td>
-                <td width="300">@request.Information</td>
-                <td width="100"@request.Status></td>
+                <td width="160" style="max-width:160px;">@request.Date</td>
+                <td width="100" style="max-width:100px;">@request.Name</td>
+                <td width="190" style="max-width:190px;">@request.EMail</td>
+                <td width="600" style="max-width:600px;">@request.Information</td>
+                <td width="110" style="max-width:110px;">@request.Status></td>
                 <td width="100">
                 <form method="post" asp-controller="Requests" asp-action="SetStatus">
                     <select onchange="this.form.submit()" name="Status">
-                        @if(request.Status == 0){<option selected value=@request.Id,0>Получена</option>}
-                        else{<option value=@request.Id,0>Получена</option>}
-                        @if(request.Status == 1){<option selected value=@request.Id,1>В работе</option>}
-                        else{<option value=@request.Id,1>В работе</option>}
-                        @if(request.Status == 2){<option selected value=@request.Id,2>Выполнена</option>}
-                        else{<option value=@request.Id,2>Выполнена</option>}
-                        @if(request.Status == 3){<option selected value=@request.Id,3>Отклонена</option>}
-                        else{<option value=@request.Id,3>Отклонена</option>}
-                        @if(request.Status == 4){<option selected value=@request.Id,4>Отменена</option>}
-                        else{<option value=@request.Id,4>Отменена</option>}
+                        @if(request.Status == 0){<option selected value=@request.Id,0 >Получена</option>}
+                        else{<option value=@request.Id,0 >Получена</option>}
+                        @if(request.Status == 1){<option selected value=@request.Id,1 >В работе</option>}
+                        else{<option value=@request.Id,1 >В работе</option>}
+                        @if(request.Status == 2){<option selected value=@request.Id,2 >Выполнена</option>}
+                        else{<option value=@request.Id,2 >Выполнена</option>}
+                        @if(request.Status == 3){<option selected value=@request.Id,3 >Отклонена</option>}
+                        else{<option value=@request.Id,3 >Отклонена</option>}
+                        @if(request.Status == 4){<option selected value=@request.Id,4 >Отменена</option>}
+                        else{<option value=@request.Id,4 >Отменена</option>}
                     </select>
                 </form>
                 </td>

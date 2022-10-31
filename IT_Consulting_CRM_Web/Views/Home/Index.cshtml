@@ -1,6 +1,8 @@
 ﻿@using IT_Consulting_CRM_Web.Controllers
 @model IT_Consulting_CRM_Web.Models.Requests
-@{ ViewData["Title"] = "Requests"; }
+@{
+    ViewData["Title"] = "Requests";
+}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -15,21 +17,15 @@
             position: center;
             height: 40px;
             line-height: 40px;
-            padding: 0 50px 0 50px;
-            margin: 0 10px;
-            background: linear-gradient(-135deg, #00E5FE, #4463FE);
+            padding: 0 10px 0 10px;
+            margin: 0 700px;
+            background: linear-gradient(-135deg, #fe2f00, #4463FE);
             border-width: 0;
             border-radius: 50px;
-            font-size: 15px;
+            font-size: 20px;
             color: white;
             outline: none;
             cursor: pointer;
-        }
-
-        .brd {
-            border: 4px double black; /* Параметры границы */
-            background: #e9e5e5; /* Цвет фона */
-            padding: 20px; /* Поля вокруг текста */
         }
     </style>
 </head>
@@ -59,48 +55,12 @@
     <!-- Header - set the background image for the header in the line below-->
     <header>
         <div class="py-5 bg-image-full" style="background-image: url('img/main_image.jpg')">
-            <div style="height:42em"></div>
-        </div>
-    </header>
-    <section class="py-5">
-        <div class="container my-5">
-            <div class="row justify-content-center">
-                <div class="col-lg-6">
-                    <div class="row" style="align-content:center;">
-                        <div class="brd">
-                            <header>Оставить заявку или задать вопрос</header>
-                            <form asp-action="Sendrequest">
-                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                <div class="brd">
-                                    Имя
-                                    <input asp-for="Name" class="form-control" value="" />
-                                    <span asp-validation-for="Name" class="text-danger"></span>
-                                </div>
-                                <div class="brd">
-                                    Фамилия
-                                    <input asp-for="SurName" class="form-control" value="" />
-                                    <span asp-validation-for="SurName" class="text-danger"></span>
-                                </div>
-                                <div class="brd">
-                                    E-mail
-                                    <input asp-for="EMail" class="form-control" value="" />
-                                    <span asp-validation-for="EMail" class="text-danger"></span>
-                                </div>
-                                <div class="brd">
-                                    Задать вопрос
-                                    <input asp-for="Information" class="form-control" value="" />
-                                    <span asp-validation-for="Information" class="text-danger"></span>
-                                </div>
-                                <div class="brd">
-                                    <input type="submit" value="Оставить заявку" class="btn btn-primary" />
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+            <div style="height:39em"></div>
+            <ul class="btn btn-primary">
+                <li class="nav-item"><a class="nav-link text-black" asp-controller="Home" asp-action="ShowRequest">ОСТАВИТЬ ЗАЯВКУ</a></li>
+            </ul>
+        </div>        
+    </header>    
     <!-- Footer-->
     <footer class="py-lg-3 bg-dark">
         <div class="container">

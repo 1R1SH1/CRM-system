@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml.Linq;
 
 namespace IT_Consulting_CRM_Web.Models
 {
@@ -11,5 +12,15 @@ namespace IT_Consulting_CRM_Web.Models
         public string Information { get; set; }
         public DateTime Date { get; set; }
         public int Status { get; set; }
-    }
+        public Requests(int id, string name, string surName, string email, string information)
+        {
+            Id = id;
+            Status = 0;
+            Name = name;
+            SurName = surName;
+            EMail = email;
+            Information = information;
+            Date = DateTime.Now;
+        }
+    }    
 }
