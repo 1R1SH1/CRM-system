@@ -1,6 +1,4 @@
-﻿using Microsoft.VisualBasic;
-using System;
-using System.Xml.Linq;
+﻿using System;
 
 namespace IT_Consulting_CRM_Web.Models
 {
@@ -11,5 +9,5 @@ namespace IT_Consulting_CRM_Web.Models
         public string Image { get; set; }
         public string BlogInformation { get; set; }
         public DateTime DateTime { get; set; }
-    }    
+    }
 }

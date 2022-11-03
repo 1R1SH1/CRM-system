@@ -102,12 +102,12 @@
                             @item.DateTime
                             <div class="card" style="width:20em;margin:10px;">
                                 <img src="@item.Image" class="card-img-top" style="height:10em;" />
-                                <div class="card-body" style="height:5em;">
-                                    <div class="card-text">
+                                <div class="card-body" style="min-height:5em;">
+                                    <div class="card-text" style="word-wrap:break-word;">
                                         <p>@item.Header</p>
                                     </div>
                                 </div>
-                                <div class="card-text">
+                                <div class="card-text" style="word-wrap:break-word; text-align: left;">
                                     <p>@item.BlogInformation</p>
                                 </div>
                                 <a id="Delete" align="right" href="/Blog/DeleteBlog/@item.Id">&#128465;</a>
@@ -123,7 +123,7 @@
 
         <footer class="py-lg-3 bg-dark" style="vertical-align:bottom">
             <div class="container">
-                <p class="m-1 text-center text-white">#SkillProfi &copy; 2022</p>
+                <p class="m-1 text-center text-white">#Skill &copy; 2022</p>
                 <p class="m-0 text-center text-white">Все права защищены</p>
             </div>
         </footer>
@@ -242,12 +242,12 @@ else
                             @item.DateTime
                             <div class="card" style="width:20em;margin:10px;">
                                 <img src="@item.Image" class="card-img-top" style="height:10em;" />
-                                <div class="card-body" style="height:5em;">
-                                    <div class="card-text">
+                                <div class="card-body" style="min-height:5em;">
+                                    <div class="card-text" style="word-wrap:break-word; text-align: left;">
                                         <p>@item.Header</p>
                                     </div>
                                 </div>
-                                <div class="card-text">
+                                <div class="card-text" style="word-wrap:break-word;">
                                     <p>@item.BlogInformation</p>
                                 </div>
                                 <a href="/Blog/BlogDetails/@item.Id" class="main"></a>
@@ -259,7 +259,7 @@ else
         </section>
         <footer class="py-lg-3 bg-dark" style="vertical-align:bottom">
             <div class="container">
-                <p class="m-1 text-center text-white">#SkillProfi &copy; 2022</p>
+                <p class="m-1 text-center text-white">#Skill &copy; 2022</p>
                 <p class="m-0 text-center text-white">Все права защищены</p>
             </div>
         </footer>

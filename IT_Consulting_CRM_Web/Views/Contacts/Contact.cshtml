@@ -64,29 +64,31 @@
                             <div class="brd">
                                 <form>
                                     <div class="brd container-fluid px-4">
-                                        <div id="photo" style="text-align: justify-all">
+                                        <div id="photo" style="text-align: justify-all;">
                                             <img style="vertical-align:auto" width="550" height="300" src="@Model.Image" alt="">
                                         </div>
-                                        <div id="photo" style="text-align: justify-all">
-                                            <span style="vertical-align:auto">@Model.Address</span>
+                                        <div id="photo" style="text-align: justify-all; word-wrap:break-word;">
+                                            <span style="vertical-align:auto;">@Model.Address</span>
                                         </div>
                                     </div>
-                                    <div class="container my-5">
-                                        <p class="projects-item-descr">
-                                            @Model.ContactsInformation
-                                        </p>
+                                    <div class="container my-5" style="text-align: justify-all; word-wrap:break-word;">
+                                        <span>
+                                            <p class="projects-item-descr" style="vertical-align:auto;">
+                                                @Model.ContactsInformation
+                                            </p>
+                                        </span>                                        
                                     </div>
-                                    <div class="container my-5">
+                                    <div class="container my-5" style="text-align: justify-all;">
                                         <p class="projects-item-descr">
                                             Телефон: @Model.Phone
                                         </p>
                                     </div>
-                                    <div class="container my-5">
+                                    <div class="container my-5" style="text-align: justify-all;">
                                         <p class="projects-item-descr">
                                             E-mail: @Model.EMail
                                         </p>
                                     </div>
-                                    <div class="container my-5">
+                                    <div class="container my-5" style="text-align: justify-all">
                                         <p class="projects-item-descr">
                                             @Model.Name
                                             @Model.LastName
@@ -106,7 +108,7 @@
 
         <footer class="py-lg-3 bg-dark" style="vertical-align:bottom">
             <div class="container">
-                <p class="m-1 text-center text-white">#SkillProfi &copy; 2022</p>
+                <p class="m-1 text-center text-white">#Skill &copy; 2022</p>
                 <p class="m-0 text-center text-white">Все права защищены</p>
             </div>
         </footer>
@@ -179,17 +181,19 @@ else
                             <div class="brd">
                                 <form>
                                     <div class="brd container-fluid px-4">
-                                        <div id="photo" style="text-align: justify-all">
+                                        <div id="photo" style="text-align: justify-all;">
                                             <img style="vertical-align:auto" width="550" height="300" src="@Model.Image" alt="">
                                         </div>
-                                        <div id="photo" style="text-align: justify-all">
-                                            <span style="vertical-align:auto">@Model.Address</span>
+                                        <div id="photo" style="text-align: justify-all; word-wrap:break-word;">
+                                            <span style="vertical-align:auto;">@Model.Address</span>
                                         </div>
                                     </div>
-                                    <div class="container my-5">
-                                        <p class="projects-item-descr">
-                                            @Model.ContactsInformation
-                                        </p>
+                                    <div class="container my-5" style="text-align: justify-all; word-wrap:break-word;">
+                                        <span>
+                                            <p class="projects-item-descr" style="text-align: left;">
+                                                @Model.ContactsInformation
+                                            </p>
+                                        </span>                                        
                                     </div>
                                     <div class="container my-5">
                                         <p class="projects-item-descr">
@@ -217,7 +221,7 @@ else
         </section>
         <footer class="py-lg-3 bg-dark" style="vertical-align:bottom">
             <div class="container">
-                <p class="m-1 text-center text-white">#SkillProfi &copy; 2022</p>
+                <p class="m-1 text-center text-white">#Skill &copy; 2022</p>
                 <p class="m-0 text-center text-white">Все права защищены</p>
             </div>
         </footer>

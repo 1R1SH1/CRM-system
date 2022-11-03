@@ -92,29 +92,29 @@
             </div>
         </nav>
 
-        <section class="py" style="height:50em;">
+        <section class="py" style="height:auto; min-height:50em;">
             <div class="row justify-content-center">
                 <h1 class="title_1" >Что мы можем сделать</h1>
                 <a class="brd-spoiler"></a>
                 @foreach (var item in Model)
                 {
                     <div class="spoiler-block">
-                        <a href="#" class="spoiler-title">@item.Header  &#62;</a>
-                        
-		                <div class="spoiler-content"> 
-                                 @item.ServicesInformation
+                        <a href="#" class="spoiler-title" style="word-wrap:break-word; text-align: left;">@item.Header  &#62;</a>
+
+                        <div class="spoiler-content" style="word-wrap:break-word; text-align: left;">
+                            @item.ServicesInformation
 		                </div>
                         <a id="Delete" href="/Services/DeleteService/@item.Id">&#128465;</a>
                         <a id="Update" href="/Services/UpdateService/@item.Id">&#128393;</a>
 	                </div>
                 }
             </div>
-            <a class="btn projects-item-btn" style="margin-left:100px; margin-top:50px;" asp-controller="Services" asp-action="AddService">Добавить услуги</a>
+            <a class="btn projects-item-btn" style="margin-left:100px; margin-top:10px;" asp-controller="Services" asp-action="AddService">Добавить услуги</a>
         </section>        
 
         <footer class="py-lg-3 bg-dark" style="vertical-align:bottom">
             <div class="container">
-                <p class="m-1 text-center text-white">#SkillProfi &copy; 2022</p>
+                <p class="m-1 text-center text-white">#Skill &copy; 2022</p>
                 <p class="m-0 text-center text-white">Все права защищены</p>
             </div>
         </footer>
@@ -220,15 +220,15 @@ else
                 </div>
             </div>
         </nav>
-        <section class="py" style="height:50em;">
+        <section class="py" style=" height:auto; min-height:50em;">
             <div class="row justify-content-center">
                 <h1 class="title_1">Что мы можем сделать</h1>
                 <a class="brd-spoiler"></a>
             @foreach (var item in Model)
             {
                 <div class="spoiler-block">
-                        <a href="#" class="spoiler-title">@item.Header  &#62;</a>
-                    <div class="spoiler-content">
+                        <a href="#" class="spoiler-title" style="word-wrap:break-word; text-align: left;">@item.Header  &#62;</a>
+                        <div class="spoiler-content" style="word-wrap:break-word; text-align: left;">
                         @item.ServicesInformation
                     </div>
                 </div>
@@ -237,7 +237,7 @@ else
         </section>
         <footer class="py-lg-3 bg-dark" style="vertical-align:bottom">
             <div class="container">
-                <p class="m-1 text-center text-white">#SkillProfi &copy; 2022</p>
+                <p class="m-1 text-center text-white">#Skill &copy; 2022</p>
                 <p class="m-0 text-center text-white">Все права защищены</p>
             </div>
         </footer>

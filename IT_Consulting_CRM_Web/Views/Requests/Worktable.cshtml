@@ -31,38 +31,7 @@
     </form>
     </div>
         <p id=Subheader style="text-align:left">Всего заявок: @RequestsController.RawRequests.Count</p>
-        <p id=Subheader style="text-align:left">За указанный перод: @RequestsController.Requests.Count</p>
-    @*<table class="simple-little-table" cellspacing='0'>
-        <tr style="font-size:20px;">
-            <th>ID</th>
-            <th>Name</th>
-            <th>Surname</th>
-            <th>Patronymic</th>
-            <th></th>
-            <th></th>
-            <th></th>
-        </tr>
-        @foreach (var note in Model)
-        {
-            <tr>
-                <th>@note.Id</th>
-                <th>@note.Name</th>
-                <th>@note.SurName</th>
-                <th>@note.Patronymic</th>
-                <th><a href="~/Home/Details/@note.Id">Детальная информация</a></th>
-                <th>
-                    <form class="form-simple">
-                        <button class="btn" asp-action="Edit" asp-route-id=@note.Id>Изменить</button>
-                    </form>
-                </th>
-                <th>
-                    <form class="form-simple" method="post">
-                        <button class="btn" asp-action="Delete" asp-route-id="@note.Id">Удалить</button>
-                    </form>
-                </th>
-            </tr>
-        }
-    </table>*@
+        <p id=Subheader style="text-align:left">За указанный период: @RequestsController.Requests.Count</p>
     <table class="simple-little-table" cellspacing='0'>
         <tr style="font-size:20px;">
             <td width="160" style="max-width:160px;">Дата</td>
