@@ -74,7 +74,7 @@
         </DataGrid>
         <TextBlock HorizontalAlignment="Left"
                    TextWrapping="Wrap"
-                   Text=" Введите описание "
+                   Text="Введите описание"
                    VerticalAlignment="Top"
                    Foreground="White"
                    FontFamily="Segoe UI" Height="30" FontSize="20" Margin="0,70,0,1">
@@ -95,7 +95,7 @@
         </TextBlock>
         <TextBlock HorizontalAlignment="Left"
                    TextWrapping="Wrap"
-                   Text=" Введите заголовок "
+                   Text="Введите заголовок"
                    VerticalAlignment="Top"
                    Foreground="White"
                    FontFamily="Segoe UI" Height="30" FontSize="20" Margin="0,30,0,1">

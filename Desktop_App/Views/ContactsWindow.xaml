@@ -217,7 +217,7 @@
         </DataGrid>
         <TextBlock HorizontalAlignment="Left"
                    TextWrapping="Wrap"
-                   Text="  Введите адрес "
+                   Text="Введите адрес"
                    VerticalAlignment="Top"
                    Foreground="White"
                    FontFamily="Segoe UI" Height="30" Width="880" FontSize="20" Margin="0,240,0,0">
@@ -238,7 +238,7 @@
         </TextBlock>
         <TextBlock HorizontalAlignment="Left"
                    TextWrapping="Wrap"
-                   Text="  Введите описание "
+                   Text="Введите описание"
                    VerticalAlignment="Top"
                    Foreground="White"
                    FontFamily="Segoe UI" Height="30" Width="880" FontSize="20" Margin="0,210,0,0">
@@ -259,7 +259,7 @@
         </TextBlock>
         <TextBlock HorizontalAlignment="Left"
                    TextWrapping="Wrap"
-                   Text="  Введите ссылку на изображение "
+                   Text="Введите ссылку на изображение"
                    VerticalAlignment="Top"
                    Foreground="White"
                    FontFamily="Segoe UI" Height="30" Width="1100" FontSize="20" Margin="0,180,0,0">
@@ -280,7 +280,7 @@
         </TextBlock>
         <TextBlock HorizontalAlignment="Left"
                    TextWrapping="Wrap"
-                   Text="  Введите Email "
+                   Text="Введите Email"
                    VerticalAlignment="Top"
                    Foreground="White"
                    FontFamily="Segoe UI" Height="30" FontSize="20" Width="900" Margin="0,150,0,0">
@@ -301,7 +301,7 @@
         </TextBlock>
         <TextBlock HorizontalAlignment="Left"
                    TextWrapping="Wrap"
-                   Text="  Введите телефон "
+                   Text="Введите телефон"
                    VerticalAlignment="Top"
                    Foreground="White"
                    FontFamily="Segoe UI" Height="30" FontSize="20" Width="900" Margin="0,120,0,0">
@@ -322,7 +322,7 @@
         </TextBlock>
         <TextBlock HorizontalAlignment="Left"
                    TextWrapping="Wrap"
-                   Text="  Введите отчество "
+                   Text="Введите отчество"
                    VerticalAlignment="Top"
                    Foreground="White"
                    FontFamily="Segoe UI" Height="30" FontSize="20" Width="900" Margin="0,90,0,0">
@@ -343,7 +343,7 @@
         </TextBlock>
         <TextBlock HorizontalAlignment="Left"
                    TextWrapping="Wrap"
-                   Text="  Введите фамилию "
+                   Text="Введите фамилию"
                    VerticalAlignment="Top"
                    Foreground="White"
                    FontFamily="Segoe UI" Height="30" FontSize="20" Width="900" Margin="0,60,0,0">
@@ -364,7 +364,7 @@
         </TextBlock>
         <TextBlock HorizontalAlignment="Left"
                    TextWrapping="Wrap"
-                   Text="  Введите имя "
+                   Text="Введите имя"
                    VerticalAlignment="Top"
                    Foreground="White"
                    FontFamily="Segoe UI" Height="30" FontSize="20" Width="900" Margin="0,30,0,0">

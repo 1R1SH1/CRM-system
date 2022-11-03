@@ -133,7 +133,7 @@
         </DataGrid>
         <TextBlock HorizontalAlignment="Left"
                    TextWrapping="Wrap"
-                   Text="  Введите дату "
+                   Text="Введите дату"
                    VerticalAlignment="Top"
                    Foreground="White"
                    FontFamily="Segoe UI" Height="30" Width="880" FontSize="20" Margin="0,150,0,0">
@@ -154,7 +154,7 @@
         </TextBlock>
         <TextBlock HorizontalAlignment="Left"
                    TextWrapping="Wrap"
-                   Text="  Введите описание "
+                   Text="Введите описание"
                    VerticalAlignment="Top"
                    Foreground="White"
                    FontFamily="Segoe UI" Height="30" Width="880" FontSize="20" Margin="0,110,0,0">
@@ -175,7 +175,7 @@
         </TextBlock>
         <TextBlock HorizontalAlignment="Left"
                    TextWrapping="Wrap"
-                   Text="  Введите ссылку на изображение "
+                   Text="Введите ссылку на изображение"
                    VerticalAlignment="Top"
                    Foreground="White"
                    FontFamily="Segoe UI" Height="30" Width="1100" FontSize="20" Margin="0,70,0,0">
@@ -196,7 +196,8 @@
         </TextBlock>
         <TextBlock HorizontalAlignment="Left"
                    TextWrapping="Wrap"
-                   Text="  Введите заголовок "
+                   TextAlignment="Left"
+                   Text="Введите заголовок"
                    VerticalAlignment="Top"
                    Foreground="White"
                    FontFamily="Segoe UI" Height="30" FontSize="20" Width="900" Margin="0,30,0,0">
