@@ -54,13 +54,16 @@
                 padding: 20px; /*Поля вокруг текста*/
             }
 
+            .brd1 {
+                border: 2px double black; /*Параметры границы*/
+            }
+
             .card:hover {
                 box-shadow: -1px 9px 40px -12px #4463FE;
             }
 
             .title_1 {
                 margin-top: 20px;
-                margin-left: 80px;
                 text-decoration: none; /**убираем подчёркивание у ссылки**/
                 color: #000; /**цвет текста ссылки**/
             }
@@ -92,27 +95,30 @@
             </div>
         </nav>
 
-        <section class="py-xxl-5" style="min-height:50em;">
-            <div class="row justify-content-center">
-                <h1 class="title_1">Проекты</h1>
-                @foreach (var item in Model)
-                {
-                    <ul class="fullclick">
-                        <li>
-                            <div class="card" style="width:20em;margin:10px;">
-                                <img src="@item.Image" class="card-img-top" style="height:10em;" />
-                                <div class="card-body" style="height:5em;">
-                                    <div class="card-text" style="word-wrap:break-word; text-align: left;">
-                                        <p>@item.Header</p>
+        <section class="py-5" style="min-height:50em;">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <h1 class="title_1">Проекты</h1>
+                    <div class="brd1"></div>
+                    @foreach (var item in Model)
+                    {
+                        <ul class="fullclick">
+                            <li>
+                                <div class="card" style="width:20em;margin:10px;">
+                                    <img src="@item.Image" class="card-img-top" style="height:10em;" />
+                                    <div class="card-body" style="height:5em;">
+                                        <div class="card-text" style="word-wrap:break-word; text-align: left;">
+                                            <p>@item.Header</p>
+                                        </div>
                                     </div>
+                                    <a id="Delete" align="right" href="/Projects/DeleteProject/@item.Id">&#128465;</a>
+                                    <a id="Update" align="right" href="/Projects/UpdateProject/@item.Id">&#128393;</a>
+                                    <a href="/Projects/ProjectDetails/@item.Id" class="main"></a>
                                 </div>
-                                <a id="Delete" align="right" href="/Projects/DeleteProject/@item.Id">&#128465;</a>
-                                <a id="Update" align="right" href="/Projects/UpdateProject/@item.Id">&#128393;</a>
-                                <a href="/Projects/ProjectDetails/@item.Id" class="main"></a>
-                            </div>
-                        </li>
-                    </ul>
-                }
+                            </li>
+                        </ul>
+                    }
+                </div>
             </div>
             <a class="btn projects-item-btn" style="margin-left:60px;" asp-controller="Projects" asp-action="AddProject">Добавить проект</a>
         </section>        
@@ -199,13 +205,16 @@ else
             padding: 20px; /*Поля вокруг текста*/
             }
 
+            .brd1 {
+                border: 2px double black; /*Параметры границы*/
+            }
+
             .card:hover {
             box-shadow: -1px 9px 40px -12px #4463FE;
             }
 
             .title_1 {
                 margin-top: 60px;
-                margin-left: 300px;
                 text-decoration: none; /**убираем подчёркивание у ссылки**/
                 color: #000; /**цвет текста ссылки**/
             }
@@ -228,25 +237,28 @@ else
                 </div>
             </div>
         </nav>
-        <section class="py-xxl-5" style="min-height:50em;">
-            <div class="row justify-content-center">
+        <section class="py-5" style="min-height:50em;">
+            <div class="container">
                 <h1 class="title_1">Проекты</h1>
-                @foreach (var item in Model)
-                {
-                    <ul class="fullclick">
-                        <li>
-                            <div class="card" style="width:20em;margin:10px;">
-                                <img src="@item.Image" class="card-img-top" style="height:10em;" />
-                                <div class="card-body" style="height:5em;">
-                                    <div class="card-text" style="word-wrap:break-word; text-align: left;">
-                                        <p>@item.Header</p>
+                <div class="brd1"></div>
+                <div class="row justify-content-center">                    
+                    @foreach (var item in Model)
+                    {
+                        <ul class="fullclick">
+                            <li>
+                                <div class="card" style="width:20em;margin:10px;">
+                                    <img src="@item.Image" class="card-img-top" style="height:10em;" />
+                                    <div class="card-body" style="height:5em;">
+                                        <div class="card-text" style="word-wrap:break-word; text-align: left;">
+                                            <p>@item.Header</p>
+                                        </div>
                                     </div>
+                                    <a href="/Projects/ProjectDetails/@item.Id" class="main"></a>
                                 </div>
-                                <a href="/Projects/ProjectDetails/@item.Id" class="main"></a>
-                            </div>
-                        </li>
-                    </ul>
-                }
+                            </li>
+                        </ul>
+                    }
+                </div>
             </div>
         </section>
         <footer class="py-lg-3 bg-dark" style="vertical-align:bottom">

@@ -31,7 +31,7 @@ namespace IT_Consulting_CRM_API.Controllers
         {
             Context = dataContext;
             httpClient = new HttpClient();
-            BotUrl = @"https://api.telegram.org/bot/";
+            //BotUrl = @"https://api.telegram.org/bot/";
             Update_id = 0;
         }
 
@@ -60,7 +60,7 @@ namespace IT_Consulting_CRM_API.Controllers
         [HttpGet]
         public async Task<IEnumerable<Requests>> Get()
         {
-            ReadDataFromBot();
+            //ReadDataFromBot();
             return await Context.Request.ToListAsync();
         }
 

@@ -30,6 +30,10 @@
                 padding: 20px; /*Поля вокруг текста*/
             }
 
+            .brd1 {
+                border: 2px double black; /*Параметры границы*/
+            }
+
             .brd-spoiler {
                 border: 2px double black; /*Параметры границы*/
                 width: 70em;
@@ -69,7 +73,6 @@
 
             .title_1 {
                 margin-top:60px;
-                margin-left:170px;
                 text-decoration: none; /**убираем подчёркивание у ссылки**/
                 color: #000; /**цвет текста ссылки**/
             }
@@ -93,21 +96,23 @@
         </nav>
 
         <section class="py" style="height:auto; min-height:50em;">
-            <div class="row justify-content-center">
-                <h1 class="title_1" >Что мы можем сделать</h1>
-                <a class="brd-spoiler"></a>
-                @foreach (var item in Model)
-                {
-                    <div class="spoiler-block">
-                        <a href="#" class="spoiler-title" style="word-wrap:break-word; text-align: left;">@item.Header  &#62;</a>
-
-                        <div class="spoiler-content" style="word-wrap:break-word; text-align: left;">
-                            @item.ServicesInformation
-		                </div>
-                        <a id="Delete" href="/Services/DeleteService/@item.Id">&#128465;</a>
-                        <a id="Update" href="/Services/UpdateService/@item.Id">&#128393;</a>
-	                </div>
-                }
+            <div class="container">
+                <h1 class="title_1">Что мы можем сделать</h1>
+                <div class="brd1"></div>
+                 <div class="row justify-content-center">
+                     @foreach (var item in Model)
+                     {
+                         <div class="spoiler-block">
+                             <a href="#" class="spoiler-title" style="word-wrap:break-word; text-align: left;">@item.Header  &#62;</a>
+                 
+                             <div class="spoiler-content" style="word-wrap:break-word; text-align: left;">
+                                 @item.ServicesInformation
+		                     </div>
+                             <a id="Delete" href="/Services/DeleteService/@item.Id">&#128465;</a>
+                             <a id="Update" href="/Services/UpdateService/@item.Id">&#128393;</a>
+	                     </div>
+                     }
+                 </div>
             </div>
             <a class="btn projects-item-btn" style="margin-left:100px; margin-top:10px;" asp-controller="Services" asp-action="AddService">Добавить услуги</a>
         </section>        
@@ -162,6 +167,10 @@ else
             padding: 20px; /*Поля вокруг текста*/
             }
 
+            .brd1 {
+                border: 2px double black; /*Параметры границы*/
+            }
+
             .brd-spoiler {
                 border: 2px double black; /*Параметры границы*/
                 width: 70em;
@@ -197,7 +206,6 @@ else
 
             .title_1 {
                 margin-top: 60px;
-                margin-left: 19em;
                 text-decoration: none; /**убираем подчёркивание у ссылки**/
                 color: #000; /**цвет текста ссылки**/
             }
@@ -221,19 +229,21 @@ else
             </div>
         </nav>
         <section class="py" style=" height:auto; min-height:50em;">
-            <div class="row justify-content-center">
+            <div class="container">
                 <h1 class="title_1">Что мы можем сделать</h1>
-                <a class="brd-spoiler"></a>
-            @foreach (var item in Model)
-            {
-                <div class="spoiler-block">
-                        <a href="#" class="spoiler-title" style="word-wrap:break-word; text-align: left;">@item.Header  &#62;</a>
-                        <div class="spoiler-content" style="word-wrap:break-word; text-align: left;">
-                        @item.ServicesInformation
-                    </div>
+                <div class="brd1"></div>
+                <div class="row justify-content-center">
+                    @foreach (var item in Model)
+                    {
+                        <div class="spoiler-block">
+                            <a href="#" class="spoiler-title" style="word-wrap:break-word; text-align: left;">@item.Header  &#62;</a>
+                            <div class="spoiler-content" style="word-wrap:break-word; text-align: left;">
+                                @item.ServicesInformation
+                            </div>
+                        </div>
+                    }
                 </div>
-            }
-            </div>
+            </div>            
         </section>
         <footer class="py-lg-3 bg-dark" style="vertical-align:bottom">
             <div class="container">
