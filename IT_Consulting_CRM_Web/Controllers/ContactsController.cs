@@ -13,13 +13,9 @@ namespace IT_Consulting_CRM_Web.Controllers
 
         public IActionResult Contact(Contacts contacts)
         {
-            if (contacts.Id == 0)
-            {
-                AddContact(contacts);
-            }
                 _contact = JsonConvert.DeserializeObject<List<Contacts>>(CRUD.Read("Contacts"));
-                var c = _contact.FirstOrDefault();
-                return View(c);
+                //var c = _contact.FirstOrDefault();
+                return View(_contact);
         }
 
         [HttpGet]

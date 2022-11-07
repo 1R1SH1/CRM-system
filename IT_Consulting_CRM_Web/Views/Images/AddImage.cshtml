@@ -1,0 +1,28 @@
+﻿@model IT_Consulting_CRM_Web.Models.Image
+@{
+    ViewData["Title"] = "AddImage";
+}
+
+<center>
+    <h1>Добавление изображения на главную страницу</h1>
+    <hr />
+    <form method="post" enctype="multipart/form-data" asp-controller="Images" asp-action="AddImage">
+        <input type="file" name="imgFile" />
+        <input type="submit" value="Добавить" />
+        <hr />
+        <table class="table">
+            <tr>
+                <th>Название изображения</th>
+                <th>Изображение</th>
+            </tr>
+            @foreach(var item in Model.FileImage)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td><img src="~/img/@item.Name" height="80" width="120"/></td>
+                    <td><a href="@Url.Action("Delete", "Images", new{imgDel=item.Name})">Удалить</a></td>
+                </tr>
+            }
+        </table>
+    </form>
+</center>

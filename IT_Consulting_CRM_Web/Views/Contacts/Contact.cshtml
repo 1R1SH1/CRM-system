@@ -1,5 +1,5 @@
 ﻿@using IT_Consulting_CRM_Web.Controllers
-@model Contacts
+@model IEnumerable<Contacts>
 @if (AccountController.Role == "admin")
 {
     Layout = "_LayoutAdmin";
@@ -62,42 +62,45 @@
                     <div class="col-lg-6">
                         <div class="row" style="align-content:center;">
                             <div class="brd">
+                                @foreach (var item in Model)
+                                {
                                 <form>
                                     <div class="brd container-fluid px-4">
                                         <div id="photo" style="text-align: justify-all;">
-                                            <img style="vertical-align:auto" width="550" height="300" src="@Model.Image" alt="">
+                                            <img style="vertical-align:auto" width="550" height="300" src="@item.Image" alt="">
                                         </div>
                                         <div id="photo" style="text-align: justify-all; word-wrap:break-word;">
-                                            <span style="vertical-align:auto;">@Model.Address</span>
+                                            <span style="vertical-align:auto;">@item.Address</span>
                                         </div>
                                     </div>
                                     <div class="container my-5" style="text-align: justify-all; word-wrap:break-word;">
                                         <span>
                                             <p class="projects-item-descr" style="vertical-align:auto;">
-                                                @Model.ContactsInformation
+                                                @item.ContactsInformation
                                             </p>
                                         </span>                                        
                                     </div>
                                     <div class="container my-5" style="text-align: justify-all;">
                                         <p class="projects-item-descr">
-                                            Телефон: @Model.Phone
+                                            Телефон: @item.Phone
                                         </p>
                                     </div>
                                     <div class="container my-5" style="text-align: justify-all;">
                                         <p class="projects-item-descr">
-                                            E-mail: @Model.EMail
+                                            E-mail: @item.EMail
                                         </p>
                                     </div>
                                     <div class="container my-5" style="text-align: justify-all">
                                         <p class="projects-item-descr">
-                                            @Model.Name
-                                            @Model.LastName
-                                            @Model.SurName                                            
+                                            @item.Name
+                                            @item.LastName
+                                            @item.SurName                                            
                                         </p>
                                     </div>
                                 </form>
-                                <a id="Delete" align="right" href="/Contacts/Delete/@Model.Id">&#128465;</a>
-                                <a id="Update" align="right" href="/Contacts/UpdateContact/@Model.Id">&#128393;</a>
+                                    <a id="Delete" align="right" href="/Contacts/Delete/@item.Id">&#128465;</a>
+                                    <a id="Update" align="right" href="/Contacts/UpdateContact/@item.Id">&#128393;</a>
+                                }                                
                             </div>
                         </div>
                     </div>
@@ -179,40 +182,43 @@ else
                     <div class="col-lg-6">
                         <div class="row" style="align-content:center;">
                             <div class="brd">
-                                <form>
-                                    <div class="brd container-fluid px-4">
-                                        <div id="photo" style="text-align: justify-all;">
-                                            <img style="vertical-align:auto" width="550" height="300" src="@Model.Image" alt="">
+                                @foreach (var item in Model)
+                                {
+                                    <form>
+                                        <div class="brd container-fluid px-4">
+                                            <div id="photo" style="text-align: justify-all;">
+                                                <img style="vertical-align:auto" width="550" height="300" src="@item.Image" alt="">
+                                            </div>
+                                            <div id="photo" style="text-align: justify-all; word-wrap:break-word;">
+                                                <span style="vertical-align:auto;">@item.Address</span>
+                                            </div>
                                         </div>
-                                        <div id="photo" style="text-align: justify-all; word-wrap:break-word;">
-                                            <span style="vertical-align:auto;">@Model.Address</span>
+                                        <div class="container my-5" style="text-align: justify-all; word-wrap:break-word;">
+                                            <span>
+                                                <p class="projects-item-descr" style="vertical-align:auto;">
+                                                    @item.ContactsInformation
+                                                </p>
+                                            </span>
                                         </div>
-                                    </div>
-                                    <div class="container my-5" style="text-align: justify-all; word-wrap:break-word;">
-                                        <span>
-                                            <p class="projects-item-descr" style="text-align: left;">
-                                                @Model.ContactsInformation
+                                        <div class="container my-5" style="text-align: justify-all;">
+                                            <p class="projects-item-descr">
+                                                Телефон: @item.Phone
                                             </p>
-                                        </span>                                        
-                                    </div>
-                                    <div class="container my-5">
-                                        <p class="projects-item-descr">
-                                            Телефон: @Model.Phone
-                                        </p>
-                                    </div>
-                                    <div class="container my-5">
-                                        <p class="projects-item-descr">
-                                            E-mail: @Model.EMail
-                                        </p>
-                                    </div>
-                                    <div class="container my-5">
-                                        <p class="projects-item-descr">
-                                            @Model.Name
-                                            @Model.LastName
-                                            @Model.SurName
-                                        </p>
-                                    </div>
-                                </form>
+                                        </div>
+                                        <div class="container my-5" style="text-align: justify-all;">
+                                            <p class="projects-item-descr">
+                                                E-mail: @item.EMail
+                                            </p>
+                                        </div>
+                                        <div class="container my-5" style="text-align: justify-all">
+                                            <p class="projects-item-descr">
+                                                @item.Name
+                                                @item.LastName
+                                                @item.SurName
+                                            </p>
+                                        </div>
+                                    </form>
+                                }
                             </div>
                         </div>
                     </div>

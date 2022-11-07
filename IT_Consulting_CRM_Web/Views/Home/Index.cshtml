@@ -1,5 +1,4 @@
 ﻿@using IT_Consulting_CRM_Web.Controllers
-@model IT_Consulting_CRM_Web.Models.Requests
 @if (AccountController.Role == "admin")
 {
     Layout = "_LayoutAdmin";
@@ -50,11 +49,10 @@
         </nav>
         <!-- Header - set the background image for the header in the line below-->
         <header style="min-height:10em;">
-            <div class="bg-image-full" style="background-image: url('img/main_image.jpg'); min-height:10em;">
+            <div class="bg-image-full" style="background-image: url('img/картинка.jpg'); min-height:10em;">
                 <div class="nav-link"><a class="btn nav-link text-black" asp-controller="Home" asp-action="ShowRequest">ОСТАВИТЬ ЗАЯВКУ</a></div>
             </div>
-            <a id="Delete" href="/Services/DeleteService/">&#128465;</a>
-            <a id="Update" href="/Services/UpdateService/">&#128393;</a>
+            <a id="Add" href="/Images/AddImage/">&#128393;</a>
         </header>
         <!-- Footer-->
         <footer class="py-lg-3 bg-dark">
@@ -118,7 +116,7 @@ else
         </nav>
         <!-- Header - set the background image for the header in the line below-->
         <header style="min-height:48em;">
-            <div class="bg-image-full" style="background-image: url('img/main_image.jpg'); min-height:48em; width:117em;">
+            <div class="bg-image-full" style="background-image: url('img/картинка.jpg'); min-height:48em; width:117em;">
                 <div style="height:39em"></div>
                 <div class="nav-link"><a class="btn nav-link text-black" asp-controller="Home" asp-action="ShowRequest">ОСТАВИТЬ ЗАЯВКУ</a></div>
             </div>
