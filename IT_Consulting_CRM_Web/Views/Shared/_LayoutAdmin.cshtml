@@ -42,11 +42,12 @@
                                   </a>
                                   <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                       <nav class="sb-sidenav-menu-nested nav">
-                                          <a class="nav-link" href="/Requests/Worktable">Рабочий стол</a>
-                                          <a class="nav-link" href="/Services/Service">Услуги</a>
-                                          <a class="nav-link" href="/Projects/Project">Проекты</a>
-                                          <a class="nav-link" href="/Blog/Blogs">Блог</a>
-                                          <a class="nav-link" href="/Contacts/Contact">Контакты</a>
+                                          <a class="nav-link" asp-controller="Requests" asp-action="Worktable">Рабочий стол</a>
+                                          <a class="nav-link" asp-controller="Home" asp-action="Index">Главная</a>
+                                          <a class="nav-link" asp-controller="Services" asp-action="Service">Услуги</a>
+                                          <a class="nav-link" asp-controller="Projects" asp-action="Project">Проекты</a>
+                                          <a class="nav-link" asp-controller="Blog" asp-action="Blogs">Блог</a>
+                                          <a class="nav-link" asp-controller="Contacts" asp-action="Contact">Контакты</a>
                                       </nav>
                                   </div>                                
                               </div>
@@ -61,7 +62,7 @@
                      <div class="container-fluid px-4">
                          <h1 class="mt-4">Панель управления</h1>                    
                      </div>
-                         <div class="container ms-auto">
+                         <div class="container ms-auto" style="min-height:30em;">
                              <main role="main" class="pb-3 ms-auto">
                                  @RenderBody()
                              </main>

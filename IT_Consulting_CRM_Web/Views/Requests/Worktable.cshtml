@@ -1,6 +1,7 @@
 ﻿@using IT_Consulting_CRM_Web.Controllers
-
-@{Layout = "_LayoutAdmin";}
+@if (AccountController.Role == "admin")
+{
+    Layout = "_LayoutAdmin";
 
 <head>
     <link rel="stylesheet" href="~/css/StyleSheet.css" type="text/css" />
@@ -68,3 +69,4 @@
         }
     </table>
 </div>
+}

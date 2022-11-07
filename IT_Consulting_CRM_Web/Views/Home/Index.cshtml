@@ -1,76 +1,139 @@
 ﻿@using IT_Consulting_CRM_Web.Controllers
 @model IT_Consulting_CRM_Web.Models.Requests
-@{
-    ViewData["Title"] = "Requests";
-}
+@if (AccountController.Role == "admin")
+{
+    Layout = "_LayoutAdmin";
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=10" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <style type="text/css">
-        .btn {
-            text-decoration: none;
-            position: center;
-            height: 40px;
-            line-height: 40px;
-            padding: 0 10px 0 10px;
-            margin: 0 700px;
-            background: linear-gradient(-135deg, #fe2f00, #4463FE);
-            border-width: 0;
-            border-radius: 50px;
-            font-size: 20px;
-            color: white;
-            outline: none;
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="#!"></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    @if (AccountController.Role == "admin")
-                    {
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=10" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <link href="~/css/styles.css" rel="stylesheet"/>
+        <style type="text/css">
+            .btn {
+                text-decoration: none;
+                position: center;
+                height: 40px;
+                line-height: 40px;
+                padding: 0 10px 0 10px;
+                margin: 480px 700px 0;
+                background: linear-gradient(-135deg, #fe2f00, #4463FE);
+                border-width: 0;
+                border-radius: 50px;
+                font-size: 20px;
+                color: white;
+                outline: none;
+                cursor: pointer;
+                width: 250px;
+            }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="#!"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item"><a class="nav-link" asp-controller="Requests" asp-action="Worktable">РАБОЧИЙ СТОЛ</a></li>
-                    }
-                    else
-                    {
-                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">ГЛАВНАЯ</a></li>
-                    <li class="nav-item"><a class="nav-link" asp-controller="Services" asp-action="Service">УСЛУГИ</a></li>
-                    <li class="nav-item"><a class="nav-link" asp-controller="Projects" asp-action="Project">ПРОЕКТЫ</a></li>
-                    <li class="nav-item"><a class="nav-link" asp-controller="Blog" asp-action="Blogs">БЛОГ</a></li>
-                    <li class="nav-item"><a class="nav-link" asp-controller="Contacts" asp-action="Contact">КОНТАКТЫ</a></li>
-                    }
-                </ul>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">ГЛАВНАЯ</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Services" asp-action="Service">УСЛУГИ</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Projects" asp-action="Project">ПРОЕКТЫ</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Blog" asp-action="Blogs">БЛОГ</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Contacts" asp-action="Contact">КОНТАКТЫ</a></li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
-    <!-- Header - set the background image for the header in the line below-->
-    <header>
-        <div class="py-5 bg-image-full" style="background-image: url('img/main_image.jpg')">
-            <div style="height:39em"></div>
-            <ul class="btn btn-primary">
-                <li class="nav-item"><a class="nav-link text-black" asp-controller="Home" asp-action="ShowRequest">ОСТАВИТЬ ЗАЯВКУ</a></li>
-            </ul>
-        </div>        
-    </header>    
-    <!-- Footer-->
-    <footer class="py-lg-3 bg-dark">
-        <div class="container">
-            <p class="m-1 text-center text-white">#Skill &copy; 2022</p>
-            <p class="m-0 text-center text-white">Все права защищены</p>
-        </div>
-    </footer>
-    <!-- Bootstrap core JS-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Core theme JS-->
-    <script src="js/scripts.js"></script>
-</body>
-</html>
+        </nav>
+        <!-- Header - set the background image for the header in the line below-->
+        <header style="min-height:10em;">
+            <div class="bg-image-full" style="background-image: url('img/main_image.jpg'); min-height:10em;">
+                <div class="nav-link"><a class="btn nav-link text-black" asp-controller="Home" asp-action="ShowRequest">ОСТАВИТЬ ЗАЯВКУ</a></div>
+            </div>
+            <a id="Delete" href="/Services/DeleteService/">&#128465;</a>
+            <a id="Update" href="/Services/UpdateService/">&#128393;</a>
+        </header>
+        <!-- Footer-->
+        <footer class="py-lg-3 bg-dark">
+            <div class="container">
+                <p class="m-1 text-center text-white">#Skill &copy; 2022</p>
+                <p class="m-0 text-center text-white">Все права защищены</p>
+            </div>
+        </footer>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+    </body>
+    </html>
+}
+else
+{
+    
+    ViewData["Title"] = "Requests";
+
+    <html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=10" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <style type="text/css">
+            .btn {
+                text-decoration: none;
+                position: center;
+                height: 40px;
+                line-height: 40px;
+                padding: 0 10px 0 10px;
+                margin: 80px 700px 0;
+                background: linear-gradient(-135deg, #fe2f00, #4463FE);
+                border-width: 0;
+                border-radius: 50px;
+                font-size: 20px;
+                color: white;
+                outline: none;
+                cursor: pointer;
+                width: 250px;
+            }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="#!"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">ГЛАВНАЯ</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Services" asp-action="Service">УСЛУГИ</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Projects" asp-action="Project">ПРОЕКТЫ</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Blog" asp-action="Blogs">БЛОГ</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Contacts" asp-action="Contact">КОНТАКТЫ</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Header - set the background image for the header in the line below-->
+        <header style="min-height:48em;">
+            <div class="bg-image-full" style="background-image: url('img/main_image.jpg'); min-height:48em; width:117em;">
+                <div style="height:39em"></div>
+                <div class="nav-link"><a class="btn nav-link text-black" asp-controller="Home" asp-action="ShowRequest">ОСТАВИТЬ ЗАЯВКУ</a></div>
+            </div>
+        </header>
+        <!-- Footer-->
+        <footer class="py-lg-3 bg-dark">
+            <div class="container">
+                <p class="m-1 text-center text-white">#Skill &copy; 2022</p>
+                <p class="m-0 text-center text-white">Все права защищены</p>
+            </div>
+        </footer>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+    </body>
+    </html>
+}
