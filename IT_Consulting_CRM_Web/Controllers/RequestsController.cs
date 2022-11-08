@@ -1,16 +1,14 @@
 using IT_Consulting_CRM_Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.Globalization;
 
 namespace IT_Consulting_CRM_Web.Controllers
 {
     public class RequestsController : Controller
     {
-        public static List<Requests> Requests { get; set; }
-        public static List<Requests> RawRequests { get; set; }
+        public static List<Requests>? Requests { get; set; }
+        public static List<Requests>? RawRequests { get; set; }
         private static int? Diapazon { get; set; }
         public static DateTime Start { get; set; }
         public static DateTime End { get; set; }
@@ -24,7 +22,7 @@ namespace IT_Consulting_CRM_Web.Controllers
         {
             if (Diapazon == null) Diapazon = 0;
             Show();
-            Console.WriteLine(RawRequests.Count);
+            Console.WriteLine(RawRequests?.Count);
             return View();
         }
 
@@ -74,7 +72,7 @@ namespace IT_Consulting_CRM_Web.Controllers
             RawRequests = JsonConvert.DeserializeObject<List<Requests>>(CRUD.Read("Request"));
             Requests = new List<Requests>();
             SetDiapazon();
-            for (int i = 0; i < RawRequests.Count; i++)
+            for (int i = 0; i < RawRequests?.Count; i++)
             {
                 if (RawRequests[i].Date >= Start && RawRequests[i].Date < End.AddDays(1))
                 {
@@ -102,7 +100,7 @@ namespace IT_Consulting_CRM_Web.Controllers
         {
             RawRequests = JsonConvert.DeserializeObject<List<Requests>>(CRUD.Read("Request"));
             string[] output = ParseStatus(Status);
-            Requests request = RawRequests.Find(u => u.Id == int.Parse(output[0]));
+            Requests? request = RawRequests?.Find(u => u.Id == int.Parse(output[0]));
             request.Status = int.Parse(output[1]);
             CRUD.Update("Request", JsonConvert.SerializeObject(request));
             return RedirectToAction("Worktable", "Requests");

@@ -31,8 +31,8 @@
         <input type="date" name="end" value="@RequestsController.End.ToString("yyyy-MM-dd")" onchange="this.form.submit()"/>
     </form>
     </div>
-        <p id=Subheader style="text-align:left">Всего заявок: @RequestsController.RawRequests.Count</p>
-        <p id=Subheader style="text-align:left">За указанный период: @RequestsController.Requests.Count</p>
+        <p id=Subheader style="text-align:left">Всего заявок: @RequestsController.RawRequests?.Count</p>
+        <p id=Subheader style="text-align:left">За указанный период: @RequestsController.Requests?.Count</p>
     <table class="simple-little-table" cellspacing='0'>
         <tr style="font-size:20px;">
             <td width="160" style="max-width:160px;">Дата</td>

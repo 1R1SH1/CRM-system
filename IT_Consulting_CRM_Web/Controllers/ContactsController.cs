@@ -1,21 +1,18 @@
 using IT_Consulting_CRM_Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace IT_Consulting_CRM_Web.Controllers
 {
     public class ContactsController : Controller
     {
 
-        private static List<Contacts> _contact = new List<Contacts>();
+        private static List<Contacts>? _contact = new List<Contacts>();
 
         public IActionResult Contact(Contacts contacts)
         {
-                _contact = JsonConvert.DeserializeObject<List<Contacts>>(CRUD.Read("Contacts"));
-                //var c = _contact.FirstOrDefault();
-                return View(_contact);
+            _contact = JsonConvert.DeserializeObject<List<Contacts>>(CRUD.Read("Contacts"));
+            return View(_contact);
         }
 
         [HttpGet]

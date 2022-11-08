@@ -1,7 +1,6 @@
 ﻿using Desktop_App.Views;
 using System;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Text;
 
 namespace Desktop_App.Core
@@ -18,7 +17,7 @@ namespace Desktop_App.Core
         {
             Answer(Main.httpClient.PostAsync($"{Main.Host}{url}", new StringContent(json, Encoding.UTF8, "application/json")).Result.ToString());
         }
-
+        
         public static string Read(string url)
         {
             return Main.httpClient.GetAsync($"{Main.Host}{url}").Result.Content.ReadAsStringAsync().Result;

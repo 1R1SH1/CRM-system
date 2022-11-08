@@ -11,20 +11,22 @@ namespace Desktop_App.ViewModels
         public RelayCommand ShutDownWindowCommand { get; set; }
         public RelayCommand MaximizeWindowCommand { get; set; }
         public RelayCommand MinimizeWindowCommand { get; set; }
+        public RelayCommand ShowLoginWindow { get; set; }
         public RelayCommand ShowRequestWindow { get; set; }
         public RelayCommand ShowServiceWindow { get; set; }
         public RelayCommand ShowProjectWindow { get; set; }
         public RelayCommand ShowBlogsWindow { get; set; }
         public RelayCommand ShowContactsWindow { get; set; }
-        public MainWindow MainWin { get; set; }
+        public static LoginWindow LogWin { get; set; }
         private object _currentView;
-        
+
         public event PropertyChangedEventHandler PropertyChanged;
         private RequestsViewModel _requestviewmodel;
         private ServicesViewModel _serviceviewmodel;
         private ProjectViewModel _projectsviewmodel;
         private BlogsViewModel _blogsviewmodel;
         private ContactsViewModel _contactsviewmodel;
+        private LoginViewModel _loginviewmodel;
 
         public RequestsViewModel RequestViewModel
         {
@@ -82,8 +84,19 @@ namespace Desktop_App.ViewModels
             }
         }
 
+        public LoginViewModel Model
+        {
+            get => _loginviewmodel;
+            set
+            {
+                _loginviewmodel = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Model)));
+            }
+        }
+
         public MainViewModel()
         {
+            Model = new LoginViewModel("Authentication");
             RequestViewModel = new RequestsViewModel("Request");
             ServiceViewModel = new ServicesViewModel("Services");
             ProjectsViewModel = new ProjectViewModel("Project");
@@ -109,6 +122,7 @@ namespace Desktop_App.ViewModels
                 else
                     Application.Current.MainWindow.WindowState = WindowState.Minimized;
             });
+            ShowLoginWindow = new(o => { CurrentView = Model; });
             ShowRequestWindow = new(o => { CurrentView = RequestViewModel; });
             ShowServiceWindow = new(o => { CurrentView = ServiceViewModel; });
             ShowProjectWindow = new(o => { CurrentView = ProjectsViewModel; });

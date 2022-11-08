@@ -1,8 +1,5 @@
 using IT_Consulting_CRM_API.Models;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace IT_Consulting_CRM_API
 {

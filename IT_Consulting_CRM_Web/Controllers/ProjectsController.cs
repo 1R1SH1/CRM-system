@@ -1,14 +1,12 @@
 using IT_Consulting_CRM_Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace IT_Consulting_CRM_Web.Controllers
 {
     public class ProjectsController : Controller
     {
-        private static List<Projects> _services = new();
+        private static List<Projects>? _services = new();
 
         public IActionResult Project()
         {
@@ -19,7 +17,7 @@ namespace IT_Consulting_CRM_Web.Controllers
         public IActionResult ProjectDetails(Projects projects)
         {
             _services = JsonConvert.DeserializeObject<List<Projects>>(CRUD.Read("Project"));
-            var p = _services.FirstOrDefault(x => x.Id == projects.Id);
+            var p = _services?.FirstOrDefault(x => x.Id == projects.Id);
             return View(p);
         }
 

@@ -14,17 +14,18 @@ namespace IT_Consulting_CRM_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "admin")]
     public class RequestController : ControllerBase
     {
-        public static DataContext Context { get; set; }
+        public static DataContext? Context { get; set; }
 
         public static List<Requests> Requests = new List<Requests>();
 
-        private static HttpClient httpClient { get; set; }
+        private static HttpClient? httpClient { get; set; }
 
-        private static string BotUrl { get; set; }
+        private static string? BotUrl { get; set; }
 
-        private static string PrevDatas { get; set; }
+        private static string? PrevDatas { get; set; }
 
         private static int Update_id { get; set; }
         public RequestController(DataContext dataContext)
@@ -61,7 +62,7 @@ namespace IT_Consulting_CRM_API.Controllers
         public async Task<IEnumerable<Requests>> Get()
         {
             //ReadDataFromBot();
-            return await Context.Request.ToListAsync();
+            return await Context.Request.ToListAsync().ConfigureAwait(true);
         }
 
         private void ReadDataFromBot()

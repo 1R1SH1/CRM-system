@@ -1,7 +1,4 @@
-﻿using System;
-using System.Xml.Linq;
-
-namespace IT_Consulting_CRM_Web.Models
+﻿namespace IT_Consulting_CRM_Web.Models
 {
     public class Requests
     {
@@ -22,5 +19,5 @@ namespace IT_Consulting_CRM_Web.Models
             Information = information;
             Date = DateTime.Now;
         }
-    }    
+    }
 }

@@ -1,5 +1,3 @@
-using System;
-
 public interface IRequestMessage
 {
     int Id { get; set; }

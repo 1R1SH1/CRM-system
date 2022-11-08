@@ -3,17 +3,15 @@ using IT_Consulting_CRM_API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace IT_Consulting_CRM_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "admin")]
     public class ProjectController : ControllerBase
     {
-        public static DataContext Context { get; set; }
+        public static DataContext? Context { get; set; }
         public ProjectController(DataContext dataContext)
         {
             Context = dataContext;

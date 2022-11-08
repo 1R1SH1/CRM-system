@@ -1,9 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using IT_Consulting_CRM_Web.Models;
-using System.IO;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Hosting;
-using System.Threading.Tasks;
+﻿using IT_Consulting_CRM_Web.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace IT_Consulting_CRM_Web.Controllers
 {
@@ -28,7 +24,7 @@ namespace IT_Consulting_CRM_Web.Controllers
         public async Task<IActionResult> AddImage(IFormFile imgFile)
         {
             string ext = Path.GetExtension(imgFile.FileName);
-            if(ext == ".jpg" || ext == ".png" || ext == ".gif")
+            if (ext == ".jpg" || ext == ".png" || ext == ".gif")
             {
                 var imgSave = Path.Combine(_webHostEnvironment.WebRootPath, "img", imgFile.FileName);
                 var stream = new FileStream(imgSave, FileMode.Create);
@@ -39,9 +35,9 @@ namespace IT_Consulting_CRM_Web.Controllers
         }
         public IActionResult Delete(string imgDel)
         {
-            imgDel=Path.Combine(_webHostEnvironment.WebRootPath, "img", imgDel);
+            imgDel = Path.Combine(_webHostEnvironment.WebRootPath, "img", imgDel);
             FileInfo fileInfo = new FileInfo(imgDel);
-            if(fileInfo != null)
+            if (fileInfo != null)
             {
                 System.IO.File.Delete(imgDel);
                 fileInfo.Delete();

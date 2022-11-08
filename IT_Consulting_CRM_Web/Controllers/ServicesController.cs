@@ -1,13 +1,12 @@
 using IT_Consulting_CRM_Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System.Collections.Generic;
 
 namespace IT_Consulting_CRM_Web.Controllers
 {
     public class ServicesController : Controller
     {
-        private static List<Services> _services = new List<Services>();
+        private static List<Services>? _services = new List<Services>();
 
         public IActionResult Service()
         {

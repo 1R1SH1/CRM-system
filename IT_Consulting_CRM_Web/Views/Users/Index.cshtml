@@ -1,5 +1,5 @@
 ﻿@using IT_Consulting_CRM_Web.Controllers
-@model IEnumerable<IT_Consulting_CRM_Web.ViewModels.CreateUserViewModel>
+@model IEnumerable<IT_Consulting_CRM_Web.Models.AnswerUser>
 @{
     ViewData["Title"] = "Users list";
 }
@@ -34,13 +34,12 @@
             <th></th>
             <th></th>
         </tr>
-        @foreach (var user in Model.OrderByDescending(x => x.Username))
+        @foreach (var user in Model)
         {
             <tr>
-                <th>@user.Username</th>
+                <th>@user.Name</th>
             </tr>
         }
     </table>
 
-<a class="btn" asp-action="Create">Добавить пользователя</a>
 }

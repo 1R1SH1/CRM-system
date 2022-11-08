@@ -11,9 +11,10 @@ namespace IT_Consulting_CRM_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "admin")]
     public class ContactsController : ControllerBase
     {
-        public static DataContext Context { get; set; }
+        public static DataContext? Context { get; set; }
         public ContactsController(DataContext dataContext)
         {
             Context = dataContext;

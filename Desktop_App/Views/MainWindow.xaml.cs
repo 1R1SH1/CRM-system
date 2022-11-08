@@ -9,7 +9,6 @@ namespace Desktop_App.Views
     {
         public HttpClient httpClient { get; set; }
         public string Host { get; set; }
-        public string apiType { get; set; }
         public MainWindow()
         {
             InitializeComponent();
