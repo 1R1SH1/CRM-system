@@ -13,7 +13,7 @@ namespace Desktop_App.Views
         {
             InitializeComponent();
             CRUD.Init(this);
-            Host = "https://localhost:44390/api/";
+            Host = "https://localhost:5001/api/";
             httpClient = new HttpClient();
             DataContext = new MainViewModel();
         }

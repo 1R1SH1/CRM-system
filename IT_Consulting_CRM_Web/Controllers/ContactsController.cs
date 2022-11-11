@@ -9,7 +9,7 @@ namespace IT_Consulting_CRM_Web.Controllers
 
         private static List<Contacts>? _contact = new List<Contacts>();
 
-        public IActionResult Contact(Contacts contacts)
+        public IActionResult Contact()
         {
             _contact = JsonConvert.DeserializeObject<List<Contacts>>(CRUD.Read("Contacts"));
             return View(_contact);

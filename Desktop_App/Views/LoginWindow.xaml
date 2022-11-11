@@ -3,10 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:local="clr-namespace:Desktop_App.Views" xmlns:viewmodels="clr-namespace:Desktop_App.ViewModels" 
+             xmlns:local="clr-namespace:Desktop_App.Views" 
+             xmlns:viewmodels="clr-namespace:Desktop_App.ViewModels" 
              d:DataContext="{d:DesignInstance Type=viewmodels:LoginViewModel}"
              mc:Ignorable="d" Background="{DynamicResource winColor}"
-             Height="170" Width="270" MaxHeight="170" MaxWidth="270" MinHeight="170" MinWidth="270">
+             Height="170" 
+             Width="270" 
+             MaxHeight="170" 
+             MaxWidth="270" 
+             MinHeight="170" 
+             MinWidth="270">
     <Grid>
         <TextBlock
                    Foreground="White"
@@ -21,7 +27,7 @@
             FontFamily="Segoe UI"
             FontSize="18"
             TextWrapping="Wrap" 
-            Text="{Binding Login, UpdateSourceTrigger=PropertyChanged}"
+            Text=""
             HorizontalAlignment="Left"
             Width="230"
             Height="26"
@@ -37,9 +43,9 @@
                    FontSize="12"
                    TextWrapping="Wrap" 
                    Text="Пароль" HorizontalAlignment="Left" Width="70" Height="16" VerticalAlignment="Top"/>
-        <TextBox x:Name="Password"
+        <PasswordBox x:Name="Password"
                      Margin="10,68,0,0"
-                     Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"
+                     Password=""
                      BorderBrush="{DynamicResource textColor}"
                      Foreground="{DynamicResource textColor}"
                      Background="{DynamicResource fieldColor}" 
@@ -49,10 +55,10 @@
                      Width="230"
                      Height="26"
                      VerticalAlignment="Top">
-            <TextBox.InputBindings>
+            <PasswordBox.InputBindings>
                 <KeyBinding Key="Enter" Command="{Binding Send}"/>
-            </TextBox.InputBindings>
-        </TextBox>
+            </PasswordBox.InputBindings>
+        </PasswordBox>
 
         <Button Content="Вход"
                 HorizontalAlignment="Center"

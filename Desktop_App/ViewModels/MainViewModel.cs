@@ -17,7 +17,9 @@ namespace Desktop_App.ViewModels
         public RelayCommand ShowProjectWindow { get; set; }
         public RelayCommand ShowBlogsWindow { get; set; }
         public RelayCommand ShowContactsWindow { get; set; }
-        public static LoginWindow LogWin { get; set; }
+        public RelayCommand ShowUserMainWindow { get; set; }
+        public RelayCommand ShowUserProjectWindow { get; set; }
+
         private object _currentView;
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -26,7 +28,7 @@ namespace Desktop_App.ViewModels
         private ProjectViewModel _projectsviewmodel;
         private BlogsViewModel _blogsviewmodel;
         private ContactsViewModel _contactsviewmodel;
-        private LoginViewModel _loginviewmodel;
+        private LoginWindow _loginWindow;
 
         public RequestsViewModel RequestViewModel
         {
@@ -84,19 +86,45 @@ namespace Desktop_App.ViewModels
             }
         }
 
-        public LoginViewModel Model
+        public LoginWindow Model
         {
-            get => _loginviewmodel;
+            get => _loginWindow;
             set
             {
-                _loginviewmodel = value;
+                _loginWindow = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Model)));
             }
         }
-
-        public MainViewModel()
+        public void User()
         {
-            Model = new LoginViewModel("Authentication");
+            ProjectsViewModel = new ProjectViewModel("Project");
+
+
+            Application.Current.MainWindow.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
+
+            MoveWindowCommand = new(o => { Application.Current.MainWindow.DragMove(); });
+            ShutDownWindowCommand = new(o => { Application.Current.Shutdown(); });
+            MaximizeWindowCommand = new(o =>
+            {
+                if (Application.Current.MainWindow.WindowState == WindowState.Maximized)
+                    Application.Current.MainWindow.WindowState = WindowState.Normal;
+                else
+                    Application.Current.MainWindow.WindowState = WindowState.Maximized;
+            });
+
+            MinimizeWindowCommand = new(o =>
+            {
+                if (Application.Current.MainWindow.WindowState == WindowState.Minimized)
+                    Application.Current.MainWindow.WindowState = WindowState.Normal;
+                else
+                    Application.Current.MainWindow.WindowState = WindowState.Minimized;
+            });
+
+            ShowUserProjectWindow = new(o => { CurrentView = ProjectsViewModel; });
+        }
+
+        public void Admin()
+        {
             RequestViewModel = new RequestsViewModel("Request");
             ServiceViewModel = new ServicesViewModel("Services");
             ProjectsViewModel = new ProjectViewModel("Project");
@@ -122,6 +150,38 @@ namespace Desktop_App.ViewModels
                 else
                     Application.Current.MainWindow.WindowState = WindowState.Minimized;
             });
+
+            ShowRequestWindow = new(o => { CurrentView = RequestViewModel; });
+            ShowServiceWindow = new(o => { CurrentView = ServiceViewModel; });
+            ShowProjectWindow = new(o => { CurrentView = ProjectsViewModel; });
+            ShowBlogsWindow = new(o => { CurrentView = BlogViewModel; });
+            ShowContactsWindow = new(o => { CurrentView = ContactViewModel; });
+        }
+
+        public MainViewModel()
+        {
+            Model = new LoginWindow(this);
+
+            Application.Current.MainWindow.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
+
+            MoveWindowCommand = new(o => { Application.Current.MainWindow.DragMove(); });
+            ShutDownWindowCommand = new(o => { Application.Current.Shutdown(); });
+            MaximizeWindowCommand = new(o =>
+            {
+                if (Application.Current.MainWindow.WindowState == WindowState.Maximized)
+                    Application.Current.MainWindow.WindowState = WindowState.Normal;
+                else
+                    Application.Current.MainWindow.WindowState = WindowState.Maximized;
+            });
+
+            MinimizeWindowCommand = new(o =>
+            {
+                if (Application.Current.MainWindow.WindowState == WindowState.Minimized)
+                    Application.Current.MainWindow.WindowState = WindowState.Normal;
+                else
+                    Application.Current.MainWindow.WindowState = WindowState.Minimized;
+            });
+
             ShowLoginWindow = new(o => { CurrentView = Model; });
             ShowRequestWindow = new(o => { CurrentView = RequestViewModel; });
             ShowServiceWindow = new(o => { CurrentView = ServiceViewModel; });

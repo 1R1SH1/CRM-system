@@ -155,7 +155,7 @@ namespace Desktop_App.ViewModels
             CRUD.Create(ApiType, JsonConvert.SerializeObject(new Projects(0, Header, Image, ProjectInformation)));
             GetDatas();
         }
-        private void Update()
+        public void Update()
         {
             CRUD.Update(ApiType, JsonConvert.SerializeObject(new Projects(Ids[Selected.Id], Selected.Header, Selected.Image, Selected.ProjectInformation)));
             GetDatas();

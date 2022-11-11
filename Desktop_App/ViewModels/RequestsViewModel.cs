@@ -161,7 +161,7 @@ namespace Desktop_App.ViewModels
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Selected)));
             }
         }
-        public List<Requests> RawRequests
+        public List<Requests>? RawRequests
         {
             get => _rawrequests;
             set
@@ -170,7 +170,7 @@ namespace Desktop_App.ViewModels
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(RawRequests)));
             }
         }
-        public List<Requests> Requests
+        public List<Requests>? Requests
         {
             get => _requests;
             set

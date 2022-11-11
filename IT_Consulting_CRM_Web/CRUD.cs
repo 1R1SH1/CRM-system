@@ -19,7 +19,6 @@ namespace IT_Consulting_CRM_Web
         public static string Read(string url)
         {
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
-            Console.WriteLine($"Real URL = {Host}{url}");
             return httpClient.GetAsync($"{Host}{url}").Result.Content.ReadAsStringAsync().Result;
         }
         public static void Update(string url, string json)

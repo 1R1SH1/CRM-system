@@ -4,6 +4,10 @@ namespace Desktop_App.Models
     {
         public string Name { get; set; }
         public string Password { get; set; }
+        public SendLogin()
+        {
+
+        }
 
         public SendLogin(string name, string password)
         {

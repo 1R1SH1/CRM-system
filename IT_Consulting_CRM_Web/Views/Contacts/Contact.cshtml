@@ -7,6 +7,7 @@
     <!DOCTYPE html>
     <html lang="en">
     <head>
+        <link rel="stylesheet" href="global-styles.css">
         <style type="text/css">
             .btn {
                 text-decoration: none;
@@ -64,10 +65,9 @@
                             <div class="brd">
                                 @foreach (var item in Model)
                                 {
-                                <form>
                                     <div class="brd container-fluid px-4">
-                                        <div id="photo" style="text-align: justify-all;">
-                                            <img style="vertical-align:auto" width="550" height="300" src="@item.Image" alt="">
+                                        <div class="card-img" >
+                                            <img src="@item.Image"/>
                                         </div>
                                         <div id="photo" style="text-align: justify-all; word-wrap:break-word;">
                                             <span style="vertical-align:auto;">@item.Address</span>
@@ -97,7 +97,6 @@
                                             @item.SurName                                            
                                         </p>
                                     </div>
-                                </form>
                                     <a id="Delete" align="right" href="/Contacts/Delete/@item.Id">&#128465;</a>
                                     <a id="Update" align="right" href="/Contacts/UpdateContact/@item.Id">&#128393;</a>
                                 }                                

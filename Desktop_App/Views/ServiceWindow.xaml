@@ -10,126 +10,109 @@
              mc:Ignorable="d"
              d:Height="auto" d:Width="auto">
     <Grid>
-        <Grid.Resources>
-            <DataTemplate x:Key="DeleteTemplate" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="170"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.RowSpan="2">
+            <TextBlock Text="Услуги" HorizontalAlignment="Center" Margin="10" FontSize="28" Foreground="White"/>
+        </Grid>
+        <ScrollViewer Grid.Column="1" Grid.Row="1" Background="#FFF1F1F1" >
+            <StackPanel>
+                <StackPanel Margin="20 0">
+                    <ListBox  Name="ListViewProject" 
+                              ItemsSource="{Binding RawServices, UpdateSourceTrigger=PropertyChanged}" Margin="0,5" Height="600" Width="auto" SelectedItem="{Binding Selected}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Border Margin="10" Width="auto" Height="auto" Background="AliceBlue">
+                                    <StackPanel VerticalAlignment="Top">
+                                        <Expander Name="Header" Margin="5,5,5,5" Header="{Binding Header, UpdateSourceTrigger=PropertyChanged}" FontSize="20" Background="AliceBlue" VerticalAlignment="Top" FontFamily="Segoe UI">
+                                            <StackPanel>
+                                                <TextBlock Text="{Binding ServicesInformation}" TextWrapping="Wrap" MaxWidth="1550" Height="auto" Margin="2,2,2,2"/>
+                                            </StackPanel>
+                                        </Expander>
+
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>                        
+                    </ListBox>
+                </StackPanel>
                 <Button Content="Удалить"
+                        HorizontalAlignment="Left"
                         FontSize="15"
+                        Margin="10,0,0,0"
+                        Foreground="Black"
                         FontFamily="Segoe UI"
-                        Command="{Binding DataContext.DeleteSelection, ElementName=_grid}" Background="{x:Null}"/>
-            </DataTemplate>
-        </Grid.Resources>
-        <DataGrid x:Name="_grid"
-                  IsSynchronizedWithCurrentItem="True"
-                  SelectionMode="Extended"
-                  AutoGenerateColumns="False"
-                  CanUserAddRows="False"
-                  CanUserDeleteRows="False"
-                  ItemsSource="{Binding RawServices, UpdateSourceTrigger=PropertyChanged}"
-                  SelectedItem="{Binding Selected}"
-                  IsReadOnly="False" Height="auto" VerticalAlignment="Top" HorizontalAlignment="Center" MaxWidth="1920px" Width="auto" Margin="0,200,0,0">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="CellEditEnding">
-                    <i:InvokeCommandAction Command="{Binding ChangedSelection}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-            <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Id}"
-                                    Header="Id"
-                                    IsReadOnly="True"
-                                    Width="50"
-                                    FontSize="18"
-                                    FontFamily="Segoe UI">
-                    <DataGridTextColumn.ElementStyle>
-                        <Style >
-                            <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
-                        </Style>
-                    </DataGridTextColumn.ElementStyle>
-                </DataGridTextColumn>
-                <DataGridTextColumn Binding="{Binding Header, UpdateSourceTrigger=PropertyChanged}"
-                                    Header="Заголовок"
-                                    IsReadOnly="False"
-                                    Width="510"
-                                    FontSize="18"
-                                    FontFamily="Segoe UI">
-                    <DataGridTextColumn.ElementStyle>
-                        <Style >
-                            <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
-                        </Style>
-                    </DataGridTextColumn.ElementStyle>
-                </DataGridTextColumn>
-                <DataGridTextColumn Binding="{Binding ServicesInformation, UpdateSourceTrigger=PropertyChanged}"
-                                    Header="Описание"
-                                    IsReadOnly="False"
-                                    Width="1220"
-                                    FontSize="18"
-                                    FontFamily="Segoe UI">
-                    <DataGridTextColumn.ElementStyle>
-                        <Style >
-                            <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
-                        </Style>
-                    </DataGridTextColumn.ElementStyle>
-                </DataGridTextColumn>
-                <DataGridTemplateColumn CellTemplate="{StaticResource DeleteTemplate}"/>
-            </DataGrid.Columns>
-        </DataGrid>
-        <TextBlock HorizontalAlignment="Left"
-                   TextWrapping="Wrap"
-                   Text="Введите описание"
-                   VerticalAlignment="Top"
-                   Foreground="White"
-                   FontFamily="Segoe UI" Height="30" FontSize="20" Margin="0,70,0,1">
-            <TextBox HorizontalAlignment="Center"
-                 TextWrapping="Wrap"
-                 Text="{Binding ServiceInformation, UpdateSourceTrigger=PropertyChanged}" 
-                 VerticalAlignment="Bottom"
-                 Width="700"
-                 FontSize="18" 
-                 FontFamily="Segoe UI"
-                 Height="26"
-                 Margin="0,1,0,0"
-                 BorderBrush="White">
-            <TextBox.InputBindings>
-                <KeyBinding Key="Enter" Command="{Binding Send}"/>
-            </TextBox.InputBindings>
-        </TextBox>
-        </TextBlock>
-        <TextBlock HorizontalAlignment="Left"
-                   TextWrapping="Wrap"
-                   Text="Введите заголовок"
-                   VerticalAlignment="Top"
-                   Foreground="White"
-                   FontFamily="Segoe UI" Height="30" FontSize="20" Margin="0,30,0,1">
-        <TextBox HorizontalAlignment="Center"
-                 TextWrapping="Wrap"
-                 Text="{Binding Header, UpdateSourceTrigger=PropertyChanged}" 
-                 VerticalAlignment="Bottom"
-                 Width="700"
-                 FontSize="18" 
-                 FontFamily="Segoe UI"
-                 Height="26"
-                 Margin="0,1,0,0"
-                 BorderBrush="White">
-            <TextBox.InputBindings>
-                <KeyBinding Key="Enter" Command="{Binding Send}"/>
-            </TextBox.InputBindings>
-        </TextBox>
-        </TextBlock>
-        
-        <Button Content="Добавить"
-                HorizontalAlignment="Center"
-                Margin="0,110,0,0"
-                VerticalAlignment="Top"
-                Height="30"
-                Width="100"
-                FontFamily="Segoe UI"
-                FontSize="18"
-                Command="{Binding Send}" 
-                BorderBrush="White"/>
-        <TextBlock HorizontalAlignment="Left"
-                   TextWrapping="Wrap"
-                   Text="Услуги"
-                   VerticalAlignment="Top"
-                   Foreground="White"
-                   FontFamily="Segoe UI" Height="30" FontSize="20" Margin="1,1,0,0"/>
+                        Width="100"
+                        Command="{Binding DeleteSelection}" Background="{x:Null}"/>
+
+
+                <StackPanel Margin="2,5,2,2" Background="LightGray" Width="auto" Height="auto">
+                    <TextBlock
+                              Foreground="Black"
+                              Margin="10,10,0,0"
+                              FontFamily="Segoe UI"
+                              FontSize="20"
+                              TextWrapping="Wrap" 
+                              Text="Введите заголовок" HorizontalAlignment="Left" Width="200" Height="25" VerticalAlignment="Top"/>
+                    <TextBox x:Name="Header"
+                             Margin="10,9,0,0"
+                             FontFamily="Segoe UI"
+                             FontSize="18"
+                             Foreground="Black"
+                             Background="White"
+                             TextWrapping="Wrap" 
+                             Text="{Binding Header, UpdateSourceTrigger=PropertyChanged}"
+                             HorizontalAlignment="Left"
+                             Width="550"
+                             MinHeight="26"
+                             VerticalAlignment="Top">
+                        <TextBox.InputBindings>
+                            <KeyBinding Key="Enter" Command="{Binding Send}"/>
+                        </TextBox.InputBindings>
+                    </TextBox>
+                    <TextBlock
+                              Foreground="Black"
+                              Margin="10,5,0,0"
+                              FontFamily="Segoe UI"
+                              FontSize="20"
+                              TextWrapping="Wrap" 
+                              Text="Введите описание " HorizontalAlignment="Left" Width="200" Height="25" VerticalAlignment="Top"/>
+                    <TextBox x:Name="ProjectInformation"
+                             Margin="10,6,0,0"
+                             Text="{Binding ServiceInformation, UpdateSourceTrigger=PropertyChanged}"
+                             FontFamily="Segoe UI"
+                             FontSize="18"
+                             Foreground="Black"
+                             HorizontalAlignment="Left"
+                             TextWrapping="Wrap" 
+                             Background="White"
+                             Width="550"
+                             MinHeight="80"
+                             VerticalAlignment="Top">
+                        <TextBox.InputBindings>
+                            <KeyBinding Key="Enter" Command="{Binding Send}"/>
+                        </TextBox.InputBindings>
+                    </TextBox>
+
+                    <Button Name="addProject"
+                        Content="Добавить новую услугу"
+                        HorizontalAlignment="Left"
+                        Margin="155,10,0,4"
+                        VerticalAlignment="Top"
+                        Height="30"
+                        Width="auto"
+                        FontFamily="Segoe UI"
+                        FontSize="18"
+                        Command="{Binding Send}"
+                        BorderBrush="White"/>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </UserControl>
