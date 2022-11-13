@@ -1,19 +1,13 @@
-﻿<UserControl x:Class="Desktop_App.Views.ProjectsWindow"
+﻿<UserControl x:Class="Desktop_App.Views.SendRequestWindow"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Desktop_App.Views"
-             xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
-             xmlns:converter="clr-namespace:Desktop_App.Models"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:Desktop_App.Views" 
              xmlns:viewmodels="clr-namespace:Desktop_App.ViewModels" 
-             d:DataContext="{d:DesignInstance Type=viewmodels:ProjectViewModel}"
+             d:DataContext="{d:DesignInstance Type=viewmodels:SendRequestViewModel}"
              mc:Ignorable="d"
-             d:Height="600" d:Width="auto">
-    <UserControl.Resources>
-        <converter:BooleanToVisibilityConverter x:Key="Visible"/>
-    </UserControl.Resources>
-    
+             Height="auto" Width="auto">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -24,57 +18,27 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid Grid.RowSpan="2">
-            <TextBlock Text="Проекты" HorizontalAlignment="Center" Margin="10" FontSize="28" Foreground="White"/>
+            <TextBlock Text="Главная" HorizontalAlignment="Center" Margin="10" FontSize="28" Foreground="White"/>
         </Grid>
         <ScrollViewer Grid.Column="1" Grid.Row="1" Background="#FFF1F1F1" >
             <StackPanel>
                 <StackPanel Margin="20 0">
                     <ListBox  Name="ListViewProject" 
-                              ItemsSource="{Binding RawProjects, UpdateSourceTrigger=PropertyChanged}" Margin="0,5" Height="600" Width="auto" SelectedItem="{Binding Selected}">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <Border Margin="10" Width="300" Height="auto" >
-                                    <StackPanel VerticalAlignment="Top">
-                                        <Border Width="300" Height="140" Margin="5,5,5,5">
-                                            <Border.Effect>
-                                                <DropShadowEffect ShadowDepth="1"/>
-                                            </Border.Effect>
-                                            <Border.Background>
-                                                <ImageBrush ImageSource="{Binding Image, UpdateSourceTrigger=PropertyChanged}"/>
-                                            </Border.Background>
-                                        </Border>
-                                        <TextBlock Name="Header" Margin="5" Text="{Binding Header, UpdateSourceTrigger=PropertyChanged}" FontSize="17" TextWrapping="Wrap" VerticalAlignment="Top" FontFamily="Franklin Gothic Medium"/>
-                                        <TextBlock Name="ProjectInfo" Margin="5 0" Text="{Binding ProjectInformation, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" FontSize="15" VerticalAlignment="Top" FontFamily="Segoe UI"/>
-
-                                    </StackPanel>
-                                </Border>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                        <ListBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel/>
-                            </ItemsPanelTemplate>
-                        </ListBox.ItemsPanel>
+                              Margin="0,5" Height="auto" Width="auto" SelectedItem="{Binding Selected}">
+                        <ListBoxItem>
+                            <Image Source="/Image/картинка.jpg"/>
+                        </ListBoxItem>
                     </ListBox>
                 </StackPanel>
-                <Button Content="Удалить"
-                        HorizontalAlignment="Left"
-                        FontSize="15"
-                        Margin="10,0,0,0"
-                        Foreground="Black"
-                        FontFamily="Segoe UI"
-                        Width="100"
-                        Visibility="{Binding Converter={StaticResource Visible}}"
-                        Command="{Binding DeleteSelection}" Background="{x:Null}"/>
 
-                <StackPanel Margin="2,5,2,2" Background="LightGray" Width="auto" Height="auto" Visibility="{Binding Converter={StaticResource Visible}}">
+                <StackPanel Margin="2,5,2,2" Background="LightGray" Width="auto" Height="auto">
                     <TextBlock
                               Foreground="Black"
                               Margin="10,10,0,0"
                               FontFamily="Segoe UI"
                               FontSize="20"
                               TextWrapping="Wrap" 
-                              Text="Введите заголовок" HorizontalAlignment="Left" Width="200" Height="25" VerticalAlignment="Top"/>
+                              Text="Имя" HorizontalAlignment="Left" Width="200" Height="25" VerticalAlignment="Top"/>
                     <TextBox x:Name="Header"
                              Margin="10,9,0,0"
                              FontFamily="Segoe UI"
@@ -82,7 +46,7 @@
                              Foreground="Black"
                              Background="White"
                              TextWrapping="Wrap" 
-                             Text="{Binding Header, UpdateSourceTrigger=PropertyChanged}"
+                             Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
                              HorizontalAlignment="Left"
                              Width="550"
                              MinHeight="26"
@@ -97,10 +61,10 @@
                               FontFamily="Segoe UI"
                               FontSize="20"
                               TextWrapping="Wrap" 
-                              Text="Введите описание " HorizontalAlignment="Left" Width="200" Height="25" VerticalAlignment="Top"/>
+                              Text="Фамилию" HorizontalAlignment="Left" Width="200" Height="25" VerticalAlignment="Top"/>
                     <TextBox x:Name="ProjectInformation"
                              Margin="10,6,0,0"
-                             Text="{Binding ProjectInformation, UpdateSourceTrigger=PropertyChanged}"
+                             Text="{Binding SurName, UpdateSourceTrigger=PropertyChanged}"
                              FontFamily="Segoe UI"
                              FontSize="18"
                              Foreground="Black"
@@ -120,10 +84,33 @@
                               FontFamily="Segoe UI"
                               FontSize="20"
                               TextWrapping="Wrap" 
-                              Text="Вставьте ссылку на изображение" HorizontalAlignment="Left" Width="350" Height="25" VerticalAlignment="Top"/>
+                              Text="EMail" HorizontalAlignment="Left" Width="350" Height="25" VerticalAlignment="Top"/>
                     <TextBox x:Name="Image"
                              Margin="10,6,0,0"
-                             Text="{Binding Image, UpdateSourceTrigger=PropertyChanged}"
+                             Text="{Binding EMail, UpdateSourceTrigger=PropertyChanged}"
+                             FontFamily="Segoe UI"
+                             FontSize="18"
+                             Foreground="Black"
+                             Background="White"
+                             HorizontalAlignment="Left"
+                             TextWrapping="Wrap" 
+                             Width="550"
+                             MinHeight="26"
+                             VerticalAlignment="Top">
+                        <TextBox.InputBindings>
+                            <KeyBinding Key="Enter" Command="{Binding Send}"/>
+                        </TextBox.InputBindings>
+                    </TextBox>
+                    <TextBlock
+                              Foreground="Black"
+                              Margin="10,5,0,0"
+                              FontFamily="Segoe UI"
+                              FontSize="20"
+                              TextWrapping="Wrap" 
+                              Text="Задайте вопрос" HorizontalAlignment="Left" Width="200" Height="25" VerticalAlignment="Top"/>
+                    <TextBox x:Name="DateTime"
+                             Margin="10,6,0,0"
+                             Text="{Binding Information, UpdateSourceTrigger=PropertyChanged}"
                              FontFamily="Segoe UI"
                              FontSize="18"
                              Foreground="Black"
@@ -139,7 +126,7 @@
                     </TextBox>
 
                     <Button Name="addProject"
-                        Content="Добавить новый проект"
+                        Content="Оставить заявку"
                         HorizontalAlignment="Left"
                         Margin="155,10,0,4"
                         VerticalAlignment="Top"

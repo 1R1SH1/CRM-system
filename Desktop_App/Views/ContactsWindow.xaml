@@ -5,400 +5,247 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Desktop_App.Views"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
+             xmlns:converter="clr-namespace:Desktop_App.Models"
              xmlns:viewmodels="clr-namespace:Desktop_App.ViewModels" 
              d:DataContext="{d:DesignInstance Type=viewmodels:ContactsViewModel}"
              mc:Ignorable="d"
              d:Height="auto" d:Width="auto">
+    <UserControl.Resources>
+        <converter:BooleanToVisibilityConverter x:Key="Visible"/>
+    </UserControl.Resources>
     <Grid>
-        <Grid.Resources>
-            <DataTemplate x:Key="DeleteTemplate" >
-                <Button Content="Удалить"
-                        FontSize="15"
-                        FontFamily="Segoe UI"
-                        Command="{Binding DataContext.DeleteSelection, ElementName=_grid}" Background="{x:Null}"/>
-            </DataTemplate>
-        </Grid.Resources>
-        <DataGrid x:Name="_grid"
-                  IsSynchronizedWithCurrentItem="True"
-                  SelectionMode="Extended"
-                  AutoGenerateColumns="False"
-                  CanUserAddRows="False"
-                  CanUserDeleteRows="False"
-                  ItemsSource="{Binding RawContacts, UpdateSourceTrigger=PropertyChanged}"
-                  SelectedItem="{Binding Selected}"
-                  IsReadOnly="False" Height="auto" VerticalAlignment="Top" HorizontalAlignment="Center" Width="auto" Margin="0,330,0,0">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="CellEditEnding">
-                    <i:InvokeCommandAction Command="{Binding ChangedSelection}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-            <DataGrid.Columns>
-                <DataGridTextColumn IsReadOnly="True"
-                                    FontSize="18"
-                                    FontFamily="Segoe UI"
-                                    Width="auto" 
-                                    Binding="{Binding Id}">
-                    <DataGridTextColumn.Header>
-                        <TextBlock Text="Id"
-                                   FontSize="18"
-                                   TextWrapping="Wrap"
-                                   TextAlignment="Center"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   Width="50"
-                                   Margin="0,2,0,0"/>
-                    </DataGridTextColumn.Header>
-                </DataGridTextColumn>
-                <DataGridTextColumn IsReadOnly="False"
-                                    FontSize="18"
-                                    FontFamily="Segoe UI"
-                                    Width="100" 
-                                    Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}">
-                    <DataGridTextColumn.Header>
-                        <TextBlock Text="Имя"
-                                   FontSize="18"
-                                   TextWrapping="Wrap"
-                                   TextAlignment="Center"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   Width="100"
-                                   Margin="0,2,0,0"/>
-                    </DataGridTextColumn.Header>
-                </DataGridTextColumn>
-                <DataGridTextColumn IsReadOnly="False"
-                                    FontSize="18"
-                                    FontFamily="Segoe UI"
-                                    Width="100"                                     
-                                    Binding="{Binding SurName, UpdateSourceTrigger=PropertyChanged}">
-                    <DataGridTextColumn.ElementStyle>
-                        <Style >
-                            <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
-                        </Style>
-                    </DataGridTextColumn.ElementStyle>
-                    <DataGridTextColumn.Header>
-                        <TextBlock Text="Фамилия"
-                                   FontSize="18"
-                                   TextWrapping="Wrap"
-                                   TextAlignment="Center"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   Width="100"
-                                   Margin="0,2,0,0"/>
-                    </DataGridTextColumn.Header>
-                </DataGridTextColumn>
-                <DataGridTextColumn IsReadOnly="False"
-                                    FontSize="18"
-                                    FontFamily="Segoe UI"
-                                    Width="100" 
-                                    Binding="{Binding LastName, UpdateSourceTrigger=PropertyChanged}">
-                    <DataGridTextColumn.ElementStyle>
-                        <Style >
-                            <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
-                        </Style>
-                    </DataGridTextColumn.ElementStyle>
-                    <DataGridTextColumn.Header>
-                        <TextBlock Text="Отчество"
-                                   FontSize="18"
-                                   TextWrapping="Wrap"
-                                   TextAlignment="Center"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   Width="100"
-                                   Margin="0,2,0,0"/>
-                    </DataGridTextColumn.Header>
-                </DataGridTextColumn>
-                <DataGridTextColumn IsReadOnly="False"
-                                    FontSize="18"
-                                    FontFamily="Segoe UI"
-                                    Width="120" 
-                                    Binding="{Binding Phone, UpdateSourceTrigger=PropertyChanged}">
-                    <DataGridTextColumn.ElementStyle>
-                        <Style >
-                            <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
-                        </Style>
-                    </DataGridTextColumn.ElementStyle>
-                    <DataGridTextColumn.Header>
-                        <TextBlock Text="Телефон"
-                                   FontSize="18"
-                                   TextWrapping="Wrap"
-                                   TextAlignment="Center"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   Width="120"
-                                   Margin="0,2,0,0"/>
-                    </DataGridTextColumn.Header>
-                </DataGridTextColumn>
-                <DataGridTextColumn IsReadOnly="False"
-                                    FontSize="18"
-                                    FontFamily="Segoe UI"
-                                    Width="155" 
-                                    Binding="{Binding EMail, UpdateSourceTrigger=PropertyChanged}">
-                    <DataGridTextColumn.ElementStyle>
-                        <Style >
-                            <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
-                        </Style>
-                    </DataGridTextColumn.ElementStyle>
-                    <DataGridTextColumn.Header>
-                        <TextBlock Text="EMail"
-                                   FontSize="18"
-                                   TextWrapping="Wrap"
-                                   TextAlignment="Center"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   Width="155"
-                                   Margin="0,2,0,0"/>
-                    </DataGridTextColumn.Header>
-                </DataGridTextColumn>
-                <DataGridTextColumn IsReadOnly="False"
-                                    FontSize="18"
-                                    FontFamily="Segoe UI"
-                                    Width="300" 
-                                    Binding="{Binding Address, UpdateSourceTrigger=PropertyChanged}">
-                    <DataGridTextColumn.ElementStyle>
-                        <Style >
-                            <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
-                        </Style>
-                    </DataGridTextColumn.ElementStyle>
-                    <DataGridTextColumn.Header>
-                        <TextBlock Text="Адрес"
-                                   FontSize="18"
-                                   TextWrapping="Wrap"
-                                   TextAlignment="Center"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   Width="300"
-                                   Margin="0,2,0,0"/>
-                    </DataGridTextColumn.Header>
-                </DataGridTextColumn>
-                <DataGridTextColumn IsReadOnly="False"
-                                    FontSize="18"
-                                    FontFamily="Segoe UI"
-                                    Width="500" 
-                                    Binding="{Binding ContactsInformation, UpdateSourceTrigger=PropertyChanged}">
-                    <DataGridTextColumn.ElementStyle>
-                        <Style >
-                            <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
-                        </Style>
-                    </DataGridTextColumn.ElementStyle>
-                    <DataGridTextColumn.Header>
-                        <TextBlock Text="Описание"
-                                   FontSize="18"
-                                   TextWrapping="Wrap"
-                                   TextAlignment="Center"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   Width="500"
-                                   Margin="0,2,0,0"/>
-                    </DataGridTextColumn.Header>
-                </DataGridTextColumn>
-                <DataGridTextColumn IsReadOnly="False"
-                                    FontSize="18"
-                                    FontFamily="Segoe UI"
-                                    Width="340" 
-                                    Binding="{Binding Image, UpdateSourceTrigger=PropertyChanged}">
-                    <DataGridTextColumn.ElementStyle>
-                        <Style >
-                            <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
-                        </Style>
-                    </DataGridTextColumn.ElementStyle>
-                    <DataGridTextColumn.Header>
-                        <TextBlock Text="Изображение"
-                                   FontSize="18"
-                                   TextWrapping="Wrap"
-                                   TextAlignment="Center"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   Width="340"
-                                   Margin="0,2,0,0"/>
-                    </DataGridTextColumn.Header>
-                </DataGridTextColumn>
-                <DataGridTemplateColumn CellTemplate="{StaticResource DeleteTemplate}"/>
-            </DataGrid.Columns>
-        </DataGrid>
-        <TextBlock HorizontalAlignment="Left"
-                   TextWrapping="Wrap"
-                   Text="Введите адрес"
-                   VerticalAlignment="Top"
-                   Foreground="White"
-                   FontFamily="Segoe UI" Height="30" Width="880" FontSize="20" Margin="0,240,0,0">
-            <TextBox HorizontalAlignment="Center"
-                 TextWrapping="Wrap"
-                 AcceptsReturn="True"
-                 Text="{Binding Address, UpdateSourceTrigger=PropertyChanged}" 
-                 VerticalAlignment="Bottom"
-                 Width="700"
-                 FontSize="18" 
-                 FontFamily="Segoe UI"
-                 Height="26"
-                 BorderBrush="White">
-            <TextBox.InputBindings>
-                <KeyBinding Key="Enter" Command="{Binding Send}"/>
-            </TextBox.InputBindings>
-        </TextBox>
-        </TextBlock>
-        <TextBlock HorizontalAlignment="Left"
-                   TextWrapping="Wrap"
-                   Text="Введите описание"
-                   VerticalAlignment="Top"
-                   Foreground="White"
-                   FontFamily="Segoe UI" Height="30" Width="880" FontSize="20" Margin="0,210,0,0">
-            <TextBox HorizontalAlignment="Center"
-                 TextWrapping="Wrap"
-                 AcceptsReturn="True"
-                 Text="{Binding ContactInformation, UpdateSourceTrigger=PropertyChanged}" 
-                 VerticalAlignment="Bottom"
-                 Width="700"
-                 FontSize="18" 
-                 FontFamily="Segoe UI"
-                 Height="26"
-                 BorderBrush="White">
-            <TextBox.InputBindings>
-                <KeyBinding Key="Enter" Command="{Binding Send}"/>
-            </TextBox.InputBindings>
-        </TextBox>
-        </TextBlock>
-        <TextBlock HorizontalAlignment="Left"
-                   TextWrapping="Wrap"
-                   Text="Введите ссылку на изображение"
-                   VerticalAlignment="Top"
-                   Foreground="White"
-                   FontFamily="Segoe UI" Height="30" Width="1100" FontSize="20" Margin="0,180,0,0">
-            <TextBox HorizontalAlignment="Center"
-                 TextWrapping="Wrap"
-                 AcceptsReturn="True"
-                 Text="{Binding Image, UpdateSourceTrigger=PropertyChanged}" 
-                 VerticalAlignment="Bottom"
-                 Width="700"
-                 FontSize="18" 
-                 FontFamily="Segoe UI"
-                 Height="26"
-                 BorderBrush="White">
-            <TextBox.InputBindings>
-                <KeyBinding Key="Enter" Command="{Binding Send}"/>
-            </TextBox.InputBindings>
-        </TextBox>
-        </TextBlock>
-        <TextBlock HorizontalAlignment="Left"
-                   TextWrapping="Wrap"
-                   Text="Введите Email"
-                   VerticalAlignment="Top"
-                   Foreground="White"
-                   FontFamily="Segoe UI" Height="30" FontSize="20" Width="900" Margin="0,150,0,0">
-        <TextBox HorizontalAlignment="Center"
-                 TextWrapping="Wrap"
-                 AcceptsReturn="True"
-                 Text="{Binding EMail, UpdateSourceTrigger=PropertyChanged}" 
-                 VerticalAlignment="Bottom"
-                 Width="700"
-                 FontSize="18" 
-                 FontFamily="Segoe UI"
-                 Height="26"
-                 BorderBrush="White">
-            <TextBox.InputBindings>
-                <KeyBinding Key="Enter" Command="{Binding Send}"/>
-            </TextBox.InputBindings>
-        </TextBox>
-        </TextBlock>
-        <TextBlock HorizontalAlignment="Left"
-                   TextWrapping="Wrap"
-                   Text="Введите телефон"
-                   VerticalAlignment="Top"
-                   Foreground="White"
-                   FontFamily="Segoe UI" Height="30" FontSize="20" Width="900" Margin="0,120,0,0">
-        <TextBox HorizontalAlignment="Center"
-                 TextWrapping="Wrap"
-                 AcceptsReturn="True"
-                 Text="{Binding Phone, UpdateSourceTrigger=PropertyChanged}" 
-                 VerticalAlignment="Bottom"
-                 Width="700"
-                 FontSize="18" 
-                 FontFamily="Segoe UI"
-                 Height="26"
-                 BorderBrush="White">
-            <TextBox.InputBindings>
-                <KeyBinding Key="Enter" Command="{Binding Send}"/>
-            </TextBox.InputBindings>
-        </TextBox>
-        </TextBlock>
-        <TextBlock HorizontalAlignment="Left"
-                   TextWrapping="Wrap"
-                   Text="Введите отчество"
-                   VerticalAlignment="Top"
-                   Foreground="White"
-                   FontFamily="Segoe UI" Height="30" FontSize="20" Width="900" Margin="0,90,0,0">
-        <TextBox HorizontalAlignment="Center"
-                 TextWrapping="Wrap"
-                 AcceptsReturn="True"
-                 Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}" 
-                 VerticalAlignment="Bottom"
-                 Width="700"
-                 FontSize="18" 
-                 FontFamily="Segoe UI"
-                 Height="26"
-                 BorderBrush="White">
-            <TextBox.InputBindings>
-                <KeyBinding Key="Enter" Command="{Binding Send}"/>
-            </TextBox.InputBindings>
-        </TextBox>
-        </TextBlock>
-        <TextBlock HorizontalAlignment="Left"
-                   TextWrapping="Wrap"
-                   Text="Введите фамилию"
-                   VerticalAlignment="Top"
-                   Foreground="White"
-                   FontFamily="Segoe UI" Height="30" FontSize="20" Width="900" Margin="0,60,0,0">
-        <TextBox HorizontalAlignment="Center"
-                 TextWrapping="Wrap"
-                 AcceptsReturn="True"
-                 Text="{Binding SurName, UpdateSourceTrigger=PropertyChanged}" 
-                 VerticalAlignment="Bottom"
-                 Width="700"
-                 FontSize="18" 
-                 FontFamily="Segoe UI"
-                 Height="26"
-                 BorderBrush="White">
-            <TextBox.InputBindings>
-                <KeyBinding Key="Enter" Command="{Binding Send}"/>
-            </TextBox.InputBindings>
-        </TextBox>
-        </TextBlock>
-        <TextBlock HorizontalAlignment="Left"
-                   TextWrapping="Wrap"
-                   Text="Введите имя"
-                   VerticalAlignment="Top"
-                   Foreground="White"
-                   FontFamily="Segoe UI" Height="30" FontSize="20" Width="900" Margin="0,30,0,0">
-        <TextBox HorizontalAlignment="Center"
-                 TextWrapping="Wrap"
-                 AcceptsReturn="True"
-                 Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" 
-                 VerticalAlignment="Bottom"
-                 Width="700"
-                 FontSize="18" 
-                 FontFamily="Segoe UI"
-                 Height="26"
-                 BorderBrush="White">
-            <TextBox.InputBindings>
-                <KeyBinding Key="Enter" Command="{Binding Send}"/>
-            </TextBox.InputBindings>
-        </TextBox>
-        </TextBlock>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="170"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.RowSpan="2">
+            <TextBlock Text="Главная" HorizontalAlignment="Center" Margin="10" FontSize="28" Foreground="White"/>
+        </Grid>
+        <ScrollViewer Grid.Column="1" Grid.Row="1" Background="#FFF1F1F1" >
+            <StackPanel>
+                <StackPanel Margin="20 0" HorizontalAlignment="Center">
+                    <ListBox  Name="ListViewProject" 
+                              ItemsSource="{Binding RawContacts, UpdateSourceTrigger=PropertyChanged}" 
+                              Margin="0,5" Height="auto" 
+                              Width="auto" SelectedItem="{Binding Selected}"
+                              HorizontalAlignment="Center">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Border Margin="10" Width="auto" Height="auto" HorizontalAlignment="Center">
+                                    <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center">
+                                        <Border Width="700" Height="400" Margin="5,5,5,5" HorizontalAlignment="Center">
+                                            <Border.Effect>
+                                                <DropShadowEffect ShadowDepth="1"/>
+                                            </Border.Effect>
+                                            <Border.Background>
+                                                <ImageBrush ImageSource="{Binding Image, UpdateSourceTrigger=PropertyChanged}"/>
+                                            </Border.Background>
+                                        </Border>
+                                        <TextBlock Name="Address" Margin="5 10" Text="{Binding Address, UpdateSourceTrigger=PropertyChanged}" FontSize="17" TextWrapping="Wrap" VerticalAlignment="Top" FontFamily="Franklin Gothic Medium"/>
+                                        <TextBlock Name="ContactsInformation" Margin="5 10" Text="{Binding ContactsInformation, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" FontSize="15" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Segoe UI"/>
+                                        <TextBlock Name="Email" Margin="5 10" Text="{Binding EMail, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" FontSize="15" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Segoe UI"/>
+                                        <TextBlock Name="Phone" Margin="5 10" Text="{Binding Phone, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" FontSize="15" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Segoe UI"/>
+                                        <TextBlock Name="Name" Margin="5 10" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" FontSize="15" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Segoe UI"/>
+                                        <TextBlock Name="SurName" Margin="5 10" Text="{Binding SurName, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" FontSize="15" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Segoe UI"/>
+                                        <TextBlock Name="LastName" Margin="5 10" Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" FontSize="15" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Segoe UI"/>
 
-        <Button Content="Добавить"
-                HorizontalAlignment="Center"
-                Margin="0,280,0,0"
-                VerticalAlignment="Top"
-                Height="30"
-                Width="100"
-                FontFamily="Segoe UI"
-                FontSize="18"
-                Command="{Binding Send}" 
-                BorderBrush="White"/>
-        <TextBlock HorizontalAlignment="Left"
-                   TextWrapping="Wrap"
-                   Text="Контакты"
-                   VerticalAlignment="Top"
-                   Foreground="White"
-                   FontFamily="Segoe UI" Height="30" FontSize="20" Margin="1,1,0,0"/>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                        
+                    </ListBox>
+                </StackPanel>
+                <Button Content="Удалить"
+                        HorizontalAlignment="Left"
+                        FontSize="15"
+                        Margin="10,0,0,0"
+                        Foreground="Black"
+                        FontFamily="Segoe UI"
+                        Width="100"
+                        Visibility="{Binding Converter={StaticResource Visible}}"
+                        Command="{Binding DeleteSelection}" Background="{x:Null}"/>
+
+                <StackPanel Margin="2,5,2,2" Background="LightGray" Width="auto" Height="auto" Visibility="{Binding Converter={StaticResource Visible}}">
+                    <TextBlock
+                              Foreground="Black"
+                              Margin="10,10,0,0"
+                              FontFamily="Segoe UI"
+                              FontSize="20"
+                              TextWrapping="Wrap" 
+                              Text="Имя" HorizontalAlignment="Left" Width="200" Height="25" VerticalAlignment="Top"/>
+                    <TextBox x:Name="Header"
+                             Margin="10,9,0,0"
+                             FontFamily="Segoe UI"
+                             FontSize="18"
+                             Foreground="Black"
+                             Background="White"
+                             TextWrapping="Wrap" 
+                             Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
+                             HorizontalAlignment="Left"
+                             Width="550"
+                             MinHeight="26"
+                             VerticalAlignment="Top">
+                        <TextBox.InputBindings>
+                            <KeyBinding Key="Enter" Command="{Binding Send}"/>
+                        </TextBox.InputBindings>
+                    </TextBox>
+                    <TextBlock
+                              Foreground="Black"
+                              Margin="10,5,0,0"
+                              FontFamily="Segoe UI"
+                              FontSize="20"
+                              TextWrapping="Wrap" 
+                              Text="Фамилию" HorizontalAlignment="Left" Width="200" Height="25" VerticalAlignment="Top"/>
+                    <TextBox x:Name="ProjectInformation"
+                             Margin="10,6,0,0"
+                             Text="{Binding SurName, UpdateSourceTrigger=PropertyChanged}"
+                             FontFamily="Segoe UI"
+                             FontSize="18"
+                             Foreground="Black"
+                             HorizontalAlignment="Left"
+                             TextWrapping="Wrap" 
+                             Background="White"
+                             Width="550"
+                             MinHeight="26"
+                             VerticalAlignment="Top">
+                        <TextBox.InputBindings>
+                            <KeyBinding Key="Enter" Command="{Binding Send}"/>
+                        </TextBox.InputBindings>
+                    </TextBox>
+                    <TextBlock
+                              Foreground="Black"
+                              Margin="10,5,0,0"
+                              FontFamily="Segoe UI"
+                              FontSize="20"
+                              TextWrapping="Wrap" 
+                              Text="Отчество" HorizontalAlignment="Left" Width="200" Height="25" VerticalAlignment="Top"/>
+                    <TextBox x:Name="Last"
+                             Margin="10,6,0,0"
+                             Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}"
+                             FontFamily="Segoe UI"
+                             FontSize="18"
+                             Foreground="Black"
+                             HorizontalAlignment="Left"
+                             TextWrapping="Wrap" 
+                             Background="White"
+                             Width="550"
+                             MinHeight="26"
+                             VerticalAlignment="Top">
+                        <TextBox.InputBindings>
+                            <KeyBinding Key="Enter" Command="{Binding Send}"/>
+                        </TextBox.InputBindings>
+                    </TextBox>
+                    <TextBlock
+                              Foreground="Black"
+                              Margin="10,5,0,0"
+                              FontFamily="Segoe UI"
+                              FontSize="20"
+                              TextWrapping="Wrap" 
+                              Text="EMail" HorizontalAlignment="Left" Width="350" Height="25" VerticalAlignment="Top"/>
+                    <TextBox x:Name="Image"
+                             Margin="10,6,0,0"
+                             Text="{Binding EMail, UpdateSourceTrigger=PropertyChanged}"
+                             FontFamily="Segoe UI"
+                             FontSize="18"
+                             Foreground="Black"
+                             Background="White"
+                             HorizontalAlignment="Left"
+                             TextWrapping="Wrap" 
+                             Width="550"
+                             MinHeight="26"
+                             VerticalAlignment="Top">
+                        <TextBox.InputBindings>
+                            <KeyBinding Key="Enter" Command="{Binding Send}"/>
+                        </TextBox.InputBindings>
+                    </TextBox>
+                    <TextBlock
+                              Foreground="Black"
+                              Margin="10,5,0,0"
+                              FontFamily="Segoe UI"
+                              FontSize="20"
+                              TextWrapping="Wrap" 
+                              Text="Телефон" HorizontalAlignment="Left" Width="200" Height="25" VerticalAlignment="Top"/>
+                    <TextBox x:Name="DateTime"
+                             Margin="10,6,0,0"
+                             Text="{Binding Phone, UpdateSourceTrigger=PropertyChanged}"
+                             FontFamily="Segoe UI"
+                             FontSize="18"
+                             Foreground="Black"
+                             Background="White"
+                             HorizontalAlignment="Left"
+                             TextWrapping="Wrap" 
+                             Width="550"
+                             MinHeight="26"
+                             VerticalAlignment="Top">
+                        <TextBox.InputBindings>
+                            <KeyBinding Key="Enter" Command="{Binding Send}"/>
+                        </TextBox.InputBindings>
+                    </TextBox>
+                    <TextBlock
+                              Foreground="Black"
+                              Margin="10,5,0,0"
+                              FontFamily="Segoe UI"
+                              FontSize="20"
+                              TextWrapping="Wrap" 
+                              Text="Адрес" HorizontalAlignment="Left" Width="200" Height="25" VerticalAlignment="Top"/>
+                    <TextBox x:Name="Address"
+                             Margin="10,6,0,0"
+                             Text="{Binding Address, UpdateSourceTrigger=PropertyChanged}"
+                             FontFamily="Segoe UI"
+                             FontSize="18"
+                             Foreground="Black"
+                             Background="White"
+                             HorizontalAlignment="Left"
+                             TextWrapping="Wrap" 
+                             Width="550"
+                             MinHeight="80"
+                             VerticalAlignment="Top">
+                        <TextBox.InputBindings>
+                            <KeyBinding Key="Enter" Command="{Binding Send}"/>
+                        </TextBox.InputBindings>
+                    </TextBox>
+                    <TextBlock
+                              Foreground="Black"
+                              Margin="10,5,0,0"
+                              FontFamily="Segoe UI"
+                              FontSize="20"
+                              TextWrapping="Wrap" 
+                              Text="Информация о контакте" HorizontalAlignment="Left" Width="400" Height="25" VerticalAlignment="Top"/>
+                    <TextBox x:Name="ContactInfo"
+                             Margin="10,6,0,0"
+                             Text="{Binding ContactInformation, UpdateSourceTrigger=PropertyChanged}"
+                             FontFamily="Segoe UI"
+                             FontSize="18"
+                             Foreground="Black"
+                             Background="White"
+                             HorizontalAlignment="Left"
+                             TextWrapping="Wrap" 
+                             Width="550"
+                             MinHeight="80"
+                             VerticalAlignment="Top">
+                        <TextBox.InputBindings>
+                            <KeyBinding Key="Enter" Command="{Binding Send}"/>
+                        </TextBox.InputBindings>
+                    </TextBox>
+
+                    <Button Name="addProject"
+                        Content="Добавить новый контакт"
+                        HorizontalAlignment="Left"
+                        Margin="155,10,0,4"
+                        VerticalAlignment="Top"
+                        Height="30"
+                        Width="auto"
+                        FontFamily="Segoe UI"
+                        FontSize="18"
+                        Command="{Binding Send}"
+                        BorderBrush="White"/>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </UserControl>

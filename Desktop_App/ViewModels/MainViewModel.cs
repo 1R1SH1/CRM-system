@@ -19,17 +19,28 @@ namespace Desktop_App.ViewModels
         public RelayCommand ShowContactsWindow { get; set; }
         public RelayCommand ShowUserMainWindow { get; set; }
         public RelayCommand ShowUserProjectWindow { get; set; }
+        public RelayCommand ShowSendRequestWindow { get; set; }        
 
         private object _currentView;
 
         public event PropertyChangedEventHandler PropertyChanged;
         private RequestsViewModel _requestviewmodel;
+        private SendRequestViewModel _sendRequestViewmodel;
         private ServicesViewModel _serviceviewmodel;
         private ProjectViewModel _projectsviewmodel;
         private BlogsViewModel _blogsviewmodel;
         private ContactsViewModel _contactsviewmodel;
         private LoginWindow _loginWindow;
 
+        public SendRequestViewModel SendRequestsViewModel
+        {
+            get => _sendRequestViewmodel;
+            set
+            {
+                _sendRequestViewmodel = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SendRequestsViewModel)));
+            }
+        }
         public RequestsViewModel RequestViewModel
         {
             get => _requestviewmodel;
@@ -95,36 +106,10 @@ namespace Desktop_App.ViewModels
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Model)));
             }
         }
-        public void User()
+
+        public void Access()
         {
-            ProjectsViewModel = new ProjectViewModel("Project");
-
-
-            Application.Current.MainWindow.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
-
-            MoveWindowCommand = new(o => { Application.Current.MainWindow.DragMove(); });
-            ShutDownWindowCommand = new(o => { Application.Current.Shutdown(); });
-            MaximizeWindowCommand = new(o =>
-            {
-                if (Application.Current.MainWindow.WindowState == WindowState.Maximized)
-                    Application.Current.MainWindow.WindowState = WindowState.Normal;
-                else
-                    Application.Current.MainWindow.WindowState = WindowState.Maximized;
-            });
-
-            MinimizeWindowCommand = new(o =>
-            {
-                if (Application.Current.MainWindow.WindowState == WindowState.Minimized)
-                    Application.Current.MainWindow.WindowState = WindowState.Normal;
-                else
-                    Application.Current.MainWindow.WindowState = WindowState.Minimized;
-            });
-
-            ShowUserProjectWindow = new(o => { CurrentView = ProjectsViewModel; });
-        }
-
-        public void Admin()
-        {
+            SendRequestsViewModel = new SendRequestViewModel("Request");
             RequestViewModel = new RequestsViewModel("Request");
             ServiceViewModel = new ServicesViewModel("Services");
             ProjectsViewModel = new ProjectViewModel("Project");
@@ -150,12 +135,12 @@ namespace Desktop_App.ViewModels
                 else
                     Application.Current.MainWindow.WindowState = WindowState.Minimized;
             });
-
             ShowRequestWindow = new(o => { CurrentView = RequestViewModel; });
             ShowServiceWindow = new(o => { CurrentView = ServiceViewModel; });
             ShowProjectWindow = new(o => { CurrentView = ProjectsViewModel; });
             ShowBlogsWindow = new(o => { CurrentView = BlogViewModel; });
             ShowContactsWindow = new(o => { CurrentView = ContactViewModel; });
+            ShowSendRequestWindow = new(o => { CurrentView = SendRequestsViewModel; });
         }
 
         public MainViewModel()
@@ -188,6 +173,7 @@ namespace Desktop_App.ViewModels
             ShowProjectWindow = new(o => { CurrentView = ProjectsViewModel; });
             ShowBlogsWindow = new(o => { CurrentView = BlogViewModel; });
             ShowContactsWindow = new(o => { CurrentView = ContactViewModel; });
+            ShowSendRequestWindow = new(o => { CurrentView = SendRequestsViewModel; });
         }
     }
 }

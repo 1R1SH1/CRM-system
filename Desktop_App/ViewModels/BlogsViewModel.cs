@@ -1,5 +1,6 @@
 ﻿using Desktop_App.Core;
 using Desktop_App.Models;
+using Desktop_App.Views;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -78,8 +79,8 @@ namespace Desktop_App.ViewModels
         private string _image;
         private DateTime _date;
 
-        public RelayCommand ChangedSelection => _changedselection ?? (_changedselection = new RelayCommand(obj => Update()));
         public RelayCommand GetDatasComm => _getdatascomm ?? (_getdatascomm = new RelayCommand(obj => GetDatas()));
+        public RelayCommand ChangedSelection => _changedselection ?? (_changedselection = new RelayCommand(obj => Update()));
         public RelayCommand DeleteSelection => _deleteselection ?? (_deleteselection = new RelayCommand(obj => Delete()));
         public RelayCommand Send => _send ?? (_send = new RelayCommand(obj => Create()));
 
@@ -163,18 +164,27 @@ namespace Desktop_App.ViewModels
         }
         private void Create()
         {
-            CRUD.Create(ApiType, JsonConvert.SerializeObject(new Blogs(0, Header, Image, BlogInformation, DateTimes)));
-            GetDatas();
+            if(LoginWindow.Role == "admin")
+            {
+                CRUD.Create(ApiType, JsonConvert.SerializeObject(new Blogs(0, Header, Image, BlogInformation, DateTimes)));
+                GetDatas();
+            }            
         }
         private void Update()
         {
-            CRUD.Update(ApiType, JsonConvert.SerializeObject(new Blogs(Ids[Selected.Id], Selected.Header, Selected.Image, Selected.BlogInformation, Selected.DateTime)));
-            GetDatas();
+            if (LoginWindow.Role == "admin")
+            {
+                CRUD.Update(ApiType, JsonConvert.SerializeObject(new Blogs(Ids[Selected.Id], Selected.Header, Selected.Image, Selected.BlogInformation, Selected.DateTime)));
+                GetDatas();
+            }
         }
         private void Delete()
         {
-            CRUD.Delete($"{ApiType}/{Ids[Selected.Id]}");
-            GetDatas();
+            if (LoginWindow.Role == "admin")
+            {
+                CRUD.Delete($"{ApiType}/{Ids[Selected.Id]}");
+                GetDatas();
+            }                
         }
         private void Show()
         {

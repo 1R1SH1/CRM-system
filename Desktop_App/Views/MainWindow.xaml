@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Desktop_App.Views"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:converter="clr-namespace:Desktop_App.Models"
         xmlns:extensions="clr-namespace:Desktop_App.Core" 
         xmlns:viewmodels="clr-namespace:Desktop_App.ViewModels" 
         d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
@@ -16,6 +17,10 @@
         AllowsTransparency="True"
         ResizeMode="CanResize"
         WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <converter:BooleanToVisibilityConverter x:Key="Visible"/>
+    </Window.Resources>
 
     <DockPanel Background="#1E1E1E"
                Margin="7">
@@ -107,16 +112,8 @@
                              FontWeight="Normal"
                              Foreground="LightGray"
                              IsChecked="True"
-                             Command="{Binding ShowUserMainWindow}" Cursor="Hand"/>
-
-                <!--<RadioButton Content=" Главная"
-                             extensions:Extensions.Icon="&#9658;"
-                             FontSize="20"
-                             Padding="6,0,3,0"
-                             FontWeight="Normal"
-                             Foreground="LightGray"
-                             IsChecked="True"
-                             Command="{Binding ShowUserProjectWindow}" Cursor="Hand"/>-->
+                             Command="{Binding ShowSendRequestWindow}" 
+                             Cursor="Hand"/>
 
                 <RadioButton Content=" Заявки"
                              extensions:Extensions.Icon="&#128386;"

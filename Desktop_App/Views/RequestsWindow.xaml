@@ -4,13 +4,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:converter="clr-namespace:Desktop_App.Models"
              xmlns:sys="clr-namespace:System;assembly=mscorlib" 
              xmlns:viewmodels="clr-namespace:Desktop_App.ViewModels" 
              d:DataContext="{d:DesignInstance Type=viewmodels:RequestsViewModel}"
              mc:Ignorable="d"              
              Height="auto" 
              Width="auto">
-    <Grid>
+    <UserControl.Resources>
+        <converter:BooleanToVisibilityConverter x:Key="Visible"/>
+    </UserControl.Resources>
+    <Grid Visibility="{Binding Converter={StaticResource Visible}}">
         <Grid.Resources>
             <DataTemplate x:Key="StatusTemplate" >
                 <ComboBox FontSize="18"

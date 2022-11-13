@@ -49,13 +49,13 @@ namespace Desktop_App.Views
                     string json = httpClient.GetAsync(url).Result.Content.ReadAsStringAsync().Result;
                     List<string> r = JsonConvert.DeserializeObject<List<string>>(json);
                     Role = r[1];
-                    if (Role == "admin")
+                    if (Role != null)
                     {
-                        ViewModel.Admin();
+                        ViewModel.Access();
                     }
                     else
                     {
-                        ViewModel.User();
+                        ViewModel.Access();
                     }
                 }
             }

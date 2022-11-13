@@ -2,9 +2,9 @@
 
 namespace Desktop_App.Views
 {
-    public partial class RequestsWindow : UserControl
+    public partial class SendRequestWindow : UserControl
     {
-        public RequestsWindow()
+        public SendRequestWindow()
         {
             InitializeComponent();
         }

@@ -5,10 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Desktop_App.Views"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
+             xmlns:converter="clr-namespace:Desktop_App.Models"
              xmlns:viewmodels="clr-namespace:Desktop_App.ViewModels" 
              d:DataContext="{d:DesignInstance Type=viewmodels:BlogsViewModel}"
              mc:Ignorable="d"
              d:Height="auto" d:Width="auto">
+    <UserControl.Resources>
+        <converter:BooleanToVisibilityConverter x:Key="Visible"/>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -60,10 +64,11 @@
                         Foreground="Black"
                         FontFamily="Segoe UI"
                         Width="100"
+                        Visibility="{Binding Converter={StaticResource Visible}}"
                         Command="{Binding DeleteSelection}" Background="{x:Null}"/>
 
 
-                <StackPanel Margin="2,5,2,2" Background="LightGray" Width="auto" Height="auto">
+                <StackPanel Margin="2,5,2,2" Background="LightGray" Width="auto" Height="auto" Visibility="{Binding Converter={StaticResource Visible}}">
                     <TextBlock
                               Foreground="Black"
                               Margin="10,10,0,0"

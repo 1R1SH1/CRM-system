@@ -20,6 +20,10 @@
                 <l:LoginWindow/>
             </DataTemplate>
 
+            <DataTemplate DataType="{x:Type viewmodel:SendRequestViewModel}">
+                <l:SendRequestWindow/>
+            </DataTemplate>
+
             <DataTemplate DataType="{x:Type viewmodel:RequestsViewModel}">
                 <l:RequestsWindow/>
             </DataTemplate>

@@ -1,5 +1,6 @@
 ﻿using Desktop_App.Core;
 using Desktop_App.Models;
+using Desktop_App.Views;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -83,6 +84,7 @@ namespace Desktop_App.ViewModels
         private Requests _selected;
         private List<Requests> _rawrequests = new();
         private List<Requests> _requests = new();
+        private DateTime _dateTime;
 
         public RelayCommand ForAll => _forall ?? (_forall = new RelayCommand(obj => ForAllTimes()));
         public RelayCommand Month => _month ?? (_month = new RelayCommand(obj => ShowMonth()));
@@ -179,6 +181,15 @@ namespace Desktop_App.ViewModels
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Requests)));
             }
         }
+        public DateTime DateTimes
+        {
+            get => _dateTime;
+            set
+            {
+                _dateTime = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DateTimes)));
+            }
+        }
 
         private string ApiType { get; set; }
         private DateTime FirstDate { get; set; }
@@ -194,55 +205,76 @@ namespace Desktop_App.ViewModels
 
         public void GetDatas()
         {
-            CRUD.Read(ApiType);
-            RawRequests = JsonConvert.DeserializeObject<List<Requests>>(CRUD.Read(ApiType));
-            if (RawRequests.Count > 0)
+            if(LoginWindow.Role == "admin")
             {
-                FirstDate = RawRequests[0].Date;
-            }
-            Show();
+                CRUD.Read(ApiType);
+                RawRequests = JsonConvert.DeserializeObject<List<Requests>>(CRUD.Read(ApiType));
+                if (RawRequests.Count > 0)
+                {
+                    FirstDate = RawRequests[0].Date;
+                }
+                Show();
+            }            
         }
         private void Show()
         {
-            Requests = new List<Requests>();
-            for (int i = 0; i < RawRequests.Count; i++)
+            if(LoginWindow.Role == "admin")
             {
-                if (RawRequests[i].Date >= Start && RawRequests[i].Date < End.AddDays(1))
+                Requests = new List<Requests>();
+                for (int i = 0; i < RawRequests.Count; i++)
                 {
-                    if (CheckAll(RawRequests[i])) Requests.Add(RawRequests[i]);
+                    if (RawRequests[i].Date >= Start && RawRequests[i].Date < End.AddDays(1))
+                    {
+                        if (CheckAll(RawRequests[i])) Requests.Add(RawRequests[i]);
+                    }
                 }
-            }
-            Info = $"За всё время: {RawRequests.Count}";
-            Count = $"Отсортировано: {Requests.Count}";
+                Info = $"За всё время: {RawRequests.Count}";
+                Count = $"Отсортировано: {Requests.Count}";
+            }            
         }
         private void UpdateStatus()
         {
-            CRUD.Update(ApiType, JsonConvert.SerializeObject(Selected));
-            GetDatas();
+            if(LoginWindow.Role != "admin")
+            {
+                CRUD.Update(ApiType, JsonConvert.SerializeObject(Selected));
+                GetDatas();
+            }            
         }
         private void ShowToday()
         {
-            Start = DateTime.Today;
-            End = DateTime.Today;
-            Show();
+            if (LoginWindow.Role != "admin")
+            {
+                Start = DateTime.Today;
+                End = DateTime.Today;
+                Show();
+            }                
         }
         private void ShowTomorrow()
         {
-            Start = DateTime.Today.AddDays(-1);
-            End = DateTime.Today.AddDays(-1);
-            Show();
+            if (LoginWindow.Role != "admin")
+            {
+                Start = DateTime.Today.AddDays(-1);
+                End = DateTime.Today.AddDays(-1);
+                Show();
+            }                
         }
         private void ShowWeek()
         {
-            Start = GetFirstDayOfWeek(DateTime.Today);
-            End = DateTime.Today;
-            Show();
+            if (LoginWindow.Role != "admin")
+            {
+                Start = GetFirstDayOfWeek(DateTime.Today);
+                End = DateTime.Today;
+                Show();
+            }                
         }
         private void ShowMonth()
         {
-            Start = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
-            End = DateTime.Today;
-            Show();
+            if (LoginWindow.Role != "admin")
+            {
+                Start = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
+                End = DateTime.Today;
+                Show();
+            }                
         }
         private bool CheckAll(Requests request)
         {

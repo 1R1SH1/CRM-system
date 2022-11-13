@@ -1,5 +1,6 @@
 ﻿using Desktop_App.Core;
 using Desktop_App.Models;
+using Desktop_App.Views;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -152,18 +153,27 @@ namespace Desktop_App.ViewModels
         }
         private void Create()
         {
-            CRUD.Create(ApiType, JsonConvert.SerializeObject(new Projects(0, Header, Image, ProjectInformation)));
-            GetDatas();
+            if(LoginWindow.Role == "admin")
+            {
+                CRUD.Create(ApiType, JsonConvert.SerializeObject(new Projects(0, Header, Image, ProjectInformation)));
+                GetDatas();
+            }            
         }
         public void Update()
         {
-            CRUD.Update(ApiType, JsonConvert.SerializeObject(new Projects(Ids[Selected.Id], Selected.Header, Selected.Image, Selected.ProjectInformation)));
-            GetDatas();
+            if (LoginWindow.Role == "admin")
+            {
+                CRUD.Update(ApiType, JsonConvert.SerializeObject(new Projects(Ids[Selected.Id], Selected.Header, Selected.Image, Selected.ProjectInformation)));
+                GetDatas();
+            }                
         }
         private void Delete()
         {
-            CRUD.Delete($"{ApiType}/{Ids[Selected.Id]}");
-            GetDatas();
+            if (LoginWindow.Role == "admin")
+            {
+                CRUD.Delete($"{ApiType}/{Ids[Selected.Id]}");
+                GetDatas();
+            }                
         }
         private void Show()
         {
