@@ -4,7 +4,7 @@
 
 namespace IT_Consulting_CRM_API.Migrations
 {
-    public partial class M1001 : Migration
+    public partial class Final_Migration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -69,6 +69,7 @@ namespace IT_Consulting_CRM_API.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SurName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -80,6 +81,28 @@ namespace IT_Consulting_CRM_API.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Contact", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MenuNamesAndPageHeaders",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MainPage = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProjectPage = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ServicePage = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BlogPage = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ContactPage = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MainPageHeader = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProjectPageHeader = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ServicePageHeader = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BlogPageHeader = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ContactPageHeader = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MenuNamesAndPageHeaders", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -297,6 +320,9 @@ namespace IT_Consulting_CRM_API.Migrations
 
             migrationBuilder.DropTable(
                 name: "Contact");
+
+            migrationBuilder.DropTable(
+                name: "MenuNamesAndPageHeaders");
 
             migrationBuilder.DropTable(
                 name: "Project");

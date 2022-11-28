@@ -3,9 +3,6 @@ using IT_Consulting_CRM_API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace IT_Consulting_CRM_API.Controllers
 {
@@ -14,7 +11,7 @@ namespace IT_Consulting_CRM_API.Controllers
     [Authorize(Roles = "admin")]
     public class BlogController : ControllerBase
     {
-        public static DataContext? Context { get; set; }
+        public static DataContext Context { get; set; }
         public BlogController(DataContext dataContext)
         {
             Context = dataContext;

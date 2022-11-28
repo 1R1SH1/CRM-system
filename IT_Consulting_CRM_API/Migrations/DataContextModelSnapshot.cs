@@ -64,6 +64,9 @@ namespace IT_Consulting_CRM_API.Migrations
                     b.Property<string>("EMail")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
@@ -79,6 +82,49 @@ namespace IT_Consulting_CRM_API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Contact");
+                });
+
+            modelBuilder.Entity("IT_Consulting_CRM_API.Models.MenuNameAndPageHeader", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("BlogPage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BlogPageHeader")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ContactPage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ContactPageHeader")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MainPage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MainPageHeader")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProjectPage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProjectPageHeader")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ServicePage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ServicePageHeader")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MenuNamesAndPageHeaders");
                 });
 
             modelBuilder.Entity("IT_Consulting_CRM_API.Models.Projects", b =>

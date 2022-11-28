@@ -4,11 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
 
 namespace IT_Consulting_CRM_API.Controllers
 {
@@ -32,7 +27,7 @@ namespace IT_Consulting_CRM_API.Controllers
         {
             Context = dataContext;
             httpClient = new HttpClient();
-            //BotUrl = @"https://api.telegram.org/bot/";
+            BotUrl = @"https://api.telegram.org/bot5207281250:AAHsxrjSznifTZZ5jwMXFlDNjZl4s-FjhUk";
             Update_id = 0;
         }
 
@@ -61,14 +56,14 @@ namespace IT_Consulting_CRM_API.Controllers
         [HttpGet]
         public async Task<IEnumerable<Requests>> Get()
         {
-            //ReadDataFromBot();
+            ReadDataFromBot();
             return await Context.Request.ToListAsync().ConfigureAwait(true);
         }
 
-        private void ReadDataFromBot()
+        private static void ReadDataFromBot()
         {
-            string url = $"{BotUrl}getUpdates";
-            string r = httpClient.GetStringAsync(url).Result;
+            string url = $"{BotUrl}";
+            string r = httpClient.GetAsync(url).Result.Content.ReadAsStringAsync().Result;
             if (PrevDatas != r)
             {
                 PrevDatas = r;
