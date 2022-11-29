@@ -99,20 +99,20 @@
             <div class="container">
                 <h1 class="title_1">Блог</h1>
                 <div class="brd1"></div>
-                <div class="row justify-content-center" style="min-height:40em; min-width:15em">
+                <div class="row justify-content-center" style="/*min-height:40em;*/ min-width:15em;">
                     @foreach (var item in Model)
                     {
                         <ul class="fullclick">
                             <li>
                                 @item.DateTime
-                                <div class="card" style="width:20em;margin:10px;">
+                                <div class="card" style="width:20em; margin:10px; height:26em">
                                     <img src="@item.Image" class="card-img-top" style="height:10em;" />
                                     <div class="card-body" style="min-height:5em;">
                                         <div class="card-text" style="word-wrap:break-word; text-align: left;">
                                             <p>@item.Header</p>
                                         </div>
                                     </div>
-                                    <div class="card-text" style="word-wrap:break-word;">
+                                    <div class="card-text" style="word-wrap:break-word; overflow:hidden;">
                                         <p>@item.BlogInformation</p>
                                     </div>
                                     <a id="Delete" align="right" href="/Blog/DeleteBlog/@item.Id">&#128465;</a>
@@ -251,14 +251,14 @@ else
                         <ul class="fullclick">
                             <li>
                                 @item.DateTime
-                                <div class="card" style="width:20em;margin:10px;">
+                                <div class="card" style="width:20em;margin:10px; height:26em">
                                     <img src="@item.Image" class="card-img-top" style="height:10em;" />
                                     <div class="card-body" style="min-height:5em;">
                                         <div class="card-text" style="word-wrap:break-word; text-align: left;">
                                             <p>@item.Header</p>
                                         </div>
                                     </div>
-                                    <div class="card-text" style="word-wrap:break-word;">
+                                    <div class="card-text" style="word-wrap:break-word; overflow:hidden;">
                                         <p>@item.BlogInformation</p>
                                     </div>
                                     <a href="/Blog/BlogDetails/@item.Id" class="main"></a>

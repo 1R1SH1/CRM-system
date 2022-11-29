@@ -1,45 +1,23 @@
 ﻿@using IT_Consulting_CRM_Web.Controllers
-@model IEnumerable<IT_Consulting_CRM_Web.Models.AnswerUser>
+@using IT_Consulting_CRM_Web.ViewModels
+@model IEnumerable<LoginViewModel>
 @{
     ViewData["Title"] = "Users list";
 }
 @if (AccountController.Role == "admin")
 {
-    <head>
-        <title></title>
-        <link rel="stylesheet" href="~/css/style.css" type="text/css" />
-        <style type="text/css">
-
-            .btn {
-            text-decoration: none;
-            position: center;
-            height: 40px;
-            line-height: 40px;
-            padding: 0 50px 0 50px;
-            margin: 0 10px;
-            background: linear-gradient(-135deg, #00E5FE, #4463FE);
-            border-width: 0;
-            border-radius: 50px;
-            font-size: 15px;
-            color: white;
-            outline: none;
-            cursor: pointer;
-            }
-        </style>
-    </head>
-
-    <table class="simple-little-table" cellspacing='0'>
+    <table class="simple-little-table">
         <tr style="font-size:20px;">
             <th>Имя пользователя</th>
             <th></th>
-            <th></th>
         </tr>
-        @foreach (var user in Model)
+        @foreach(var item in Model.ToList().ToString())
         {
             <tr>
-                <th>@user.Name</th>
+                <th>@item</th>
             </tr>
         }
+        
     </table>
 
 }

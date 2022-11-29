@@ -16,6 +16,12 @@ namespace IT_Consulting_CRM_Web
             Answer(httpClient.PostAsync($"{Host}{url}", new StringContent(json, Encoding.UTF8, "application/json")).Result.ToString());
         }
 
+        public static string GetUsers(string url)
+        {
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
+            return httpClient.GetStringAsync($"{Host}{url}").Result;
+        }
+
         public static string Read(string url)
         {
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
