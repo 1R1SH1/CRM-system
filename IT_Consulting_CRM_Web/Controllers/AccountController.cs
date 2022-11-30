@@ -22,7 +22,7 @@ namespace IT_Consulting_CRM_Web.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Login(LoginViewModel model)
         {
-            if (model.Name == null) { model.Name = ""; }
+            if (model.Username == null) { model.Username = ""; }
             if (model.Password == null) { model.Password = ""; }
             string url = host + "Authentication/";
             CRUD.Token = httpClient.PostAsync(url, new StringContent(JsonConvert.SerializeObject(model),

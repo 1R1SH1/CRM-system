@@ -6,10 +6,13 @@ namespace IT_Consulting_CRM_Web.Controllers
 {
     public class UsersController : Controller
     {
+        private static List<LoginViewModel> _log = new();
+
+        [HttpGet]
         public IActionResult Index()
         {
-            var user = JsonConvert.DeserializeObject<List<LoginViewModel>>(CRUD.Read("Users"));
-            return View(user);
+            _log = JsonConvert.DeserializeObject<List<LoginViewModel>>(CRUD.Read("Users"));
+            return View(_log);
         }
     }
 }

@@ -28,9 +28,9 @@ namespace IT_Consulting_CRM_API.Controllers
             [FromServices] IJwtSigningEncodingKey signingEncodingKey,
             [FromServices] IJwtEncryptingEncodingKey encryptingEncodingKey)
         {
-            if ((await _signInManager.PasswordSignInAsync(authRequest.Name, authRequest.Password, false, false)).Succeeded)
+            if ((await _signInManager.PasswordSignInAsync(authRequest.Username, authRequest.Password, false, false)).Succeeded)
             {
-                User user = await _userManager.FindByNameAsync(authRequest.Name);
+                User user = await _userManager.FindByNameAsync(authRequest.Username);
                 string role;
                 if (await _userManager.IsInRoleAsync(user, "admin")) { role = "admin"; }
                 else if (await _userManager.IsInRoleAsync(user, "user")) { role = "user"; }
@@ -38,7 +38,7 @@ namespace IT_Consulting_CRM_API.Controllers
 
                 var claims = new Claim[]
                 {
-                    new Claim(ClaimTypes.NameIdentifier, authRequest.Name),
+                    new Claim(ClaimTypes.NameIdentifier, authRequest.Username),
                     new Claim(ClaimTypes.Role, role)
                 };
 

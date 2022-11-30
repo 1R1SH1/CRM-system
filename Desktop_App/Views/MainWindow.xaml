@@ -39,7 +39,7 @@
                     <ColumnDefinition Width="100"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Text="Приложение Админа"
+                <TextBlock Text="#SkillProfi"
                            FontSize="28"
                            Foreground="LightGray"
                            FontFamily="Consolas"

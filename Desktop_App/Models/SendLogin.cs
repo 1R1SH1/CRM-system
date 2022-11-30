@@ -2,7 +2,7 @@ namespace Desktop_App.Models
 {
     public class SendLogin
     {
-        public string Name { get; set; }
+        public string Username { get; set; }
         public string Password { get; set; }
         public SendLogin()
         {
@@ -11,7 +11,7 @@ namespace Desktop_App.Models
 
         public SendLogin(string name, string password)
         {
-            Name = name;
+            Username = name;
             Password = password;
         }
     }

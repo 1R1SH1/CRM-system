@@ -74,3 +74,17 @@ Newtonsoft.Json версии 13.0.1;
 
 Для сборки проекта требуется подключить к проекту NuGet пакеты:
 Telegram.Bot версии 18.0.0-alpha.3;
+
+<<Данные для запуска проекта>>
+
+Проект реализован на Visual Studio Community 2022 - можно бесплатно скачать и установить с официального сайта Microsoft.
+
+Необходимо скачать данные по ссылке https://github.com/1R1SH1/IT_Consulting_CRM_API.git
+
+1) Запускаем Visual Studio
+image.png
+
+2) Открывам скачанные данные с репозитория 
+- Выбираем "Открыть проект или решение" image.png
+- В открывшемся окне выбираем папку IT_Consulting_CRM_API и открываем ее image.png
+- Далее выбираем IT_Consulting_CRM_API.sln и нажимаем открыть image.png

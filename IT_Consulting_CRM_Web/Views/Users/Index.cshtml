@@ -1,6 +1,6 @@
 ﻿@using IT_Consulting_CRM_Web.Controllers
 @using IT_Consulting_CRM_Web.ViewModels
-@model IEnumerable<LoginViewModel>
+@model List<LoginViewModel>
 @{
     ViewData["Title"] = "Users list";
 }
@@ -8,16 +8,13 @@
 {
     <table class="simple-little-table">
         <tr style="font-size:20px;">
-            <th>Имя пользователя</th>
-            <th></th>
+            <td>Имя пользователя</td>
         </tr>
-        @foreach(var item in Model.ToList().ToString())
+        @foreach(var item in Model)
         {
             <tr>
-                <th>@item</th>
+                    <td>@item.Username</td>
             </tr>
-        }
-        
+        }        
     </table>
-
 }

@@ -6,7 +6,7 @@ namespace IT_Consulting_CRM_Web.ViewModels
     {
         [Required]
         [Display(Name = "Логин")]
-        public string Name { get; set; }
+        public string Username { get; set; }
         [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Пароль")]
