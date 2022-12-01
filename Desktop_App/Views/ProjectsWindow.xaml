@@ -33,7 +33,7 @@
                               ItemsSource="{Binding RawProjects, UpdateSourceTrigger=PropertyChanged}" Margin="0,5" Height="600" Width="auto" SelectedItem="{Binding Selected}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <Border Margin="10" Width="300" Height="auto" >
+                                <Border Margin="5,5,5,5" Width="300" MinHeight="1700">
                                     <StackPanel VerticalAlignment="Top">
                                         <Border Width="300" Height="140" Margin="5,5,5,5">
                                             <Border.Effect>
@@ -43,8 +43,8 @@
                                                 <ImageBrush ImageSource="{Binding Image, UpdateSourceTrigger=PropertyChanged}"/>
                                             </Border.Background>
                                         </Border>
-                                        <TextBlock Name="Header" Margin="5" Text="{Binding Header, UpdateSourceTrigger=PropertyChanged}" FontSize="17" TextWrapping="Wrap" VerticalAlignment="Top" FontFamily="Franklin Gothic Medium"/>
-                                        <TextBlock Name="ProjectInfo" Margin="5 0" Text="{Binding ProjectInformation, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" FontSize="15" VerticalAlignment="Top" FontFamily="Segoe UI"/>
+                                        <TextBlock Name="Header" Margin="5" Text="{Binding Header, UpdateSourceTrigger=PropertyChanged}" FontSize="17" TextWrapping="Wrap" FontFamily="Franklin Gothic Medium"/>
+                                        <TextBlock Name="ProjectInfo" Margin="5 0" Text="{Binding ProjectInformation, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" FontSize="15" FontFamily="Segoe UI"/>
 
                                     </StackPanel>
                                 </Border>

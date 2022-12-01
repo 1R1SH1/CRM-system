@@ -72,7 +72,7 @@
                              TextWrapping="Wrap" 
                              Background="White"
                              Width="550"
-                             MinHeight="80"
+                             MinHeight="26"
                              VerticalAlignment="Top">
                         <TextBox.InputBindings>
                             <KeyBinding Key="Enter" Command="{Binding Send}"/>
@@ -118,7 +118,7 @@
                              HorizontalAlignment="Left"
                              TextWrapping="Wrap" 
                              Width="550"
-                             MinHeight="26"
+                             MinHeight="80"
                              VerticalAlignment="Top">
                         <TextBox.InputBindings>
                             <KeyBinding Key="Enter" Command="{Binding Send}"/>
