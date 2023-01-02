@@ -1,8 +1,7 @@
-using IT_Consulting_CRM_API.Data;
+using IT_Consulting_CRM_API.Methods;
 using IT_Consulting_CRM_API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace IT_Consulting_CRM_API.Controllers
 {
@@ -11,37 +10,33 @@ namespace IT_Consulting_CRM_API.Controllers
     [Authorize(Roles = "admin")]
     public class ServicesController : ControllerBase
     {
-        public static DataContext? Context { get; set; }
-        public ServicesController(DataContext dataContext)
+        public static ServiceCore Core { get; set; }
+        public ServicesController(ServiceCore core)
         {
-            Context = dataContext;
+            Core = core;
         }
         [HttpPost]
         public async Task Post([FromBody] Services service)
         {
-            await Context.Service.AddAsync(service);
-            await Context.SaveChangesAsync();
+            await Core.PostService(service);
         }
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] Services service)
         {
-            Context.Service.Update(service);
-            await Context.SaveChangesAsync();
+            await Core.PutService(service);
             return Ok();
         }
         [AllowAnonymous]
         [HttpGet]
         public async Task<IEnumerable<Services>> Get()
         {
-            return await Context.Service.ToListAsync();
+            return await Core.GetService();
         }
         [HttpDelete]
         [Route("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            Services service = Context.Service.ToList().Find(u => u.Id == id);
-            Context.Service.Remove(service);
-            await Context.SaveChangesAsync();
+            await Core.DeleteService(id);
             return Ok();
         }
     }

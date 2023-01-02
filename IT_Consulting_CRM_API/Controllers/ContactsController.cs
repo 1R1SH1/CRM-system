@@ -1,8 +1,7 @@
-using IT_Consulting_CRM_API.Data;
+using IT_Consulting_CRM_API.Methods;
 using IT_Consulting_CRM_API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace IT_Consulting_CRM_API.Controllers
 {
@@ -11,38 +10,34 @@ namespace IT_Consulting_CRM_API.Controllers
     [Authorize(Roles = "admin")]
     public class ContactsController : ControllerBase
     {
-        public static DataContext? Context { get; set; }
-        public ContactsController(DataContext dataContext)
+        public static ContactCore Core { get; set; }
+        public ContactsController(ContactCore core)
         {
-            Context = dataContext;
+            Core = core;
         }
         [HttpPost]
         public async Task<IActionResult> Post(Contacts contacts)
         {
-            Context.Contact.Add(contacts);
-            await Context.SaveChangesAsync();
+            await Core.PostContact(contacts);
             return Ok();
         }
         [HttpPut]
         public async Task<IActionResult> Put(Contacts contacts)
         {
-            Context.Contact.Update(contacts);
-            await Context.SaveChangesAsync();
+            await Core.PutContact(contacts);
             return Ok();
         }
         [AllowAnonymous]
         [HttpGet]
         public async Task<IEnumerable<Contacts>> Get()
         {
-            return await Context.Contact.ToListAsync();
+            return await Core.GetContact();
         }
         [HttpDelete]
         [Route("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            Contacts contact = Context.Contact.ToList().Find(u => u.Id == id);
-            Context.Contact.Remove(contact);
-            await Context.SaveChangesAsync();
+            await Core.DeleteContact(id);
             return Ok();
         }
     }

@@ -1,8 +1,7 @@
-using IT_Consulting_CRM_API.Data;
+using IT_Consulting_CRM_API.Methods;
 using IT_Consulting_CRM_API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace IT_Consulting_CRM_API.Controllers
 {
@@ -11,38 +10,34 @@ namespace IT_Consulting_CRM_API.Controllers
     [Authorize(Roles = "admin")]
     public class BlogController : ControllerBase
     {
-        public static DataContext Context { get; set; }
-        public BlogController(DataContext dataContext)
+        public static BlogCore Core { get; set; }
+        public BlogController(BlogCore core)
         {
-            Context = dataContext;
+            Core = core;
         }
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Blogs data)
         {
-            await Context.Blog.AddAsync(data);
-            await Context.SaveChangesAsync();
+            await Core.PostBlog(data);
             return Ok();
         }
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] Blogs data)
         {
-            Context.Blog.Update(data);
-            await Context.SaveChangesAsync();
+            await Core.PutBlog(data);
             return Ok();
         }
         [HttpGet]
         [AllowAnonymous]
         public async Task<IEnumerable<Blogs>> Get()
         {
-            return await Context.Blog.ToListAsync();
+            return await Core.GetBlog();
         }
         [HttpDelete]
         [Route("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            Blogs blog = Context.Blog.ToList().Find(u => u.Id == id);
-            Context.Blog.Remove(blog);
-            await Context.SaveChangesAsync();
+            await Core.DeleteBlog(id);
             return Ok();
         }
     }

@@ -1,10 +1,12 @@
 using IT_Consulting_CRM_API;
 using IT_Consulting_CRM_API.Data;
+using IT_Consulting_CRM_API.Methods;
 using IT_Consulting_CRM_API.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using NuGet.Protocol.Core.Types;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +23,12 @@ builder.Services.AddLogging();
 
 builder.Services.AddDbContext<DataContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<BlogCore>();
+builder.Services.AddScoped<ContactCore>();
+builder.Services.AddScoped<ProjectCore>();
+builder.Services.AddScoped<RequestCore>();
+builder.Services.AddScoped<ServiceCore>();
 
 builder.Services.AddIdentity<User, Microsoft.AspNetCore.Identity.IdentityRole>()
             .AddEntityFrameworkStores<DataContext>();
